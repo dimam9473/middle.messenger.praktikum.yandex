@@ -24,6 +24,8 @@
     "parcel": "^2.8.3"
   },
   "dependencies": {
-    "handlebars": "^4.7.7"
+    "@parcel/transformer-sass": "^2.8.3",
+    "handlebars": "^4.7.7",
+    "node-sass": "^8.0.0"
   }
 }
