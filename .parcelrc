@@ -3,5 +3,6 @@
   "transformers": {
     "*.hbs": ["@anikin/parcel-transformer-handlebars"],
     "*.scss": ["@anikin/parcel-transformer-handlebars"]
-  }
+  },
+  "reporters":  ["parcel-reporter-clean-dist"]
 } 

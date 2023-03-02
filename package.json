@@ -2,11 +2,10 @@
   "name": "praktikum",
   "version": "1.0.0",
   "description": "### Откройте pull request в ветку main из ветки, где вы разрабатывали проект, и добавьте ссылку на этот pr в README.md в ветке main.  ### ВАЖНО: pull request должен называться “Sprint i” (i — номер спринта).",
-  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "parcel index.hbs --port 3000",
-    "build": "parcel build index.hbs"
+    "build": "parcel build index.hbs --public-url ./"
   },
   "repository": {
     "type": "git",
@@ -26,6 +25,7 @@
   "dependencies": {
     "@parcel/transformer-sass": "^2.8.3",
     "handlebars": "^4.7.7",
-    "node-sass": "^8.0.0"
+    "node-sass": "^8.0.0",
+    "parcel-reporter-clean-dist": "^1.0.4"
   }
 }
