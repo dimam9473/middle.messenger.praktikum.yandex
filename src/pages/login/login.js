@@ -1,8 +1,6 @@
 const button = document.getElementById('login')
 
-debugger
-button.addEventListener('onclick', function (e) {
-    debugger
+button.addEventListener('click', function (e) {
     e.preventDefault()
-    console.log('click')
+    window.location.href = 'chat'
 })

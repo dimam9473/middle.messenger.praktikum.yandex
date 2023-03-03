@@ -22,10 +22,19 @@
                 <label for="password">Repeat password</label>
                 <input id="password" type="password"/>
             </div>
-            <button>Create account</button>
+            <button id="createaccount">Create account</button>
         </form>
 
         <a href="login" alt="login">Login</a>
     </div>
+
+    <script>
+        const button = document.getElementById('createaccount')
+
+        button.addEventListener('click', function (e) {
+            e.preventDefault()
+            window.location.href = 'chat'
+        })
+    </script>
 </body>
 <html>
