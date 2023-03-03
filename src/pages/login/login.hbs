@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Контакты</title>
+    <meta charset="utf-8" />
+</head>
+<body>
+    <div>
+        <h1>Sign In</h1>
+        <form>
+            <div>
+                <label for="username">User name</label>
+                <input id="username"/>
+            </div>
+
+            <div>
+                <label for="password">Password</label>
+                <input id="password" type="password"/>
+            </div>
+            <button id="login">Login</button>
+        </form>
+
+        <a href="register" alt="register">Sign Up</a>
+    </div>
+    <script>
+        const button = document.getElementById('login')
+
+        button.addEventListener('click', function (e) {
+            e.preventDefault()
+            window.location.href = 'register'
+        })
+    </script>
+</body>
+<html>
