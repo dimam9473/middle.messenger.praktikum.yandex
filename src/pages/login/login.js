@@ -1,6 +1,6 @@
-const button = document.getElementById('login')
+const button = document.getElementById("enter")
 
-button.addEventListener('click', function (e) {
+button.addEventListener("click", function (e) {
     e.preventDefault()
-    window.location.href = 'chat'
+    window.location.href = "#"
 })

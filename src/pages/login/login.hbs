@@ -3,9 +3,10 @@
 <head>
     <title>Login</title>
     <meta charset="utf-8" />
+    <link rel="stylesheet" href="login.scss">
 </head>
 <body>
-    <div>
+    <div class="login-wrapper">
         {{> title title="Sign In"}}
         <form>
             {{> input id="login" label="Login" placeholder="Your login"}}
@@ -13,15 +14,8 @@
             {{> button id="enter" caption="Enter"}}
         </form>
 
-        {{> link href="register" alt="register" text="Create account?"}}
+        {{> link href="#" alt="register" text="Create account?"}}
     </div>
-    <script>
-        const button = document.getElementById("enter")
-
-        button.addEventListener("click", function (e) {
-            e.preventDefault()
-            window.location.href = "chat"
-        })
-    </script>
+    <script src="login.js"></script>
 </body>
 <html>
