@@ -1,35 +1,29 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Контакты</title>
+    <title>Create account</title>
     <meta charset="utf-8" />
 </head>
 <body>
     <div>
-        <h1>Register</h1>
+        {{> title title="Register account"}}
         <form>
-            <div>
-                <label for="username">User name</label>
-                <input id="username"/>
-            </div>
+            {{> input id="email" label="Email" placeholder="mail@mail.com"}}
+            {{> input id="login" label="Login" placeholder="Your login"}}
+            {{> input id="first-name" label="First name" placeholder="First name"}}
+            {{> input id="second-name" label="Second name" placeholder="Your second name"}}
+            {{> input id="phone" label="Phone" placeholder="+7-999-999-9999"}}
+            {{> input id="password" label="Password" type="password" placeholder="1234"}}
+            {{> input id="repeat-password" label="Repeat password" type="password" placeholder="1234"}}
 
-            <div>
-                <label for="password">Password</label>
-                <input id="password" type="password"/>
-            </div>
-
-            <div>
-                <label for="password">Repeat password</label>
-                <input id="password" type="password"/>
-            </div>
-            <button id="createaccount">Create account</button>
+            {{> button id="create-account" caption="Create account"}}
         </form>
 
-        <a href="login" alt="login">Login</a>
+        {{> link href="login" alt="login" text="Login"}}        
     </div>
 
     <script>
-        const button = document.getElementById('createaccount')
+        const button = document.getElementById('create-account')
 
         button.addEventListener('click', function (e) {
             e.preventDefault()

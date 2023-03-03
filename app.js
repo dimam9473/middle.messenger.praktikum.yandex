@@ -10,11 +10,14 @@
 // });
 
 const express = require("express");
+const hbs = require("hbs");
  
 const app = express();
+const port = 3000
  
-app.set("view engine", "hbs");
 app.set("views", "src");
+hbs.registerPartials(`${__dirname}/src/components`);
+app.set("view engine", "hbs");
 
 app.use("/register", function(_, response){
      
@@ -36,4 +39,6 @@ app.use("/", function(_, response){
     response.render("pages/login/login.hbs");
 });
 
-app.listen(3000);
+app.listen(port, function () {
+    console.log(`App listening on port: ${port}`)
+});

@@ -6,9 +6,17 @@
 </head>
 <body>
     <div>
-        Profile page
-        <a href="chat">Back</a>
-        <a href="login">Logout</a>
+        {{> link href="chat" alt="back" text="Back"}}
+        <img src="#">
+        <h2>Name Surname</h2>
+        
+        {{> input id="email" label="Email" placeholder="mail@mail.com"}}
+        {{> input id="first-name" label="First name" placeholder="First name"}}
+        {{> input id="second-name" label="Second name" placeholder="Your second name"}}
+        {{> input id="login" label="Login" placeholder="Your login"}}
+        {{> input id="phone" label="Phone" placeholder="+7-999-999-9999"}}
+
+        {{> link href="login" alt="logout" text="Logout"}}
     </div>
 </body>
 <html>
