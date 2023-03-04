@@ -1,34 +1,15 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Create account</title>
-    <meta charset="utf-8" />
-</head>
-<body>
-    <div>
-        {{> title title="Register account"}}
-        <form>
-            {{> input id="email" label="Email" placeholder="mail@mail.com"}}
-            {{> input id="login" label="Login" placeholder="Your login"}}
-            {{> input id="first-name" label="First name" placeholder="First name"}}
-            {{> input id="second-name" label="Second name" placeholder="Your second name"}}
-            {{> input id="phone" label="Phone" placeholder="+7-999-999-9999"}}
-            {{> input id="password" label="Password" type="password" placeholder="1234"}}
-            {{> input id="repeat-password" label="Repeat password" type="password" placeholder="1234"}}
+{{> title title="Register account"}}
+<form>
+    {{> input id="email" label="Email" placeholder="mail@mail.com"}}
+    {{> input id="login" label="Login" placeholder="Your login"}}
+    {{> input id="first-name" label="First name" placeholder="First name"}}
+    {{> input id="second-name" label="Second name" placeholder="Your second name"}}
+    {{> input id="phone" label="Phone" placeholder="+7-999-999-9999"}}
+    {{> input id="password" label="Password" type="password" placeholder="1234"}}
+    {{> input id="repeat-password" label="Repeat password" type="password" placeholder="1234"}}
 
-            {{> button id="create-account" caption="Create account"}}
-        </form>
+    {{> button id="create-account" caption="Create account"}}
+</form>
 
-        {{> link href="#" alt="login" text="Login"}}        
-    </div>
-
-    <script>
-        const button = document.getElementById('create-account')
-
-        button.addEventListener('click', function (e) {
-            e.preventDefault()
-            window.location.href = 'chat'
-        })
-    </script>
-</body>
-<html>
+{{> link href="/" alt="login" text="Login"}}        
+</div>    
