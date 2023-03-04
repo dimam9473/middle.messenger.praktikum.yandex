@@ -1,0 +1,14 @@
+<div class="layout">
+    <div class="login-wrapper">
+        {{> title title="Sign In" class="title"}}
+        <form>
+            <div class="inputs">
+                {{> input id="login" label="Login" placeholder="Your login" inputWrapper="input-wrapper"}}
+                {{> input id="password" label="Password" type="password" placeholder="1234"  inputWrapper="input-wrapper"}}
+            </div>
+            {{> button id="enter" caption="Enter" class="button"}}
+        </form>
+
+        {{> link href="#" alt="register" text="Create account?"}}
+    </div>
+</div>
