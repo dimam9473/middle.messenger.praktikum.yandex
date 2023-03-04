@@ -1,21 +1,29 @@
 import mountLogin from "./pages/login/login"
 import mountRegister from "./pages/register/register"
+import mountChat from "./pages/chat/chat"
+import mountProfile from "./pages/profile/profile"
+import mountNotFound from "./pages/404/404"
 
 window.addEventListener("load", function () {
-    const root = document.getElementById("root")
-    let template = ''
-
     if (window.location.pathname === "/") {
-        template = mountLogin()
+        mountLogin('root')
+        return
     }
 
     if (window.location.pathname === '/register') {
-        template = mountRegister()
+        mountRegister('root')
+        return
     }
 
     if (window.location.pathname === '/chat') {
-        template = mountRegister()
+        mountChat('root')
+        return
     }
 
-    root.innerHTML = template()
+    if (window.location.pathname === '/profile') {
+        mountProfile('root')
+        return
+    }
+
+    mountNotFound("root")
 })
