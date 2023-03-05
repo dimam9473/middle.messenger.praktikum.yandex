@@ -8,7 +8,7 @@ app.use(express.static(`${__dirname}/dist`));
 app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');
 
-app.get("/*", (_, res) => {
+app.get(/(.*?)/, (_, res) => {
     res.sendFile(`${__dirname}/dist/index.html`);
 });
 
