@@ -5,5 +5,5 @@ export default function mountTemplate(rootId, rawTemplate) {
 
     const template = Handlebars.compile(rawTemplate)
 
-    root.innerHTML = template()
+    root.insertAdjacentHTML("beforeend", template())
 }
