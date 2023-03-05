@@ -9,8 +9,8 @@ app.set('views', `${__dirname}/dist`);
 app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');
 
-app.get('/', (_, response) => {
-    response.render("index.html")
+app.get("/*", (_, res) => {
+    res.sendFile(__dirname + '/dist/index.html');
 });
 
 app.listen(port, () => console.log(`App is listening on port: ${port}`));
