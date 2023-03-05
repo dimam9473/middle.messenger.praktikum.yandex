@@ -10,8 +10,7 @@ app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');
 
 app.get('/', (_, response) => {
-    console.log('get')
-    response.render(`${__dirname}/dist/index.html`)
+    response.render("index.html")
 });
 
 app.listen(port, () => console.log(`App is listening on port: ${port}`));
