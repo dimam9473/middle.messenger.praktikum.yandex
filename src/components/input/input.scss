@@ -1,12 +1,14 @@
+@import "../../global.scss";
+
 .inputs {
     display: flex;
     flex-direction: column;
-    gap: $inputGap;
+    gap: $largeGap;
     margin-bottom: 30px;
 }
 
 .input-wrapper {
     display: flex;
     justify-content: space-between;
-    gap: 10px;
+    gap: $middleGap;
 }

@@ -12,4 +12,4 @@ app.get(/(.*?)/, (_, res) => {
     res.sendFile(`${__dirname}/dist/index.html`);
 });
 
-app.listen(port, () => console.log(`App is listening on port: ${port}`));
+app.listen(PORT, () => console.log(`App is listening on port: ${PORT}`));
