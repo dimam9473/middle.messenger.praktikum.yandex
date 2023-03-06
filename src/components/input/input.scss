@@ -1,0 +1,12 @@
+.inputs {
+    display: flex;
+    flex-direction: column;
+    gap: $inputGap;
+    margin-bottom: 30px;
+}
+
+.input-wrapper {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}

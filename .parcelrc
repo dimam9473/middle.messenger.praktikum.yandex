@@ -6,4 +6,4 @@
     "bundle-text:*": ["...", "@parcel/transformer-inline-string"]
   },
   "reporters":  ["...", "parcel-reporter-clean-dist"]
-} 
+}

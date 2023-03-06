@@ -1,14 +1,14 @@
-<div class="layout">
-    <div class="login-wrapper">
-        {{> title title="Sign In" class="title"}}
+<div class="form-layout">
+    <section class="form-wrapper">
+        {{> title/title title="Sign In" class="title"}}
         <form>
             <div class="inputs">
-                {{> input id="login" label="Login" placeholder="Your login" inputWrapper="input-wrapper"}}
-                {{> input id="password" label="Password" type="password" placeholder="1234"  inputWrapper="input-wrapper"}}
+                {{> input/input id="login" label="Login" placeholder="Your login"}}
+                {{> input/input id="password" label="Password" type="password" placeholder="1234"}}
             </div>
-            {{> button id="enter" caption="Enter" class="button"}}
+            {{> button/button id="enter" caption="Enter" class="button--green"}}
         </form>
 
-        {{> link href="register" alt="register" text="Create account?"}}
-    </div>
+        {{> link/link href="register" text="Create account?"}}
+    </section>
 </div>

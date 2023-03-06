@@ -1,0 +1,14 @@
+.button {
+    border: none;
+    border-radius: 8px;
+    padding: 12px 0;
+    width: 100%;
+
+    &:hover {
+        cursor: pointer;
+    }
+}
+
+.button--green {
+    background: linear-gradient(to right, #79db9d, #118c90);
+}

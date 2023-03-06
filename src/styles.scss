@@ -1,2 +1,10 @@
+@import "global.scss";
+
+// Components
+@import "components/button/button.scss";
+@import "components/input/input.scss";
+
+// Pages
+
 @import "pages/login/login.scss";
-@import "main.scss";
+@import "pages/profile/profile.scss";

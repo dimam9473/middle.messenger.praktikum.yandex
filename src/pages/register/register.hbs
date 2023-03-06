@@ -1,15 +1,20 @@
-{{> title title="Register account"}}
-<form>
-    {{> input id="email" label="Email" placeholder="mail@mail.com"}}
-    {{> input id="login" label="Login" placeholder="Your login"}}
-    {{> input id="first-name" label="First name" placeholder="First name"}}
-    {{> input id="second-name" label="Second name" placeholder="Your second name"}}
-    {{> input id="phone" label="Phone" placeholder="+7-999-999-9999"}}
-    {{> input id="password" label="Password" type="password" placeholder="1234"}}
-    {{> input id="repeat-password" label="Repeat password" type="password" placeholder="1234"}}
+<div class="form-layout">
+    <section class="form-wrapper">
+        {{> title/title title="Register account"}}
+        <form>
+            <div class="inputs">
+                {{> input/input id="email" label="Email" placeholder="mail@mail.com"}}
+                {{> input/input id="login" label="Login" placeholder="Your login"}}
+                {{> input/input id="first-name" label="First name" placeholder="First name"}}
+                {{> input/input id="second-name" label="Second name" placeholder="Your second name"}}
+                {{> input/input id="phone" label="Phone" placeholder="+7-999-999-9999"}}
+                {{> input/input id="password" label="Password" type="password" placeholder="1234"}}
+                {{> input/input id="repeat-password" label="Repeat password" type="password" placeholder="1234"}}
+            </div>
 
-    {{> button id="create-account" caption="Create account"}}
-</form>
+            {{> button/button id="create-account" caption="Create account" class="button--green"}}
+        </form>
 
-{{> link href="/" alt="login" text="Login"}}        
-</div>    
+        {{> link/link href="/" text="Login"}}        
+    </section>
+</div>
