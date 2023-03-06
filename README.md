@@ -14,8 +14,10 @@
 boisterous-macaron-d15bef
 https://boisterous-macaron-d15bef.netlify.app
 
-###
-Для запуска проекта нужно выполнить команды в следующем порядке:
+### Для запуска проекта нужно выполнить команды в следующем порядке:
 
 - npm run build
 - npm run start
+### Для разработки можно использовать команду:
+
+- npm run dev
