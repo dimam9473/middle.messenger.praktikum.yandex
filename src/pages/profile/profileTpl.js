@@ -1,3 +1,4 @@
+export const profileTemplate = `
 <div class="form-layout">
     <section class="form-wrapper form-wrapper--large">
         <div class="profile-header">
@@ -20,3 +21,4 @@
         </div>
     </section>
 </div>
+`

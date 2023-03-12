@@ -1,5 +1,5 @@
 import mountTemplate from "../../utils/mountTemplate"
-import { registerTml } from "./registerTml"
+import { registerTemplate } from './registerTpl'
 
 export default function mount(rootId) {
     mountTemplate(rootId, registerTml)
