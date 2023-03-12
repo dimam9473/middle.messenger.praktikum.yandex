@@ -1,3 +1,4 @@
+export const loginTemplate = `
 <div class="form-layout">
     <section class="form-wrapper">
         {{> title/title title="Sign In"}}
@@ -12,3 +13,4 @@
         {{> link/link href="register" text="Create account?"}}
     </section>
 </div>
+`

@@ -1,8 +1,8 @@
 import mountTemplate from "../../utils/mountTemplate"
-import template from "bundle-text:./login.hbs"
+import { loginTemplate } from "./loginTpl"
 
 export default function mount(rootId) {
-    mountTemplate(rootId, template)
+    mountTemplate(rootId, loginTemplate)
 
     const button = document.getElementById('enter')
 
