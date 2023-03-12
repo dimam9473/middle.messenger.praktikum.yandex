@@ -1,9 +1,8 @@
 import mountTemplate from "../../utils/mountTemplate"
-import template from "bundle-text:./register.hbs"
+import { registerTml } from "./registerTml"
 
 export default function mount(rootId) {
-    mountTemplate(rootId, template)
-
+    mountTemplate(rootId, registerTml)
     const button = document.getElementById('create-account')
 
     button.addEventListener('click', function (e) {

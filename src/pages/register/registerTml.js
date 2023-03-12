@@ -1,3 +1,4 @@
+export const registerTml = `
 <div class="form-layout">
     <section class="form-wrapper">
         {{> title/title title="Register account"}}
@@ -18,3 +19,4 @@
         {{> link/link href="/" text="Login"}}        
     </section>
 </div>
+`
