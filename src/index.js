@@ -1,3 +1,5 @@
+import "./components"
+
 import mountLogin from "./pages/login/login"
 import mountRegister from "./pages/register/register"
 import mountChat from "./pages/chat/chat"
