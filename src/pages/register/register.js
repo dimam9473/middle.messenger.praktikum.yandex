@@ -2,7 +2,7 @@ import mountTemplate from "../../utils/mountTemplate"
 import { registerTemplate } from './registerTpl'
 
 export default function mount(rootId) {
-    mountTemplate(rootId, registerTml)
+    mountTemplate(rootId, registerTemplate)
     const button = document.getElementById('create-account')
 
     button.addEventListener('click', function (e) {
