@@ -1,6 +1,6 @@
 import mountTemplate from "../../utils/mountTemplate"
-import template from "bundle-text:./500.hbs"
+import { serverErrorTemplate } from "./500Tpl"
 
 export default function mount(rootId) {
-    mountTemplate(rootId, template)
+    mountTemplate(rootId, serverErrorTemplate)
 }

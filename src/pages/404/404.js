@@ -1,6 +1,6 @@
 import mountTemplate from "../../utils/mountTemplate"
-import template from "bundle-text:./404.hbs"
+import { notFoundTemplate } from "./404Tpl"
 
 export default function mount(rootId) {
-    mountTemplate(rootId, template)
+    mountTemplate(rootId, notFoundTemplate)
 }

@@ -1,6 +1,6 @@
 import mountTemplate from "../../utils/mountTemplate"
-import template from "bundle-text:./chat.hbs"
+import { chatTemplate } from "./chatTpl"
 
 export default function mount(rootId) {
-    mountTemplate(rootId, template)
+    mountTemplate(rootId, chatTemplate)
 }
