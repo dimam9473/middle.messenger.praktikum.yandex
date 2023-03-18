@@ -1,4 +1,4 @@
-export const inputTemplate = `
+export const inputTemplate: string = `
 <div class="input-wrapper {{inputWrapper}}">
     <label for="{{id}}">{{label}}</label>
     <input id="{{id}}" name="{{name}}" type="{{#if type}}{{type}}{{else}}text{{/if}}" placeholder="{{placeholder}}"/>
