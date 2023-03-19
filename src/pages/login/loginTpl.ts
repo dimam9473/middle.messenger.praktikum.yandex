@@ -9,7 +9,7 @@ export const loginTemplate: string = `<div class="form-layout">
             {{{button}}}
         </form>
 
-        {{> link href="register" text="Create account?"}}
+        {{{link}}}
     </section>
 </div>
 `

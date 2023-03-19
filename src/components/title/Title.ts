@@ -13,7 +13,7 @@ export class Title extends Block {
     render() {
         return this.compile(titleTemplate, {
             caption: this.props.caption,
-            class: this.props.class
+            className: this.props.className
         });
     }
 }

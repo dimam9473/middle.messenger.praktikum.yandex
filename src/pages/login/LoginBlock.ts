@@ -1,6 +1,7 @@
 import Block from "../../components/block/block";
 import { Button } from "../../components/button/Button";
 import { Input } from "../../components/input/Input";
+import { Link } from "../../components/link/Link";
 import { Title } from "../../components/title/Title";
 
 import { loginTemplate } from "./loginTpl";
@@ -38,10 +39,15 @@ function initComponents() {
     })
 
     const title = new Title({
-        caption: 'Sign In'
+        caption: 'Sign In',
     })
 
-    return { button, loginInput, passwordInput, title }
+    const link = new Link({
+        caption: 'Create account?',
+        href: 'register'
+    })
+
+    return { button, loginInput, passwordInput, title, link }
 }
 
 export class Login extends Block {

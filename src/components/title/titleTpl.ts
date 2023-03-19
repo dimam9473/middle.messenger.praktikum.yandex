@@ -1,3 +1,3 @@
 export const titleTemplate: string = `
-<h1 class="title {{class}}">{{caption}}</h1>
+<h1 class="title {{className}}">{{caption}}</h1>
 `
