@@ -1,15 +1,13 @@
 import "./components"
 
-import mountServerError from "./pages/500/500"
-import mountNotFound from "./pages/404/404"
+import { NotFoundError } from "./pages/404/404"
 import { Profile } from "./pages/profile/profile"
 import { Login } from "./pages/login/login"
 import { Register } from "./pages/register/register"
 import { Chat } from "./pages/chat/chat"
+import { ServerError } from "./pages/500/500"
 
 import { render } from "./utils/render"
-
-
 
 window.addEventListener("load", function () {
     if (window.location.pathname === "/") {
@@ -41,9 +39,13 @@ window.addEventListener("load", function () {
     }
 
     if (window.location.pathname === '/500') {
-        mountServerError('root')
+        const component = new ServerError()
+
+        render("#root", component);
         return
     }
 
-    mountNotFound("root")
+    const component = new NotFoundError()
+
+    render("#root", component);
 })

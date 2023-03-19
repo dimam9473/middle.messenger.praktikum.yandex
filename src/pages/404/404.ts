@@ -1,6 +1,20 @@
-import mountTemplate from "../../utils/mountTemplate"
-import { notFoundTemplate } from "./404Tpl"
+import Block from "../../components/block/block";
 
-export default function mount(rootId: string) {
-    mountTemplate(rootId, notFoundTemplate)
+import { notFoundTemplate } from "./404Tpl";
+
+function initComponents() {
+    return {}
+}
+
+export class NotFoundError extends Block {
+    constructor(props?: object) {
+        const components = initComponents()
+
+        super({ ...props, ...components });
+    }
+
+    render() {
+        const template = this.compile(notFoundTemplate)
+        return template;
+    }
 }
