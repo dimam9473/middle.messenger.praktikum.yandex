@@ -2,7 +2,6 @@ import Handlebars from "handlebars"
 import { v4 as uuidv4 } from 'uuid';
 
 import EventBus from "../../utils/eventBus";
-import { getTypeKey } from "../../utils/getKey";
 
 type Meta = {
     tagName: string
@@ -40,7 +39,7 @@ class Block {
         this.children = children;
         this._id = uuidv4()
         if (props) {
-            this.props = this._makePropsProxy(props);
+            this.props = this._makePropsProxy({ ...props, _id: this._id });
         }
 
         this.eventBus = () => eventBus;
@@ -77,20 +76,17 @@ class Block {
             return {}
         }
 
-        const children: { [key: string]: typeof Block } = {};
-        const props = {};
+        const children: Record<string, Block> = {};
+        const props: Record<string, unknown> = {};
 
         Object.entries(propsAndChildren).forEach(([key, value]) => {
             if (value instanceof Block) {
-                //@ts-ignore
                 children[key] = value;
             } else {
-                //@ts-ignore
                 props[key] = value;
             }
         });
 
-        //@ts-ignore
         return { children, props };
     }
 
@@ -143,10 +139,6 @@ class Block {
         return this._element;
     }
 
-    get id() {
-        return this._id
-    }
-
     _render() {
         if (!this._element) {
             return
@@ -169,17 +161,15 @@ class Block {
         return this.element;
     }
 
-    _makePropsProxy(props: object) {
+    _makePropsProxy(props: Record<string, unknown>) {
         const self = this;
 
         return new Proxy(props, {
             get(target: typeof props, prop: string) {
-                //@ts-ignore
                 const value = target[prop];
                 return typeof value === "function" ? value.bind(target) : value;
             },
             set(target: typeof props, prop: string, value) {
-                //@ts-ignore
                 target[prop] = value;
 
                 self.eventBus().emit(Block.EVENTS.FLOW_CDU, { ...target }, target);
@@ -214,27 +204,26 @@ class Block {
     }
 
     compile(template: string, props?: object) {
-        const propsAndStubs = { ...props };
+        const propsAndStubs: Record<string, unknown> = { ...props };
 
         if (!this.children) {
             return
         }
 
         Object.entries(this.children).forEach(([key, child]) => {
-            //@ts-ignore
-            propsAndStubs[key] = `<div data-id="${child.id}"></div>`
+
+            propsAndStubs[key] = `<div data-id="${child._id}"></div>`
         });
 
-        const fragment = this._createDocumentElement('template');
+        const fragment = (this._createDocumentElement('template')) as HTMLTemplateElement;
         fragment.innerHTML = Handlebars.compile(template)(propsAndStubs);
         Object.values(this.children).forEach(child => {
-            //@ts-ignore
-            const stub = fragment.content.querySelector(`[data-id="${child.id}"]`);
 
-            stub.replaceWith(child.getContent());
+            const stub = fragment.content.querySelector(`[data-id="${child._id}"]`);
+            const content = child.getContent()
+            stub?.replaceWith(content || '');
         });
 
-        //@ts-ignore
         return fragment.content;
     }
 }
