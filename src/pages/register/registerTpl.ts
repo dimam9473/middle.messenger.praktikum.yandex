@@ -1,7 +1,7 @@
 export const registerTemplate: string = `
 <div class="form-layout">
     <section class="form-wrapper">
-        {{> title title="Register account"}}
+        {{> title caption="Register account"}}
         <form>
             <div class="inputs">
                 {{> input id="email" name="email" label="Email" placeholder="mail@mail.com"}}
@@ -13,10 +13,10 @@ export const registerTemplate: string = `
                 {{> input id="repeat-password" name="password-repeat" label="Repeat password" type="password" placeholder="1234"}}
             </div>
 
-            {{> button id="create-account" caption="Create account" class="button--green"}}
+            {{> button id="create-account" caption="Create account" className="button--green"}}
         </form>
 
-        {{> link href="/" text="Login"}}        
+        {{> link href="/" caption="Login"}}        
     </section>
 </div>
 `

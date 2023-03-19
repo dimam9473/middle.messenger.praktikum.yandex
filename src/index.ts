@@ -1,11 +1,11 @@
 import "./components"
 
-import mountRegister from "./pages/register/register"
+// import mountRegister from "./pages/register/register"
 import mountChat from "./pages/chat/chat"
 import mountProfile from "./pages/profile/profile"
 import mountServerError from "./pages/500/500"
 import mountNotFound from "./pages/404/404"
-import { Login } from "./pages/login/LoginBlock"
+import { Login } from "./pages/login/login"
 import { render } from "./utils/render"
 
 
@@ -20,7 +20,7 @@ window.addEventListener("load", function () {
     }
 
     if (window.location.pathname === '/register') {
-        mountRegister('root')
+        // mountRegister('root')
         return
     }
 
