@@ -6,22 +6,10 @@ import { Title } from "../../components/title/title";
 
 import { loginTemplate } from "./loginTpl";
 
-type LoginProps = {
-    title: string
-}
-
 function initComponents() {
-    const button = new Button({
-        caption: 'Enter',
-        type: 'button',
-        events: {
-            click: (event: Event) => {
-                event.preventDefault()
-                event.stopPropagation()
-                console.log(event);
-            },
-        },
-    });
+    const title = new Title({
+        caption: 'Sign In',
+    })
 
     const loginInput = new Input({
         id: 'login',
@@ -38,29 +26,35 @@ function initComponents() {
         placeholder: '1234'
     })
 
-    const title = new Title({
-        caption: 'Sign In',
-    })
+    const button = new Button({
+        caption: 'Enter',
+        type: 'button',
+        className: 'button--green',
+        events: {
+            click: (event: Event) => {
+                event.preventDefault()
+                window.location.pathname = 'chat'
+            },
+        },
+    });
 
     const link = new Link({
         caption: 'Create account?',
         href: 'register'
     })
 
-    return { button, loginInput, passwordInput, title, link }
+    return { title, loginInput, passwordInput, button, link }
 }
 
 export class Login extends Block {
-    constructor(props: LoginProps) {
+    constructor(props?: object) {
         const components = initComponents()
 
         super({ ...props, ...components });
     }
 
     render() {
-        const template = this.compile(loginTemplate, {
-            header: this.props.title,
-        })
+        const template = this.compile(loginTemplate)
         return template;
     }
 }

@@ -16,7 +16,7 @@ export class Button extends Block {
             caption: this.props.caption,
             id: this.props.id,
             type: this.props.type,
-            className: `button--green ${this.props.className || ''}`
+            className: `${this.props.className || ''}`
         });
     }
 }
