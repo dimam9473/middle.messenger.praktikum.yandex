@@ -3,8 +3,8 @@ export const loginTemplate: string = `<div class="form-layout">
         {{> title title="{{header}}"}}
         <form>
             <div class="inputs">
-                {{> input id="login" name="login" label="Login" placeholder="Your login"}}
-                {{> input id="password" name="password" label="Password" type="password" placeholder="1234"}}
+                {{{loginInput}}}
+                {{{passwordInput}}}
             </div>
             {{{button}}}
         </form>

@@ -3,9 +3,6 @@ import { buttonTpl } from "./buttonTpl";
 
 export type ButtonProps = {
     caption: string,
-    id?: string,
-    class?: string,
-    type?: 'button' | 'submit'
     events?: { [key: string]: Function }
 } & Partial<HTMLButtonElement>
 
@@ -17,7 +14,7 @@ export class Button extends Block {
     render() {
         return this.compile(buttonTpl, {
             caption: this.props.caption,
-            id: this.props.id || null,
+            id: this.props.id,
             type: this.props.type,
             class: `button--green ${this.props.class || ''}`
         });

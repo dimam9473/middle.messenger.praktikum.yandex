@@ -42,7 +42,7 @@ class EventBus {
         );
     }
 
-    emit(event: string, ...args: any[]) {
+    emit(event: string, ...args: unknown[]) {
         const key = getTypeKey<Listener>(event)
 
         if (!this.listeners[key]) {
