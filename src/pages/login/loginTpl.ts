@@ -1,6 +1,6 @@
 export const loginTemplate: string = `<div class="form-layout">
     <section class="form-wrapper">
-        {{> title title="{{title}}"}}
+        {{> title title="{{header}}"}}
         <form>
             <div class="inputs">
                 {{> input id="login" name="login" label="Login" placeholder="Your login"}}

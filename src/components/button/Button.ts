@@ -3,20 +3,23 @@ import { buttonTpl } from "./buttonTpl";
 
 export type ButtonProps = {
     caption: string,
-    events: { [key: string]: Function }
+    id?: string,
+    class?: string,
+    type?: 'button' | 'submit'
+    events?: { [key: string]: Function }
 } & Partial<HTMLButtonElement>
 
 export class Button extends Block {
     constructor(props: ButtonProps) {
-        // Создаём враппер дом-элемент button
-        super(props, "button");
+        super(props);
     }
 
     render() {
-        // В проекте должен быть ваш собственный шаблонизатор
-        // return `<div>${this.props.text}</div>`;
         return this.compile(buttonTpl, {
             caption: this.props.caption,
+            id: this.props.id || null,
+            type: this.props.type,
+            class: `button--green ${this.props.class || ''}`
         });
     }
 }

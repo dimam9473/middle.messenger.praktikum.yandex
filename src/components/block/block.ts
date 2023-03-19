@@ -25,7 +25,7 @@ class Block {
     private _meta: Meta = null;
     private _id
     props: any
-    children?: Children
+    children: Children
     eventBus: BlockEventBuss
 
     constructor(propsAndChildren?: unknown, tagName = "div") {
@@ -36,7 +36,7 @@ class Block {
             props
         };
 
-        this.children = children;
+        this.children = children || {};
         this._id = uuidv4()
         if (props) {
             this.props = this._makePropsProxy({ ...props, _id: this._id });
@@ -107,6 +107,14 @@ class Block {
 
     _componentDidMount() {
         this.componentDidMount();
+
+        if (!this.children) {
+            return
+        }
+
+        Object.values(this.children).forEach(child => {
+            child.dispatchComponentDidMount();
+        });
     }
 
     componentDidMount() { }
@@ -211,7 +219,6 @@ class Block {
         }
 
         Object.entries(this.children).forEach(([key, child]) => {
-
             propsAndStubs[key] = `<div data-id="${child._id}"></div>`
         });
 
