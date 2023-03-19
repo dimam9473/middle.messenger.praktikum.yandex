@@ -1,40 +1,42 @@
 import "./components"
 
-import mountChat from "./pages/chat/chat"
-import mountProfile, { Profile } from "./pages/profile/profile"
 import mountServerError from "./pages/500/500"
 import mountNotFound from "./pages/404/404"
+import { Profile } from "./pages/profile/profile"
 import { Login } from "./pages/login/login"
 import { Register } from "./pages/register/register"
+import { Chat } from "./pages/chat/chat"
 
 import { render } from "./utils/render"
 
 
+
 window.addEventListener("load", function () {
     if (window.location.pathname === "/") {
-        const login = new Login()
+        const component = new Login()
 
-        render("#root", login);
+        render("#root", component);
         return
     }
 
     if (window.location.pathname === '/register') {
-        const register = new Register()
+        const component = new Register()
 
-        render("#root", register);
+        render("#root", component);
         return
     }
 
     if (window.location.pathname === '/chat') {
-        mountChat('root')
+        const component = new Chat()
+
+        render("#root", component);
         return
     }
 
     if (window.location.pathname === '/profile') {
-        mountProfile('root')
-        const profile = new Profile()
+        const component = new Profile()
 
-        render("#root", profile);
+        render("#root", component);
         return
     }
 

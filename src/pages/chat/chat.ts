@@ -1,6 +1,26 @@
-import mountTemplate from "../../utils/mountTemplate"
-import { chatTemplate } from "./chatTpl"
+import Block from "../../components/block/block";
+import { Link } from "../../components/link/link";
 
-export default function mount(rootId: string) {
-    mountTemplate(rootId, chatTemplate)
+import { chatTemplate } from "./chatTpl";
+
+function initComponents() {
+    const profile = new Link({
+        caption: 'Profile',
+        href: 'profile'
+    })
+
+    return { profile }
+}
+
+export class Chat extends Block {
+    constructor(props?: object) {
+        const components = initComponents()
+
+        super({ ...props, ...components });
+    }
+
+    render() {
+        const template = this.compile(chatTemplate)
+        return template;
+    }
 }

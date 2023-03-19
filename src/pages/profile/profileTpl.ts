@@ -9,9 +9,9 @@ export const profileTemplate: string = `
         <div class="inputs">
             {{{emailInput}}}
             {{{firstNameInput}}}
-            {{secondNameInput}}
+            {{{secondNameInput}}}
             {{{loginInput}}}
-            {{phoneInput}}
+            {{{phoneInput}}}
         </div>
 
         <div class="actions">

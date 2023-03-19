@@ -1,9 +1,3 @@
-import mountTemplate from "../../utils/mountTemplate"
-
-export default function mount(rootId: string) {
-    mountTemplate(rootId, profileTemplate)
-}
-
 import Block from "../../components/block/block";
 import { Input } from "../../components/input/Input";
 import { Link } from "../../components/link/link";
