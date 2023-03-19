@@ -1,7 +1,10 @@
 import Block from "../block/block";
 import { buttonTpl } from "./buttonTpl";
 
-export type ButtonProps = { caption: string } & Partial<HTMLButtonElement>
+export type ButtonProps = {
+    caption: string,
+    events: { [key: string]: Function }
+} & Partial<HTMLButtonElement>
 
 export class Button extends Block {
     constructor(props: ButtonProps) {

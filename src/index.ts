@@ -23,6 +23,13 @@ function render(query: string, block: Block) {
 
 const button = new Button({
     caption: 'Click me',
+    events: {
+        // Названия события точно такие же, как и у первого аргумента addEventListener: 
+        // click, mouseEnter, ...
+        click: (event: Event) => {
+            console.log(event);
+        },
+    },
 });
 
 // const login = new Login({

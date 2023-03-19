@@ -56,11 +56,20 @@ class Block {
         eventBus.on(Block.EVENTS.FLOW_RENDER, this._render.bind(this));
     }
 
-    _removeEvents(eventBus: EventBus) {
-        eventBus.off(Block.EVENTS.INIT, this.init);
-        eventBus.off(Block.EVENTS.FLOW_CDM, this._componentDidMount);
-        eventBus.off(Block.EVENTS.FLOW_CDU, this._componentDidUpdate);
-        eventBus.off(Block.EVENTS.FLOW_RENDER, this._render);
+    _addEvents() {
+        const { events = {} } = this.props;
+
+        Object.keys(events).forEach(eventName => {
+            this._element?.addEventListener(eventName, events[eventName]);
+        });
+    }
+
+    _removeEvents() {
+        const { events = {} } = this.props;
+
+        Object.keys(events).forEach(eventName => {
+            this._element?.removeEventListener(eventName, events[eventName]);
+        });
     }
 
     _getChildren(propsAndChildren?: unknown): { children?: Children, props?: object } {
@@ -144,12 +153,12 @@ class Block {
         }
 
         const block = this.render();
-        this._removeEvents(this.eventBus());
+        this._removeEvents();
         this._element.innerHTML = '';
 
         this._element.appendChild(block);
 
-        this._registerEvents(this.eventBus());
+        this._addEvents();
     }
 
     render(): any {
