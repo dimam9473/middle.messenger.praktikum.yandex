@@ -1,6 +1,7 @@
 import Block from "../../components/block/block";
 import { Button } from "../../components/button/Button";
 import { Input } from "../../components/input/Input";
+import { Title } from "../../components/title/Title";
 
 import { loginTemplate } from "./loginTpl";
 
@@ -10,7 +11,7 @@ type LoginProps = {
 
 function initComponents() {
     const button = new Button({
-        caption: 'Click me',
+        caption: 'Enter',
         type: 'button',
         events: {
             click: (event: Event) => {
@@ -36,7 +37,11 @@ function initComponents() {
         placeholder: '1234'
     })
 
-    return { button, loginInput, passwordInput }
+    const title = new Title({
+        caption: 'Sign In'
+    })
+
+    return { button, loginInput, passwordInput, title }
 }
 
 export class Login extends Block {
@@ -49,7 +54,6 @@ export class Login extends Block {
     render() {
         const template = this.compile(loginTemplate, {
             header: this.props.title,
-            // button: this?.button,
         })
         return template;
     }

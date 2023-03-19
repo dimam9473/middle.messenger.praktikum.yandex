@@ -10,7 +10,6 @@ type Meta = {
 
 type BlockEventBuss = () => EventBus
 
-// type Props<T> = T & { [key: string]: typeof Block } | {}
 type Children = { [key: string]: Block }
 
 class Block {
