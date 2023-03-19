@@ -1,14 +1,20 @@
+import Handlebars from "handlebars"
+import { v4 as uuidv4 } from 'uuid';
+
 import EventBus from "../../utils/eventBus";
 import { getTypeKey } from "../../utils/getKey";
 
-type Meta<T> = {
+type Meta = {
     tagName: string
-    props: T | undefined
+    props: object | undefined
 } | null
 
 type BlockEventBuss = () => EventBus
 
-class Block<T extends object> {
+// type Props<T> = T & { [key: string]: typeof Block } | {}
+type Children = { [key: string]: Block }
+
+class Block {
     static EVENTS = {
         INIT: "init",
         FLOW_CDM: "flow:component-did-mount",
@@ -17,16 +23,22 @@ class Block<T extends object> {
     };
 
     private _element: HTMLElement | null = null;
-    private _meta: Meta<T> = null;
+    private _meta: Meta = null;
+    private _id
     props: any
+    children?: Children
     eventBus: BlockEventBuss
 
-    constructor(tagName = "div", props?: T) {
+    constructor(propsAndChildren?: unknown, tagName = "div") {
         const eventBus = EventBus.getInstance();
+        const { children, props } = this._getChildren(propsAndChildren)
         this._meta = {
             tagName,
             props
         };
+
+        this.children = children;
+        this._id = uuidv4()
         if (props) {
             this.props = this._makePropsProxy(props);
         }
@@ -42,6 +54,35 @@ class Block<T extends object> {
         eventBus.on(Block.EVENTS.FLOW_CDM, this._componentDidMount.bind(this));
         eventBus.on(Block.EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this));
         eventBus.on(Block.EVENTS.FLOW_RENDER, this._render.bind(this));
+    }
+
+    _removeEvents(eventBus: EventBus) {
+        eventBus.off(Block.EVENTS.INIT, this.init);
+        eventBus.off(Block.EVENTS.FLOW_CDM, this._componentDidMount);
+        eventBus.off(Block.EVENTS.FLOW_CDU, this._componentDidUpdate);
+        eventBus.off(Block.EVENTS.FLOW_RENDER, this._render);
+    }
+
+    _getChildren(propsAndChildren?: unknown): { children?: Children, props?: object } {
+        if (!propsAndChildren) {
+            return {}
+        }
+
+        const children: { [key: string]: typeof Block } = {};
+        const props = {};
+
+        Object.entries(propsAndChildren).forEach(([key, value]) => {
+            if (value instanceof Block) {
+                //@ts-ignore
+                children[key] = value;
+            } else {
+                //@ts-ignore
+                props[key] = value;
+            }
+        });
+
+        //@ts-ignore
+        return { children, props };
     }
 
     _createResources() {
@@ -69,7 +110,7 @@ class Block<T extends object> {
         this.eventBus().emit(Block.EVENTS.FLOW_CDM);
     }
 
-    _componentDidUpdate(oldProps: T, newProps: T) {
+    _componentDidUpdate(oldProps: object, newProps: object) {
         const response = this.componentDidUpdate(oldProps, newProps);
         if (!response) {
             return;
@@ -77,11 +118,11 @@ class Block<T extends object> {
         this._render();
     }
 
-    componentDidUpdate(oldProps: T, newProps: T) {
+    componentDidUpdate(oldProps: object, newProps: object) {
         return true;
     }
 
-    setProps = (nextProps: T) => {
+    setProps = (nextProps: object) => {
         if (!nextProps) {
             return;
         }
@@ -93,16 +134,25 @@ class Block<T extends object> {
         return this._element;
     }
 
+    get id() {
+        return this._id
+    }
+
     _render() {
         if (!this._element) {
             return
         }
 
         const block = this.render();
-        this._element.innerHTML = block;
+        this._removeEvents(this.eventBus());
+        this._element.innerHTML = '';
+
+        this._element.appendChild(block);
+
+        this._registerEvents(this.eventBus());
     }
 
-    render(): string {
+    render(): any {
         return ''
     }
 
@@ -110,18 +160,18 @@ class Block<T extends object> {
         return this.element;
     }
 
-    _makePropsProxy(props: T) {
+    _makePropsProxy(props: object) {
         const self = this;
 
-        return new Proxy<T>(props, {
+        return new Proxy(props, {
             get(target: typeof props, prop: string) {
-                const key = getTypeKey<T>(prop)
-                const value = target[key];
+                //@ts-ignore
+                const value = target[prop];
                 return typeof value === "function" ? value.bind(target) : value;
             },
             set(target: typeof props, prop: string, value) {
-                const key = getTypeKey<T>(prop)
-                target[key] = value;
+                //@ts-ignore
+                target[prop] = value;
 
                 self.eventBus().emit(Block.EVENTS.FLOW_CDU, { ...target }, target);
                 return true;
@@ -152,6 +202,31 @@ class Block<T extends object> {
         }
 
         content.style.display = "none";
+    }
+
+    compile(template: string, props?: object) {
+        const propsAndStubs = { ...props };
+
+        if (!this.children) {
+            return
+        }
+
+        Object.entries(this.children).forEach(([key, child]) => {
+            //@ts-ignore
+            propsAndStubs[key] = `<div data-id="${child.id}"></div>`
+        });
+
+        const fragment = this._createDocumentElement('template');
+        fragment.innerHTML = Handlebars.compile(template)(propsAndStubs);
+        Object.values(this.children).forEach(child => {
+            //@ts-ignore
+            const stub = fragment.content.querySelector(`[data-id="${child.id}"]`);
+
+            stub.replaceWith(child.getContent());
+        });
+
+        //@ts-ignore
+        return fragment.content;
     }
 }
 
