@@ -89,18 +89,7 @@ class Block {
         return { children, props };
     }
 
-    _createResources() {
-        if (!this._meta) {
-            return
-        }
-
-        const { tagName } = this._meta;
-        this._element = this._createDocumentElement(tagName);
-    }
-
     init() {
-        this._createResources();
-
         this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
     }
 
@@ -147,15 +136,20 @@ class Block {
     }
 
     _render() {
+        const block = this.render();
+        if (!this._element) {
+            this._element = block;
+        } else {
+            this._element.innerHTML = '';
+        }
+
         if (!this._element) {
             return
         }
 
-        const block = this.render();
         this._removeEvents();
-        this._element.innerHTML = '';
 
-        this._element.appendChild(block);
+        this._element = block;
 
         this._addEvents();
     }
@@ -230,7 +224,7 @@ class Block {
             stub?.replaceWith(content || '');
         });
 
-        return fragment.content;
+        return fragment.content.firstElementChild;
     }
 }
 

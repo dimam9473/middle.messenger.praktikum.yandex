@@ -6,6 +6,11 @@ import { Title } from "../../components/title/title";
 
 import { loginTemplate } from "./loginTpl";
 
+enum InputNames {
+    loginInput = 'login',
+    passwordInput = 'password'
+}
+
 const validateForm = (form: HTMLFormElement) => {
     let formData = new FormData(form);
     let login = formData.get('login');
@@ -25,13 +30,12 @@ function initComponents() {
         placeholder: 'Your login',
         required: true,
         events: {
-            blur: (event: Event) => {
-                //@ts-ignore
-                console.log(this)
+            focusin: () => {
+                console.log('focusin')
             },
-            focus: () => {
-                console.log('focus')
-            },
+            focusout: () => {
+                console.log('focusout')
+            }
         }
     })
 
