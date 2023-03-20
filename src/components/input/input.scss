@@ -1,5 +1,11 @@
 @import "../../global.scss";
 
+@mixin input-invalid() {
+    background-color: ivory;
+    border: none;
+    outline: 2px solid red;
+}
+
 .inputs {
     display: flex;
     flex-direction: column;
@@ -10,5 +16,25 @@
 .input-wrapper {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     gap: $middleGap;
+}
+
+.input {
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 5px;
+
+    &:focus-visible {
+        outline: none;
+    }
+
+    &:focus,
+    &:active {
+        border-color: aquamarine;
+    }
+
+    &.invalid {
+        @include input-invalid();
+    }
 }

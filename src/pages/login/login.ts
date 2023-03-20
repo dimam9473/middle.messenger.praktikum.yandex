@@ -6,6 +6,13 @@ import { Title } from "../../components/title/title";
 
 import { loginTemplate } from "./loginTpl";
 
+const validateForm = (form: HTMLFormElement) => {
+    let formData = new FormData(form);
+    let login = formData.get('login');
+    console.log(login)
+    // window.location.pathname = 'chat'
+}
+
 function initComponents() {
     const title = new Title({
         caption: 'Sign In',
@@ -15,7 +22,17 @@ function initComponents() {
         id: 'login',
         name: 'login',
         label: 'Login',
-        placeholder: 'Your login'
+        placeholder: 'Your login',
+        required: true,
+        events: {
+            blur: (event: Event) => {
+                //@ts-ignore
+                console.log(this)
+            },
+            focus: () => {
+                console.log('focus')
+            },
+        }
     })
 
     const passwordInput = new Input({
@@ -23,18 +40,23 @@ function initComponents() {
         name: 'password',
         label: 'Password',
         type: 'password',
-        placeholder: '1234'
+        placeholder: '1234',
+        required: true
     })
 
     const button = new Button({
         caption: 'Enter',
-        type: 'button',
         className: 'button--green',
         events: {
             click: (event: Event) => {
                 event.preventDefault()
-                window.location.pathname = 'chat'
-            },
+                const form = document.getElementById('login-form')
+                if (!form) {
+                    return
+                }
+
+                validateForm(form as HTMLFormElement)
+            }
         },
     });
 
