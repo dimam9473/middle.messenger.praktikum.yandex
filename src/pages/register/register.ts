@@ -11,9 +11,14 @@ import { registerTemplate } from "./registerTpl";
 function formSubmit(event: Event) {
     event.preventDefault()
     const isLoginValid = validateLogin()
+    const isEmailValid = validateEmail()
+    const isFirstNameValid = validateFirstName()
+    const isSecondNameValid = validateSecondName()
+    const isPhoneValid = validatePhone()
+
     // const isPasswordValid = validatePassword()
 
-    if (!isLoginValid) {
+    if (!isLoginValid || !isEmailValid || !isFirstNameValid || !isSecondNameValid || !isPhoneValid) {
         return
     }
 
