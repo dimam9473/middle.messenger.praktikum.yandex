@@ -3,8 +3,29 @@ import { Button } from "../../components/button/button";
 import { Input } from "../../components/input/Input";
 import { Link } from "../../components/link/link";
 import { Title } from "../../components/title/title";
+import { InputNames } from "../../constants/inputNames";
+import { emailFocus, firstNameFocus, loginFocus, phoneFocus, secondNameFocus, validateEmail, validateFirstName, validateLogin, validatePhone, validateSecondName } from "../../utils/inputHelper";
 
 import { registerTemplate } from "./registerTpl";
+
+function formSubmit(event: Event) {
+    event.preventDefault()
+    const isLoginValid = validateLogin()
+    // const isPasswordValid = validatePassword()
+
+    if (!isLoginValid) {
+        return
+    }
+
+    const form = (document.querySelector('#login-form')) as HTMLFormElement
+    const data = new FormData(form)
+
+    for (var pair of Array.from(data)) {
+        console.log(pair[0] + ": " + pair[1]);
+    }
+
+    // window.location.pathname = 'chat'
+}
 
 function initComponents() {
     const title = new Title({
@@ -12,66 +33,81 @@ function initComponents() {
     })
 
     const emailInput = new Input({
-        id: 'email',
-        name: 'email',
+        id: InputNames.email,
+        name: InputNames.email,
         label: 'Email',
-        placeholder: 'mail@mail.com'
+        placeholder: 'mail@mail.com',
+        events: {
+            focusin: emailFocus,
+            focusout: validateEmail
+        }
     })
 
     const loginInput = new Input({
-        id: 'login',
-        name: 'login',
+        id: InputNames.login,
+        name: InputNames.login,
         label: 'Login',
-        placeholder: 'Your login'
+        placeholder: 'Your login',
+        events: {
+            focusin: loginFocus,
+            focusout: validateLogin
+        }
     })
 
     const firstNameInput = new Input({
-        id: 'first-name',
-        name: 'first_name',
+        id: InputNames.firstName,
+        name: InputNames.firstName,
         label: 'First name',
-        placeholder: 'First name'
+        placeholder: 'First name',
+        events: {
+            focusin: firstNameFocus,
+            focusout: validateFirstName
+        }
     })
 
     const secondNameInput = new Input({
-        id: 'second-name',
-        name: 'second_name',
+        id: InputNames.secondName,
+        name: InputNames.secondName,
         label: 'Second nam',
-        placeholder: 'Your second name'
+        placeholder: 'Your second name',
+        events: {
+            focusin: secondNameFocus,
+            focusout: validateSecondName
+        }
     })
 
     const phoneInput = new Input({
-        id: 'phone',
-        name: 'phone',
+        id: InputNames.phone,
+        name: InputNames.phone,
         label: 'Phone',
-        placeholder: '+7-999-999-9999'
+        placeholder: '+7-999-999-9999',
+        events: {
+            focusin: phoneFocus,
+            focusout: validatePhone
+        }
     })
 
-    const passwordInput = new Input({
-        id: 'password',
-        name: 'password',
-        label: 'Password',
-        type: 'password',
-        placeholder: '1234'
-    })
+    // const passwordInput = new Input({
+    //     id: 'password',
+    //     name: 'password',
+    //     label: 'Password',
+    //     type: 'password',
+    //     placeholder: '1234'
+    // })
 
-    const repeatPasswordInput = new Input({
-        id: 'password-repeat',
-        name: 'password_repeat',
-        label: 'Repeat password',
-        type: 'password',
-        placeholder: '1234'
-    })
+    // const repeatPasswordInput = new Input({
+    //     id: 'password-repeat',
+    //     name: 'password_repeat',
+    //     label: 'Repeat password',
+    //     type: 'password',
+    //     placeholder: '1234'
+    // })
 
     const button = new Button({
         caption: 'Create account',
         type: 'button',
         className: 'button--green',
-        events: {
-            click: (event: Event) => {
-                event.preventDefault()
-                window.location.pathname = 'chat'
-            },
-        },
+        events: { click: formSubmit },
     });
 
     const link = new Link({
@@ -79,7 +115,8 @@ function initComponents() {
         href: '/'
     })
 
-    return { title, emailInput, loginInput, firstNameInput, secondNameInput, phoneInput, passwordInput, repeatPasswordInput, button, link }
+    //, passwordInput, repeatPasswordInput
+    return { title, emailInput, loginInput, firstNameInput, secondNameInput, phoneInput, button, link }
 }
 
 export class Register extends Block {

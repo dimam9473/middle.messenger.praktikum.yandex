@@ -3,64 +3,28 @@ import { Button } from "../../components/button/button";
 import { Input } from "../../components/input/Input";
 import { Link } from "../../components/link/link";
 import { Title } from "../../components/title/title";
+import { InputNames } from "../../constants/inputNames";
+import { loginFocus, passwordFocus, validateLogin, validatePassword } from "../../utils/inputHelper";
 
 import { loginTemplate } from "./loginTpl";
-
-const VALIDATION_RULES = {
-    loginRule: '^[a-zA-Z][a-zA-Z0-9-_\.]{2,20}$',
-    passwordRule: '^(?=.*[0-9])(?=.*[А-ЯA-Z])[а-яА-ЯёЁa-zA-Z0-9!@#$%^&*]{8,20}$'
-}
-
-enum InputNames {
-    loginInput = 'login',
-    passwordInput = 'password'
-}
-
-function validate(regexCondition: string, value: string) {
-    const regex: RegExp = new RegExp(regexCondition)
-
-    return regex.test(value)
-}
 
 function formSubmit(event: Event) {
     event.preventDefault()
     const isLoginValid = validateLogin()
     const isPasswordValid = validatePassword()
+
     if (!isLoginValid || !isPasswordValid) {
         return
     }
 
-    window.location.pathname = 'chat'
-}
+    const form = (document.querySelector('#login-form')) as HTMLFormElement
+    const data = new FormData(form)
 
-function loginFocus() {
-    const input = document.querySelector(`#${InputNames.loginInput}`)
-    input?.classList.remove('invalid')
-}
-
-function validateLogin() {
-    const input = document.querySelector(`#${InputNames.loginInput}`) as HTMLInputElement
-    if (!validate(VALIDATION_RULES.loginRule, input.value)) {
-        input?.classList.add('invalid')
-        return false
+    for (var pair of Array.from(data)) {
+        console.log(pair[0] + ": " + pair[1]);
     }
 
-    return true
-}
-
-function passwordFocus() {
-    const input = document.querySelector(`#${InputNames.passwordInput}`)
-    input?.classList.remove('invalid')
-}
-
-function validatePassword() {
-    const input = document.querySelector(`#${InputNames.passwordInput}`) as HTMLInputElement
-    if (!validate(VALIDATION_RULES.passwordRule, input.value)) {
-        input?.classList.add('invalid')
-        return false
-    }
-
-    return true
+    // window.location.pathname = 'chat'
 }
 
 function initComponents() {
@@ -69,8 +33,8 @@ function initComponents() {
     })
 
     const loginInput = new Input({
-        id: 'login',
-        name: 'login',
+        id: InputNames.login,
+        name: InputNames.login,
         label: 'Login',
         placeholder: 'Your login',
         required: true,
@@ -81,8 +45,8 @@ function initComponents() {
     })
 
     const passwordInput = new Input({
-        id: 'password',
-        name: 'password',
+        id: InputNames.password,
+        name: InputNames.password,
         label: 'Password',
         type: 'password',
         placeholder: '1234',
