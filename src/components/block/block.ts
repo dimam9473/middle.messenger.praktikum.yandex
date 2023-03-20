@@ -3,11 +3,6 @@ import { v4 as uuidv4 } from 'uuid';
 
 import EventBus from "../../utils/eventBus";
 
-type Meta = {
-    tagName: string
-    props: object | undefined
-} | null
-
 type BlockEventBuss = () => EventBus
 
 type Children = { [key: string]: Block }
@@ -21,19 +16,14 @@ class Block {
     };
 
     private _element: HTMLElement | null = null;
-    private _meta: Meta = null;
     private _id
     props: any
     children: Children
     eventBus: BlockEventBuss
 
-    constructor(propsAndChildren?: unknown, tagName = "div") {
+    constructor(propsAndChildren?: unknown) {
         const eventBus = EventBus.getInstance();
         const { children, props } = this._getChildren(propsAndChildren)
-        this._meta = {
-            tagName,
-            props
-        };
 
         this.children = children || {};
         this._id = uuidv4()

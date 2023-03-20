@@ -6,16 +6,61 @@ import { Title } from "../../components/title/title";
 
 import { loginTemplate } from "./loginTpl";
 
+const VALIDATION_RULES = {
+    loginRule: '^[a-zA-Z][a-zA-Z0-9-_\.]{2,20}$',
+    passwordRule: '^(?=.*[0-9])(?=.*[А-ЯA-Z])[а-яА-ЯёЁa-zA-Z0-9!@#$%^&*]{8,20}$'
+}
+
 enum InputNames {
     loginInput = 'login',
     passwordInput = 'password'
 }
 
-const validateForm = (form: HTMLFormElement) => {
-    let formData = new FormData(form);
-    let login = formData.get('login');
-    console.log(login)
-    // window.location.pathname = 'chat'
+function validate(regexCondition: string, value: string) {
+    const regex: RegExp = new RegExp(regexCondition)
+
+    return regex.test(value)
+}
+
+function formSubmit(event: Event) {
+    event.preventDefault()
+    const isLoginValid = validateLogin()
+    const isPasswordValid = validatePassword()
+    if (!isLoginValid || !isPasswordValid) {
+        return
+    }
+
+    window.location.pathname = 'chat'
+}
+
+function loginFocus() {
+    const input = document.querySelector(`#${InputNames.loginInput}`)
+    input?.classList.remove('invalid')
+}
+
+function validateLogin() {
+    const input = document.querySelector(`#${InputNames.loginInput}`) as HTMLInputElement
+    if (!validate(VALIDATION_RULES.loginRule, input.value)) {
+        input?.classList.add('invalid')
+        return false
+    }
+
+    return true
+}
+
+function passwordFocus() {
+    const input = document.querySelector(`#${InputNames.passwordInput}`)
+    input?.classList.remove('invalid')
+}
+
+function validatePassword() {
+    const input = document.querySelector(`#${InputNames.passwordInput}`) as HTMLInputElement
+    if (!validate(VALIDATION_RULES.passwordRule, input.value)) {
+        input?.classList.add('invalid')
+        return false
+    }
+
+    return true
 }
 
 function initComponents() {
@@ -30,12 +75,8 @@ function initComponents() {
         placeholder: 'Your login',
         required: true,
         events: {
-            focusin: () => {
-                console.log('focusin')
-            },
-            focusout: () => {
-                console.log('focusout')
-            }
+            focusin: loginFocus,
+            focusout: validateLogin
         }
     })
 
@@ -45,23 +86,17 @@ function initComponents() {
         label: 'Password',
         type: 'password',
         placeholder: '1234',
-        required: true
+        required: true,
+        events: {
+            focusin: passwordFocus,
+            focusout: validatePassword
+        }
     })
 
     const button = new Button({
         caption: 'Enter',
         className: 'button--green',
-        events: {
-            click: (event: Event) => {
-                event.preventDefault()
-                const form = document.getElementById('login-form')
-                if (!form) {
-                    return
-                }
-
-                validateForm(form as HTMLFormElement)
-            }
-        },
+        events: { click: formSubmit },
     });
 
     const link = new Link({

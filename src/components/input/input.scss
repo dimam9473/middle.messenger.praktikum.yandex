@@ -1,11 +1,5 @@
 @import "../../global.scss";
 
-@mixin input-invalid() {
-    background-color: ivory;
-    border: none;
-    outline: 2px solid red;
-}
-
 .inputs {
     display: flex;
     flex-direction: column;
@@ -35,6 +29,7 @@
     }
 
     &.invalid {
-        @include input-invalid();
+        background-color: ivory;
+        border-color: red;
     }
 }
