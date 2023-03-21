@@ -13,9 +13,9 @@ import { chatTemplate } from "./chatTpl";
 // }
 
 function handleClick(contact: ContactProps, messenger: Messenger) {
-    const test = this
-    const test2 = test
-    const test3 = ' '
+    messenger.setProps({
+        firstName: contact.firstName
+    })
 }
 
 function initComponents() {
@@ -31,7 +31,7 @@ function initComponents() {
         placeholder: 'Search'
     })
 
-    const messenger = new Messenger({ firstName: 'Andrey' })
+    const messenger = new Messenger({})
 
     const contacts: Contact[] = []
     for (const contact of CONTACTS) {
