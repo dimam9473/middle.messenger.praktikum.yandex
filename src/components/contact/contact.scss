@@ -9,6 +9,14 @@
     border-top: 1px solid $lightGreen;
     padding: 10px;
 
+    &:hover {
+        cursor: pointer;
+    }
+
+    &:active {
+        background-color: $lightGreen;
+    }
+
     &:last-child {
         border-bottom: 1px solid $lightGreen;
     }

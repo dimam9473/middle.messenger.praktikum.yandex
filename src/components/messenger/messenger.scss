@@ -1,0 +1,13 @@
+@import "../../global.scss";
+
+.messenger {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    height: 100%;
+}
+
+.messenger-header {
+    border-bottom: 1px solid $lightGreen;
+}

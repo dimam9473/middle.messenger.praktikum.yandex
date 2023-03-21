@@ -12,20 +12,7 @@ export const chatTemplate: string = `
         </ul>
     </section>
     <section class="chat">
-        <span id="chat_empty" class="chat--empty">Select chat</span>
-        <div id="selected_chat" class="selected-chat hide">
-            <div class="chat-header">
-                header
-            </div>
-            <div class="chat-history hide">
-                messages
-            </div>
-            <div class="message">
-                {{{atachButton}}}
-                {{{messageInput}}}
-                {{{sendButton}}}
-            </div>
-        </div>
+        {{{messenger}}}
     </section>
 </div>
 `

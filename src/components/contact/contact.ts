@@ -12,7 +12,6 @@ export type ContactProps = {
 } & Partial<HTMLButtonElement>
 
 function prepareDate(time: Date) {
-    let prepairedDate: Date
     const today = new Date()
     const currentYear = today.getFullYear()
     const currentMonth = today.getMonth()

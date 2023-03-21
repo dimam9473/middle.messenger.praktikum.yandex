@@ -1,11 +1,22 @@
 import Block from "../../components/block/block";
-import { Contact } from "../../components/contact/contact";
+import { Contact, ContactProps } from "../../components/contact/contact";
 import { Input } from "../../components/input/Input";
 import { Link } from "../../components/link/link";
+import { Messenger } from "../../components/messenger/messenger";
 import { InputNames } from "../../constants/inputNames";
 import { CONTACTS, USER_INFO } from "../../constants/mockContacts";
 
 import { chatTemplate } from "./chatTpl";
+
+// export type ChatProps = {
+//     selectedUser:
+// }
+
+function handleClick(contact: ContactProps, messenger: Messenger) {
+    const test = this
+    const test2 = test
+    const test3 = ' '
+}
 
 function initComponents() {
     const profile = new Link({
@@ -20,19 +31,27 @@ function initComponents() {
         placeholder: 'Search'
     })
 
+    const messenger = new Messenger({ firstName: 'Andrey' })
+
     const contacts: Contact[] = []
     for (const contact of CONTACTS) {
         const userInfo = USER_INFO.find(info => info.id === contact.id)
-        contacts.push(new Contact({
+        const user = {
             firstName: contact.first_name,
             avatarSrc: contact.avatar,
             lastMessage: userInfo?.lastMessage,
             time: userInfo?.time,
-            unreadCount: userInfo?.unreadCount
+            unreadCount: userInfo?.unreadCount,
+        }
+        contacts.push(new Contact({
+            ...user,
+            events: {
+                click: () => handleClick(user, messenger)
+            }
         }))
     }
 
-    return { searchInput, profile, contacts }
+    return { searchInput, profile, contacts, messenger }
 }
 
 export class Chat extends Block {
