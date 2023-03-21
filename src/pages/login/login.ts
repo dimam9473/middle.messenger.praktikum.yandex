@@ -61,7 +61,7 @@ export class Login extends Block {
     }
 
     render() {
-        const template = this.compile(loginTemplate)
+        const template = this.compile(loginTemplate, this.props)
         return template;
     }
 }

@@ -5,7 +5,7 @@ import EventBus from "../../utils/eventBus";
 
 type BlockEventBuss = () => EventBus
 
-type Children = { [key: string]: Block }
+type Children = { [key: string]: Block | Block[] }
 
 class Block {
     static EVENTS = {
@@ -65,11 +65,12 @@ class Block {
             return {}
         }
 
-        const children: Record<string, Block> = {};
+        const children: Record<string, Block | Block[]> = {};
         const props: Record<string, unknown> = {};
 
         Object.entries(propsAndChildren).forEach(([key, value]) => {
-            if (value instanceof Block) {
+            const isComponentList = Array.isArray(value) && value.every(item => item instanceof Block)
+            if (value instanceof Block || isComponentList) {
                 children[key] = value;
             } else {
                 props[key] = value;
@@ -91,7 +92,11 @@ class Block {
         }
 
         Object.values(this.children).forEach(child => {
-            child.dispatchComponentDidMount();
+            if (Array.isArray(child)) {
+                child.forEach(item => { item.dispatchComponentDidMount() })
+            } else {
+                child.dispatchComponentDidMount();
+            }
         });
     }
 
@@ -195,23 +200,39 @@ class Block {
     }
 
     compile(template: string, props?: object) {
-        const propsAndStubs: Record<string, unknown> = { ...props };
+        const propsAndStubs: Record<string, string | string[]> = { ...props };
 
         if (!this.children) {
             return
         }
 
         Object.entries(this.children).forEach(([key, child]) => {
-            propsAndStubs[key] = `<div data-id="${child._id}"></div>`
+            if (Array.isArray(child)) {
+                child.forEach(item => {
+                    if (!propsAndStubs[key]) {
+                        propsAndStubs[key] = []
+                    }
+                    (propsAndStubs[key] as Array<string>).push(`<div data-id="${item._id}"></div>`)
+                })
+            } else {
+                propsAndStubs[key] = `<div data-id="${child._id}"></div>`
+            }
         });
 
         const fragment = (this._createDocumentElement('template')) as HTMLTemplateElement;
         fragment.innerHTML = Handlebars.compile(template)(propsAndStubs);
         Object.values(this.children).forEach(child => {
-
-            const stub = fragment.content.querySelector(`[data-id="${child._id}"]`);
-            const content = child.getContent()
-            stub?.replaceWith(content || '');
+            if (Array.isArray(child)) {
+                child.forEach(item => {
+                    const stub = fragment.content.querySelector(`[data-id="${item._id}"]`);
+                    const content = item.getContent()
+                    stub?.replaceWith(content || '');
+                })
+            } else {
+                const stub = fragment.content.querySelector(`[data-id="${child._id}"]`);
+                const content = child.getContent()
+                stub?.replaceWith(content || '');
+            }
         });
 
         return fragment.content.firstElementChild;

@@ -25,11 +25,11 @@
 
     &:focus,
     &:active {
-        border-color: aquamarine;
+        border-color: $lightGreen;
     }
 
     &.invalid {
-        background-color: ivory;
-        border-color: red;
+        background-color: $lightBrown;
+        border-color: $lightRed;
     }
 }

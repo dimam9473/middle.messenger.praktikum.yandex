@@ -41,11 +41,6 @@ export function validateRepeatPassword() {
     return true
 }
 
-// export function validateRepeatPassword(password: string) {
-//     const isPasswordValid = inputValidate(InputNames.repeatPassword, VALIDATION_RULES.password)
-//     return isPasswordValid && password ===
-// }
-
 export function validateEmail() {
     return inputValidate(InputNames.email, VALIDATION_RULES.email)
 }

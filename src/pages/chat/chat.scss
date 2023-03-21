@@ -1,0 +1,43 @@
+.chat-wrapper {
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+}
+
+.menu {
+    overflow-y: auto;
+
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    max-width: 400px;
+    padding: 10px;
+    border-right: 1px solid $lightGreen;
+}
+
+.menu__profile {
+    margin-left: auto;
+}
+
+.menu__header {
+    display: flex;
+    gap: 10px
+}
+
+.contacts {
+    list-style-type: none;
+}
+
+.chat {
+    padding: 10px;
+    flex-grow: 1;
+}
+
+.chat--empty {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    height: 100%;
+}

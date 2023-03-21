@@ -72,7 +72,7 @@ export class Profile extends Block {
     }
 
     render() {
-        const template = this.compile(profileTemplate)
+        const template = this.compile(profileTemplate, this.props)
         return template;
     }
 }

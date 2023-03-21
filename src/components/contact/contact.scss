@@ -1,0 +1,52 @@
+@import "../../global.scss";
+
+.contact-wrapper {
+    display: flex;
+    align-items: center;
+    column-gap: 10px;
+
+    height: 70px;
+    border-top: 1px solid $lightGreen;
+    padding: 10px;
+
+    &:last-child {
+        border-bottom: 1px solid $lightGreen;
+    }
+}
+
+.user-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.chat-info {
+    display: flex;
+    flex-direction: column;
+    margin-left: auto;
+}
+
+.first-name {
+    &:first-letter {
+        text-transform: capitalize;
+    }
+}
+
+.last-message {
+    inline-size: 150px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.unread-count {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: fit-content;
+    padding: 5px;
+    background-color: $darkGreen;
+    border-radius: 50%;
+
+    margin-left: auto;
+}

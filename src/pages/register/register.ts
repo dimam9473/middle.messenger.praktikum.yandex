@@ -116,7 +116,7 @@ export class Register extends Block {
     }
 
     render() {
-        const template = this.compile(registerTemplate)
+        const template = this.compile(registerTemplate, this.props)
         return template;
     }
 }
