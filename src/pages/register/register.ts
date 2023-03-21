@@ -4,33 +4,10 @@ import { Input } from "../../components/input/Input";
 import { Link } from "../../components/link/link";
 import { Title } from "../../components/title/title";
 import { InputNames } from "../../constants/inputNames";
-import { emailFocus, firstNameFocus, loginFocus, phoneFocus, secondNameFocus, validateEmail, validateFirstName, validateLogin, validatePhone, validateSecondName } from "../../utils/inputHelper";
+import { emailFocus, firstNameFocus, loginFocus, passwordFocus, phoneFocus, repeatPasswordFocus, secondNameFocus, validateEmail, validateFirstName, validateLogin, validatePassword, validatePhone, validateRepeatPassword, validateSecondName } from "../../utils/inputHelper";
+import { formSubmit } from "./controller";
 
 import { registerTemplate } from "./registerTpl";
-
-function formSubmit(event: Event) {
-    event.preventDefault()
-    const isLoginValid = validateLogin()
-    const isEmailValid = validateEmail()
-    const isFirstNameValid = validateFirstName()
-    const isSecondNameValid = validateSecondName()
-    const isPhoneValid = validatePhone()
-
-    // const isPasswordValid = validatePassword()
-
-    if (!isLoginValid || !isEmailValid || !isFirstNameValid || !isSecondNameValid || !isPhoneValid) {
-        return
-    }
-
-    const form = (document.querySelector('#login-form')) as HTMLFormElement
-    const data = new FormData(form)
-
-    for (var pair of Array.from(data)) {
-        console.log(pair[0] + ": " + pair[1]);
-    }
-
-    // window.location.pathname = 'chat'
-}
 
 function initComponents() {
     const title = new Title({
@@ -92,21 +69,29 @@ function initComponents() {
         }
     })
 
-    // const passwordInput = new Input({
-    //     id: 'password',
-    //     name: 'password',
-    //     label: 'Password',
-    //     type: 'password',
-    //     placeholder: '1234'
-    // })
+    const passwordInput = new Input({
+        id: InputNames.password,
+        name: InputNames.password,
+        label: 'Password',
+        type: 'password',
+        placeholder: '1234',
+        events: {
+            focusin: passwordFocus,
+            focusout: validatePassword
+        }
+    })
 
-    // const repeatPasswordInput = new Input({
-    //     id: 'password-repeat',
-    //     name: 'password_repeat',
-    //     label: 'Repeat password',
-    //     type: 'password',
-    //     placeholder: '1234'
-    // })
+    const repeatPasswordInput = new Input({
+        id: InputNames.repeatPassword,
+        name: InputNames.repeatPassword,
+        label: 'Repeat password',
+        type: 'password',
+        placeholder: '1234',
+        events: {
+            focusin: repeatPasswordFocus,
+            focusout: validateRepeatPassword
+        }
+    })
 
     const button = new Button({
         caption: 'Create account',
@@ -120,8 +105,7 @@ function initComponents() {
         href: '/'
     })
 
-    //, passwordInput, repeatPasswordInput
-    return { title, emailInput, loginInput, firstNameInput, secondNameInput, phoneInput, button, link }
+    return { title, emailInput, loginInput, firstNameInput, secondNameInput, phoneInput, passwordInput, repeatPasswordInput, button, link }
 }
 
 export class Register extends Block {

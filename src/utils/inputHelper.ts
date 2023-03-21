@@ -30,6 +30,22 @@ export function validatePassword() {
     return inputValidate(InputNames.password, VALIDATION_RULES.password)
 }
 
+export function validateRepeatPassword() {
+    const password = document.querySelector(`#${InputNames.password}`) as HTMLInputElement
+    const repeatPassword = document.querySelector(`#${InputNames.repeatPassword}`) as HTMLInputElement
+    if (password.value !== repeatPassword.value) {
+        repeatPassword?.classList.add('invalid')
+        return false
+    }
+
+    return true
+}
+
+// export function validateRepeatPassword(password: string) {
+//     const isPasswordValid = inputValidate(InputNames.repeatPassword, VALIDATION_RULES.password)
+//     return isPasswordValid && password ===
+// }
+
 export function validateEmail() {
     return inputValidate(InputNames.email, VALIDATION_RULES.email)
 }
@@ -68,4 +84,8 @@ export function phoneFocus() {
 
 export function passwordFocus() {
     inputFocus(InputNames.password)
+}
+
+export function repeatPasswordFocus() {
+    inputFocus(InputNames.repeatPassword)
 }
