@@ -16,5 +16,5 @@ export function formSubmit(event: Event) {
         console.log(pair[0] + ": " + pair[1]);
     }
 
-    // window.location.pathname = 'chat'
+    window.location.pathname = 'chat'
 }
