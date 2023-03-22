@@ -1,11 +1,10 @@
-import Handlebars from "handlebars"
+import Block from "./block/block";
+import { Button } from "./button/button";
+import { Contact } from "./contact/contact";
+import { Input } from "./input/Input";
+import { Link } from "./link/link";
+import { Messenger } from "./messenger/messenger";
+import { Title } from "./title/title";
 
-import { titleTemplate } from "./title/titleTpl"
-import { linkTemplate } from "./link/linkTpl"
-import { inputTemplate } from "./input/inputTpl"
-import { buttonTpl } from "./button/buttonTpl"
 
-Handlebars.registerPartial('title', titleTemplate)
-Handlebars.registerPartial('link', linkTemplate)
-Handlebars.registerPartial('input', inputTemplate)
-Handlebars.registerPartial('button', buttonTpl)
+export { Block, Button, Contact, Input, Link, Messenger, Title }

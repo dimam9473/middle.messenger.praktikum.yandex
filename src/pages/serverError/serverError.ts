@@ -1,6 +1,6 @@
 import Block from "../../components/block/block";
 
-import { serverErrorTemplate } from "./500Tpl"
+import { serverErrorTemplate } from "./serverErrorTpl"
 
 function initComponents() {
     return {}
@@ -14,7 +14,7 @@ export class ServerError extends Block {
     }
 
     render() {
-        const template = this.compile(serverErrorTemplate)
+        const template = this.compile(serverErrorTemplate, this.props)
         return template;
     }
 }

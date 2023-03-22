@@ -1,12 +1,6 @@
 import { METHODS } from "../constants/methods";
 import { Options } from "../types/fetch";
-
-function queryStringify(data: object) {
-    const keys = Object.keys(data);
-    return keys.reduce((result, key, index) => {
-        return `${result}${key}=${data[key as keyof typeof data]}${index < keys.length - 1 ? '&' : ''}`;
-    }, '?');
-}
+import { queryStringify } from "../utils/queries";
 
 export class HTTPTransport {
     private static _instance: HTTPTransport;

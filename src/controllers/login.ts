@@ -1,4 +1,4 @@
-import { validateLogin, validatePassword } from "../../utils/inputHelper"
+import { validateLogin, validatePassword } from "../utils/inputHelper"
 
 export function formSubmit(event: Event) {
     event.preventDefault()

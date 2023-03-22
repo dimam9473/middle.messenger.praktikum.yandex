@@ -3,29 +3,12 @@ import { attachButtonTemplate } from "../../templates/attachButtonIconTpl";
 import { Button } from "../button/button";
 import { messengerTemplate } from "./messengerTpl";
 import { Input } from "../input/Input";
-import { sendButtonIconTemplate } from "../../templates/sendButtonIconTpl";
-import { messageFocus, validateMessage } from "../../utils/inputHelper";
+import { messageFocus } from "../../utils/inputHelper";
 import { InputNames } from "../../constants/inputNames";
+import { sendMessage } from "../../controllers/messenger";
+import { MessengerProps } from "../../types/messenger";
 
-export type MessengerProps = {
-    firstName?: string,
-    avatarSrc?: string,
-    lastMessage?: string,
-    time?: Date,
-    unreadCount?: number,
-    events?: { [key: string]: Function }
-} & Partial<HTMLButtonElement>
-
-function sendMessage() {
-    const isMessageValid = validateMessage()
-
-    if (!isMessageValid) {
-        return
-    }
-
-    const input = (document.querySelector(`#${InputNames.message}`) as HTMLInputElement)
-    console.log(input.value)
-}
+import { sendButtonIconTemplate } from "../../templates/sendButtonIconTpl";
 
 export class Messenger extends Block {
     constructor(props: MessengerProps) {

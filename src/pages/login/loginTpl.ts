@@ -9,7 +9,6 @@ export const loginTemplate: string = `
             </div>
             {{{button}}}
         </form>
-
         {{{link}}}
     </section>
 </div>

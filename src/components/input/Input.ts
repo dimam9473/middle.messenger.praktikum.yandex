@@ -1,12 +1,7 @@
 import Block from "../block/block";
-import { inputTemplate } from "./inputTpl";
+import { InputProps } from "../../types/input";
 
-export type InputProps = {
-    inputWrapper?: string
-    label?: string
-    readonly?: boolean
-    events?: { [key: string]: Function }
-} & Partial<HTMLInputElement>
+import { inputTemplate } from "./inputTpl";
 
 export class Input extends Block {
     constructor(props: InputProps) {

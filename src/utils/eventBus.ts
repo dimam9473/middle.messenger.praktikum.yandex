@@ -1,8 +1,5 @@
+import { Listener } from "../types/listener";
 import { getTypeKey } from "./getKey";
-
-type Listener = {
-    [key: string]: Function[]
-}
 
 class EventBus {
     private static instance?: EventBus = undefined;
@@ -20,7 +17,7 @@ class EventBus {
         return this.instance;
     }
 
-    on<T>(event: string, callback: Function) {
+    on(event: string, callback: Function) {
         const key = getTypeKey<Listener>(event)
 
         if (!this.listeners[key]) {

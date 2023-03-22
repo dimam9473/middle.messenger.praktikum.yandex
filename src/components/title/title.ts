@@ -1,9 +1,6 @@
 import Block from "../block/block";
+import { TitleProps } from "../../types/title";
 import { titleTemplate } from "./titleTpl";
-
-export type TitleProps = {
-    caption: string,
-} & Partial<HTMLHeadingElement>
 
 export class Title extends Block {
     constructor(props: TitleProps) {

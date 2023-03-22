@@ -1,4 +1,4 @@
-import { validateEmail, validateFirstName, validateLogin, validatePassword, validatePhone, validateRepeatPassword, validateSecondName } from "../../utils/inputHelper"
+import { validateEmail, validateFirstName, validateLogin, validatePassword, validatePhone, validateRepeatPassword, validateSecondName } from "../utils/inputHelper"
 
 export function formSubmit(event: Event) {
     event.preventDefault()

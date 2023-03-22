@@ -1,9 +1,6 @@
 import Block from "../block/block";
+import { LinkProps } from "../../types/link";
 import { linkTemplate } from "./linkTpl";
-
-export type LinkProps = {
-    caption: string,
-} & Partial<HTMLAnchorElement>
 
 export class Link extends Block {
     constructor(props: LinkProps) {

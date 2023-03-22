@@ -1,11 +1,23 @@
-import Block from "../../components/block/block";
-import { Button } from "../../components/button/button";
-import { Input } from "../../components/input/Input";
-import { Link } from "../../components/link/link";
-import { Title } from "../../components/title/title";
+import { Block, Button, Input, Link, Title } from "../../components";
+
 import { InputNames } from "../../constants/inputNames";
-import { emailFocus, firstNameFocus, loginFocus, passwordFocus, phoneFocus, repeatPasswordFocus, secondNameFocus, validateEmail, validateFirstName, validateLogin, validatePassword, validatePhone, validateRepeatPassword, validateSecondName } from "../../utils/inputHelper";
-import { formSubmit } from "./controller";
+import {
+    emailFocus,
+    firstNameFocus,
+    loginFocus,
+    passwordFocus,
+    phoneFocus,
+    repeatPasswordFocus,
+    secondNameFocus,
+    validateEmail,
+    validateFirstName,
+    validateLogin,
+    validatePassword,
+    validatePhone,
+    validateRepeatPassword,
+    validateSecondName
+} from "../../utils/inputHelper";
+import { formSubmit } from "../../controllers/register";
 
 import { registerTemplate } from "./registerTpl";
 

@@ -1,17 +1,11 @@
-import "./components"
-
 import Block from "./components/block/block"
-import { NotFoundError } from "./pages/404/404"
-import { Profile } from "./pages/profile/profile"
-import { Login } from "./pages/login/login"
-import { Register } from "./pages/register/register"
-import { Chat } from "./pages/chat/chat"
-import { ServerError } from "./pages/500/500"
+import { Chat, Login, NotFoundError, Profile, Register, ServerError } from "./pages"
 
 import { render } from "./utils/render"
 
 window.addEventListener("load", function () {
     let component: Block
+
     switch (window.location.pathname) {
         case '/': {
             component = new Login()
