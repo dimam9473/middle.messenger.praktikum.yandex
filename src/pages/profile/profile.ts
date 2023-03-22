@@ -15,35 +15,40 @@ function initComponents() {
         id: 'email',
         name: 'email',
         label: 'Email',
-        placeholder: 'mail@mail.com'
+        placeholder: 'mail@mail.com',
+        readonly: true
     })
 
     const loginInput = new Input({
         id: 'login',
         name: 'login',
         label: 'Login',
-        placeholder: 'Your login'
+        placeholder: 'Your login',
+        readonly: true
     })
 
     const firstNameInput = new Input({
         id: 'first-name',
         name: 'first_name',
         label: 'First name',
-        placeholder: 'First name'
+        placeholder: 'First name',
+        readonly: true
     })
 
     const secondNameInput = new Input({
         id: 'second-name',
         name: 'second_name',
         label: 'Second nam',
-        placeholder: 'Your second name'
+        placeholder: 'Your second name',
+        readonly: true
     })
 
     const phoneInput = new Input({
         id: 'phone',
         name: 'phone',
         label: 'Phone',
-        placeholder: '+7-999-999-9999'
+        placeholder: '+7-999-999-9999',
+        readonly: true
     })
 
     const changeData = new Link({

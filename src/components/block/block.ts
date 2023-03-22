@@ -42,15 +42,17 @@ class Block<P extends Record<string, any> = any> {
         const props: Record<string, unknown> = {};
         const children: Record<string, Block | Block[]> = {};
 
-        Object.entries(childrenAndProps).forEach(([key, value]) => {
-            const isComponentsList = Array.isArray(value) && value.length > 0 && value.every(v => v instanceof Block)
-            const isComponent = value instanceof Block
-            if (isComponentsList || isComponent) {
-                children[key as string] = value;
-            } else {
-                props[key] = value;
-            }
-        });
+        if (childrenAndProps) {
+            Object.entries(childrenAndProps).forEach(([key, value]) => {
+                const isComponentsList = Array.isArray(value) && value.length > 0 && value.every(v => v instanceof Block)
+                const isComponent = value instanceof Block
+                if (isComponentsList || isComponent) {
+                    children[key as string] = value;
+                } else {
+                    props[key] = value;
+                }
+            });
+        }
 
         return { props: props as P, children };
     }

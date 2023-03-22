@@ -4,6 +4,7 @@ import { inputTemplate } from "./inputTpl";
 export type InputProps = {
     inputWrapper?: string
     label?: string
+    readonly?: boolean
     events?: { [key: string]: Function }
 } & Partial<HTMLInputElement>
 
@@ -27,7 +28,8 @@ export class Input extends Block {
             inputWrapper: this.props.inputWrapper,
             required: this.props.required,
             pattern: this.props.pattern,
-            className: this.props.className
+            className: this.props.className,
+            readonly: this.props.readonly
         });
     }
 }
