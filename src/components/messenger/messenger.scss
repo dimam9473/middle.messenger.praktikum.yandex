@@ -1,13 +1,67 @@
 @import "../../global.scss";
 
 .messenger {
+    height: 100%;
+
+    &.not-selected {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}
+
+.selected-messenger {
     display: flex;
-    justify-content: center;
-    align-items: center;
+    flex-direction: column;
 
     height: 100%;
 }
 
 .messenger-header {
+    display: flex;
+    justify-content: space-between;
+
     border-bottom: 1px solid $lightGreen;
+}
+
+.mesenger-menu {
+    transform: rotate(90deg);
+    font-weight: 900;
+
+    &:hover {
+        cursor: pointer;
+    }
+}
+
+.messenger-footer {
+    display: flex;
+    align-items: center;
+
+    margin-top: auto;
+    gap: $middleGap;
+}
+
+.attach-button {
+    width: 32px;
+    background: none;
+    padding: 0;
+}
+
+.message-wrapper {
+    flex-grow: 1;
+}
+
+.message {
+    width: 100%;
+}
+
+.send-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background-color: $darkGreen;
 }

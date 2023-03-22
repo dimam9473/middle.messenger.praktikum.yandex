@@ -1,5 +1,5 @@
 export const registerTemplate: string = `
-<div class="form-layout">
+<div>
     <section class="form-wrapper">
         {{{title}}}        
         <form>

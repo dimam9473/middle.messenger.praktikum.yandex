@@ -1,7 +1,7 @@
 export const chatTemplate: string = `
 <div class="chat-wrapper">
     <section class="menu">
-        <div class="menu__header">
+        <div class="menu-header">
             {{{searchInput}}}
             {{{profile}}}
         </div>

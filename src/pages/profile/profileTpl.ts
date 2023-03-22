@@ -1,5 +1,5 @@
 export const profileTemplate: string = `
-<div class="form-layout">
+<div>
     <section class="form-wrapper form-wrapper--large">
         <div class="profile-header">
             {{{back}}}            

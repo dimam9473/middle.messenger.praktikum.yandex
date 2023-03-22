@@ -57,6 +57,10 @@ export function validateSecondName() {
     return inputValidate(InputNames.secondName, VALIDATION_RULES.name)
 }
 
+export function validateMessage() {
+    return inputValidate(InputNames.message, VALIDATION_RULES.message)
+}
+
 export function loginFocus() {
     inputFocus(InputNames.login)
 }
@@ -83,4 +87,8 @@ export function passwordFocus() {
 
 export function repeatPasswordFocus() {
     inputFocus(InputNames.repeatPassword)
+}
+
+export function messageFocus() {
+    inputFocus(InputNames.message)
 }

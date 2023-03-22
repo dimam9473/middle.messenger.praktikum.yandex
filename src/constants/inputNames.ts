@@ -6,5 +6,6 @@ export enum InputNames {
     firstName = 'first_name',
     secondName = 'second_name',
     phone = 'phone',
-    search = 'search'
+    search = 'search',
+    message = 'message'
 }

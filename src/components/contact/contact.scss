@@ -3,11 +3,11 @@
 .contact-wrapper {
     display: flex;
     align-items: center;
-    column-gap: 10px;
+    column-gap: $middleGap;
 
     height: 70px;
     border-top: 1px solid $lightGreen;
-    padding: 10px;
+    padding: $middleGap;
 
     &:hover {
         cursor: pointer;
@@ -52,7 +52,7 @@
     align-items: center;
 
     width: fit-content;
-    padding: 5px;
+    padding: $smallGap;
     background-color: $darkGreen;
     border-radius: 50%;
 

@@ -38,5 +38,5 @@ window.addEventListener("load", function () {
         }
     }
 
-    render("#root", component);
+    render("#root", component)
 })

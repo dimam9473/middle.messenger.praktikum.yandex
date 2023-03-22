@@ -27,8 +27,8 @@ ul {
     display: flex;
     list-style-type: none;
     gap: $middleGap;
-    margin-bottom: 20px;
-    margin-left: 10px;
+    margin-bottom: $largeGap;
+    margin-left: $middleGap;
 }
 
 .form-layout {

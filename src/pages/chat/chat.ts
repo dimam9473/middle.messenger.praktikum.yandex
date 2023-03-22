@@ -22,7 +22,7 @@ function initComponents() {
     const profile = new Link({
         caption: 'Profile',
         href: 'profile',
-        className: 'menu__profile'
+        className: 'menu-profile'
     })
 
     const searchInput = new Input({

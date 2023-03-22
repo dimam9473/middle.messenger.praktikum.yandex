@@ -9,20 +9,20 @@
 
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: $largeGap;
 
     max-width: 400px;
-    padding: 10px;
+    padding: $middleGap;
     border-right: 1px solid $lightGreen;
 }
 
-.menu__profile {
+.menu-profile {
     margin-left: auto;
 }
 
-.menu__header {
+.menu-header {
     display: flex;
-    gap: 10px
+    gap: $middleGap
 }
 
 .contacts {
@@ -30,8 +30,9 @@
 }
 
 .chat {
-    padding: 10px;
     flex-grow: 1;
+    padding: $middleGap;
+    padding-right: $largeGap;
 }
 
 .chat--empty {

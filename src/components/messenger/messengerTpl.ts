@@ -1,18 +1,18 @@
 export const messengerTemplate: string = `
-<div class="{{#unless firstName}}messenger{{/unless}}">
+<div class="messenger {{#unless firstName}}not-selected{{/unless}}">
     {{#if firstName}}
-        <div id="selected_chat" class="selected-chat">
+        <div id="selected-messenger" class="selected-messenger">
             <div class="messenger-header">
                 <div>
                     <img src="{{avatarSrc}}" alt="avatar"/>
                     <b>{{firstName}}</b>
                 </div>
-                <span>...</span>
+                <span class="mesenger-menu">...</span>
             </div>
             <div class="messenger-history">
                 messages
             </div>
-            <div class="message">
+            <div class="messenger-footer">
                 {{{atachButton}}}
                 {{{messageInput}}}
                 {{{sendButton}}}
