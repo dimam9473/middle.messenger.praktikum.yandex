@@ -9,7 +9,7 @@ export const inputTemplate: string = `
         {{#if required}}required="{{required}}"{{/if}}
         {{#if pattern}}pattern="{{pattern}}"{{/if}}
         class="input {{className}}"
-        readonly="{{readonly}}" 
+        {{#if readonly}}readonly{{/if}}
     />
 </div>
 `
