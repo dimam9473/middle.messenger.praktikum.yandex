@@ -11,6 +11,7 @@ export const profileTemplate: string = `
             {{{firstNameInput}}}
             {{{secondNameInput}}}
             {{{loginInput}}}
+            {{{displayNameInput}}}
             {{{phoneInput}}}
         </div>
 

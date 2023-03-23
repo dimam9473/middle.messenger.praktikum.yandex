@@ -8,4 +8,5 @@ export const VALIDATION_RULES: Partial<Record<InputNames, RegExp>> = {
     [InputNames.firstName]: /^[A-ZА-Я]{1,1}[а-яА-ЯёЁa-zA-Z-]{1,}$/,
     [InputNames.secondName]: /^[A-ZА-Я]{1,1}[а-яА-ЯёЁa-zA-Z-]{1,}$/,
     [InputNames.message]: /.*\S.*/,
+    [InputNames.displayName]: /.*\S.*/,
 }

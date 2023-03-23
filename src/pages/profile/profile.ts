@@ -1,5 +1,6 @@
 
 import { Block, Input, Link } from "../../components";
+import { InputNames } from "../../constants/inputNames";
 import { profileTemplate } from "./profileTpl";
 
 export class Profile extends Block {
@@ -15,33 +16,41 @@ export class Profile extends Block {
         })
 
         this.children.emailInput = new Input({
-            id: 'email',
-            name: 'email',
+            id: InputNames.email,
+            name: InputNames.email,
             label: 'Email',
             placeholder: 'mail@mail.com',
             readonly: true
         })
 
         this.children.loginInput = new Input({
-            id: 'login',
-            name: 'login',
+            id: InputNames.login,
+            name: InputNames.login,
             label: 'Login',
             placeholder: 'Your login',
             readonly: true
         })
 
+        this.children.displayNameInput = new Input({
+            id: InputNames.displayName,
+            name: InputNames.displayName,
+            label: 'Display name',
+            placeholder: 'Your display name',
+            readonly: true
+        })
+
         this.children.firstNameInput = new Input({
-            id: 'first-name',
-            name: 'first_name',
+            id: InputNames.firstName,
+            name: InputNames.firstName,
             label: 'First name',
             placeholder: 'First name',
             readonly: true
         })
 
         this.children.secondNameInput = new Input({
-            id: 'second-name',
-            name: 'second_name',
-            label: 'Second nam',
+            id: InputNames.secondName,
+            name: InputNames.secondName,
+            label: 'Second name',
             placeholder: 'Your second name',
             readonly: true
         })
