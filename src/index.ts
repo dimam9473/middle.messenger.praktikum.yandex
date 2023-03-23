@@ -33,4 +33,5 @@ window.addEventListener("load", function () {
     }
 
     render("#root", component)
+    component.dispatchComponentDidMount()
 })

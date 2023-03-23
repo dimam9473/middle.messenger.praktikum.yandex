@@ -7,8 +7,14 @@ function validate(regexCondition: RegExp, value: string) {
     return regex.test(value)
 }
 
-function inputValidate(id: string, rule: RegExp) {
-    const input = document.querySelector(`#${id}`) as HTMLInputElement
+function inputValidate(name: InputNames) {
+    const input = document.querySelector(`#${name}`) as HTMLInputElement
+    const rule = VALIDATION_RULES[name]
+
+    if (!rule) {
+        return true
+    }
+
     if (!validate(rule, input.value)) {
         input?.classList.add('invalid')
         return false
@@ -23,11 +29,11 @@ function inputFocus(id: string) {
 }
 
 export function validateLogin() {
-    return inputValidate(InputNames.login, VALIDATION_RULES.login)
+    return inputValidate(InputNames.login)
 }
 
 export function validatePassword() {
-    return inputValidate(InputNames.password, VALIDATION_RULES.password)
+    return inputValidate(InputNames.password)
 }
 
 export function validateRepeatPassword() {
@@ -42,23 +48,23 @@ export function validateRepeatPassword() {
 }
 
 export function validateEmail() {
-    return inputValidate(InputNames.email, VALIDATION_RULES.email)
+    return inputValidate(InputNames.email)
 }
 
 export function validatePhone() {
-    return inputValidate(InputNames.phone, VALIDATION_RULES.phone)
+    return inputValidate(InputNames.phone)
 }
 
 export function validateFirstName() {
-    return inputValidate(InputNames.firstName, VALIDATION_RULES.name)
+    return inputValidate(InputNames.firstName)
 }
 
 export function validateSecondName() {
-    return inputValidate(InputNames.secondName, VALIDATION_RULES.name)
+    return inputValidate(InputNames.secondName)
 }
 
 export function validateMessage() {
-    return inputValidate(InputNames.message, VALIDATION_RULES.message)
+    return inputValidate(InputNames.message)
 }
 
 export function loginFocus() {
