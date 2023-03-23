@@ -24,7 +24,8 @@ export class Input extends Block {
             required: this.props.required,
             pattern: this.props.pattern,
             className: this.props.className,
-            readonly: this.props.readonly
+            readonly: this.props.readonly,
+            validationError: this.props.validationError
         });
     }
 }

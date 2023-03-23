@@ -7,11 +7,20 @@
     margin-bottom: $largeGap;
 }
 
-.input-wrapper {
+.input-with-label {
     display: flex;
     justify-content: space-between;
-    align-items: center;
     gap: $middleGap;
+}
+
+.inputContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+.error {
+    visibility: hidden;
+    color: $lightRed;
 }
 
 .input {
@@ -31,5 +40,9 @@
     &.invalid {
         background-color: $lightBrown;
         border-color: $lightRed;
+
+        &+.error {
+            visibility: visible;
+        }
     }
 }
