@@ -2,7 +2,7 @@ export const registerTemplate: string = `
 <div>
     <section class="form-wrapper">
         {{{title}}}        
-        <form>
+        <form id="register-form">
             <div class="inputs">
                 {{{emailInput}}}
                 {{{loginInput}}}

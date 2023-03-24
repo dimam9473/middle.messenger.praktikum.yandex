@@ -16,6 +16,7 @@ class Block<P extends Record<string, any> = any> {
     public children: Record<string, Block | Block[]>;
     private eventBus: () => EventBus;
     private _element: HTMLElement | null = null;
+    private _display: string = ''
 
     /** JSDoc
      * @param {string} tagName
@@ -189,7 +190,7 @@ class Block<P extends Record<string, any> = any> {
     }
 
     getContent() {
-        return this.element;
+        return this.element as HTMLElement;
     }
 
     _makePropsProxy(props: P) {
@@ -212,6 +213,15 @@ class Block<P extends Record<string, any> = any> {
                 throw new Error('Нет доступа');
             }
         });
+    }
+
+    show() {
+        this.getContent().style.display = this._display;
+    }
+
+    hide() {
+        this._display = this.getContent().style.display
+        this.getContent().style.display = "none";
     }
 }
 

@@ -14,7 +14,7 @@ export function formSubmit(event: Event) {
         return
     }
 
-    const form = (document.querySelector('#login-form')) as HTMLFormElement
+    const form = (document.querySelector('#register-form')) as HTMLFormElement
     const data = new FormData(form)
 
     for (var pair of Array.from(data)) {

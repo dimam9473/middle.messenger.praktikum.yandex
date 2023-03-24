@@ -8,4 +8,5 @@ export const VALIDATION_MESSAGES: Partial<Record<InputNames, string>> = {
     [InputNames.firstName]: 'Латиница или кириллица',
     [InputNames.secondName]: 'Латиница или кириллицай',
     [InputNames.repeatPassword]: 'Пароли не совпадают',
+    [InputNames.displayName]: 'Не должно быть пустым',
 }

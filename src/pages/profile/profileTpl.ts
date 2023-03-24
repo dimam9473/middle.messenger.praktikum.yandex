@@ -6,19 +6,23 @@ export const profileTemplate: string = `
             <img src="#" alt="avatar">
         </div>        
         <h2>Here will be Name Surname of user</h2>
-        <div class="inputs">
+        <form id="profile-form" class="inputs">
             {{{emailInput}}}
             {{{firstNameInput}}}
             {{{secondNameInput}}}
             {{{loginInput}}}
             {{{displayNameInput}}}
             {{{phoneInput}}}
-        </div>
+            {{{oldPasswordInput}}}
+            {{{newPasswordInput}}}
+            {{{repeatPasswordInput}}}
+        </form>
 
         <div class="actions">
             {{{changeData}}}
             {{{changePassword}}}
             {{{logout}}}
+            {{{save}}}
         </div>
     </section>
 </div>

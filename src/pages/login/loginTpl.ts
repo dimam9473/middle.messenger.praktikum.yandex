@@ -3,7 +3,7 @@ export const loginTemplate: string = `
     <section class="form-wrapper">
         {{{title}}}
         <form id="login-form" name="login-form">
-            <div class="inputs">
+            <div>
                 {{{loginInput}}}
                 {{{passwordInput}}}
             </div>

@@ -11,7 +11,7 @@ function inputValidate(name: InputNames) {
     const input = document.querySelector(`#${name}`) as HTMLInputElement
     const rule = VALIDATION_RULES[name]
 
-    if (!rule) {
+    if (!rule || input.readOnly) {
         return true
     }
 
@@ -30,6 +30,10 @@ function inputFocus(id: string) {
 
 export function validateLogin() {
     return inputValidate(InputNames.login)
+}
+
+export function validateOldPassword() {
+    return inputValidate(InputNames.oldPassword)
 }
 
 export function validatePassword() {
@@ -67,6 +71,10 @@ export function validateMessage() {
     return inputValidate(InputNames.message)
 }
 
+export function validateDisplayName() {
+    return inputValidate(InputNames.displayName)
+}
+
 export function loginFocus() {
     inputFocus(InputNames.login)
 }
@@ -87,6 +95,10 @@ export function phoneFocus() {
     inputFocus(InputNames.phone)
 }
 
+export function oldPasswordFocus() {
+    inputFocus(InputNames.oldPassword)
+}
+
 export function passwordFocus() {
     inputFocus(InputNames.password)
 }
@@ -97,4 +109,8 @@ export function repeatPasswordFocus() {
 
 export function messageFocus() {
     inputFocus(InputNames.message)
+}
+
+export function displayNameFocus() {
+    inputFocus(InputNames.displayName)
 }
