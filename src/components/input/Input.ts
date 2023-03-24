@@ -2,6 +2,8 @@ import Block from "../block/block";
 import { InputProps } from "../../types/input";
 
 import { inputTemplate } from "./inputTpl";
+import { VALIDATION_MESSAGES } from "../../constants/validationMessages";
+import { InputNames } from "../../constants/inputNames";
 
 export class Input extends Block {
     constructor(props: InputProps) {
@@ -9,10 +11,9 @@ export class Input extends Block {
     }
 
     render() {
-        if (this.element) {
-            this.element.tabIndex = 0
-        }
-
+        const validationError = this.props.validationError
+            ? this.props.validationError
+            : VALIDATION_MESSAGES[this.props.name as InputNames]
 
         return this.compile(inputTemplate, {
             id: this.props.id,
@@ -25,7 +26,7 @@ export class Input extends Block {
             pattern: this.props.pattern,
             className: this.props.className,
             readonly: this.props.readonly,
-            validationError: this.props.validationError
+            validationError: validationError
         });
     }
 }

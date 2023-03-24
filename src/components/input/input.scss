@@ -1,5 +1,11 @@
 @import "../../global.scss";
 
+.input-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
 .inputs {
     display: flex;
     flex-direction: column;
@@ -7,18 +13,13 @@
     margin-bottom: $largeGap;
 }
 
-.input-with-label {
-    display: flex;
-    justify-content: space-between;
-    gap: $middleGap;
-}
-
-.inputContainer {
-    display: flex;
-    flex-direction: column;
+.label,
+.input {
+    flex: 0 0 45%;
 }
 
 .error {
+    flex: 0 0 100%;
     visibility: hidden;
     color: $lightRed;
 }
