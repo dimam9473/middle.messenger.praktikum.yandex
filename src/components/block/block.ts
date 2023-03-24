@@ -11,12 +11,15 @@ class Block<P extends Record<string, any> = any> {
         FLOW_RENDER: 'flow:render'
     } as const;
 
-    public id = uuidv4();
-    protected props: P;
-    public children: Record<string, Block | Block[]>;
-    private eventBus: () => EventBus;
+    private _eventBus: () => EventBus;
     private _element: HTMLElement | null = null;
     private _display: string = ''
+
+    protected props: P;
+
+    public id = uuidv4();
+    public children: Record<string, Block | Block[]>;
+
 
     /** JSDoc
      * @param {string} tagName
@@ -26,20 +29,35 @@ class Block<P extends Record<string, any> = any> {
      */
     constructor(propsWithChildren: P) {
         const eventBus = new EventBus();
-
         const { props, children } = this._getChildrenAndProps(propsWithChildren);
 
         this.children = children;
         this.props = this._makePropsProxy(props);
-
-        this.eventBus = () => eventBus;
+        this._eventBus = () => eventBus;
 
         this._registerEvents(eventBus);
-
         eventBus.emit(Block.EVENTS.INIT);
     }
 
-    _getChildrenAndProps(childrenAndProps: P): { props: P, children: Record<string, Block | Block[]> } {
+    private _addEvents() {
+        const { events = {} } = this.props as P & { events: Record<string, () => void> };
+
+        Object.keys(events).forEach(eventName => {
+            this._element?.addEventListener(eventName, events[eventName]);
+        });
+    }
+
+    private _componentDidMount() {
+        this.componentDidMount();
+    }
+
+    private _componentDidUpdate(oldProps: P, newProps: P) {
+        if (this.componentDidUpdate(oldProps, newProps)) {
+            this._eventBus().emit(Block.EVENTS.FLOW_RENDER);
+        }
+    }
+
+    private _getChildrenAndProps(childrenAndProps: P): { props: P, children: Record<string, Block | Block[]> } {
         const props: Record<string, unknown> = {};
         const children: Record<string, Block | Block[]> = {};
 
@@ -58,7 +76,35 @@ class Block<P extends Record<string, any> = any> {
         return { props: props as P, children };
     }
 
-    _removeEvents() {
+    private _init() {
+        this.init();
+
+        this._eventBus().emit(Block.EVENTS.FLOW_RENDER);
+    }
+
+    private _makePropsProxy(props: P) {
+        const self = this;
+
+        return new Proxy(props, {
+            get(target, prop: string) {
+                const value = target[prop];
+                return typeof value === 'function' ? value.bind(target) : value;
+            },
+            set(target, prop: string, value) {
+                const oldTarget = { ...target }
+
+                target[prop as keyof P] = value;
+
+                self._eventBus().emit(Block.EVENTS.FLOW_CDU, oldTarget, target);
+                return true;
+            },
+            deleteProperty() {
+                throw new Error('Нет доступа');
+            }
+        });
+    }
+
+    private _removeEvents() {
         const { events = {} } = this.props as P & { events: Record<string, () => void> };
 
         Object.keys(events).forEach(eventName => {
@@ -66,75 +112,18 @@ class Block<P extends Record<string, any> = any> {
         });
     }
 
-    _addEvents() {
-        const { events = {} } = this.props as P & { events: Record<string, () => void> };
-
-        Object.keys(events).forEach(eventName => {
-            this._element?.addEventListener(eventName, events[eventName]);
-        });
-    }
-
-    _registerEvents(eventBus: EventBus) {
+    private _registerEvents(eventBus: EventBus) {
         eventBus.on(Block.EVENTS.INIT, this._init.bind(this));
         eventBus.on(Block.EVENTS.FLOW_CDM, this._componentDidMount.bind(this));
         eventBus.on(Block.EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this));
         eventBus.on(Block.EVENTS.FLOW_RENDER, this._render.bind(this));
     }
 
-    private _init() {
-        this.init();
-
-        this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
-    }
-
-    protected init() {
-    }
-
-    _componentDidMount() {
-        this.componentDidMount();
-    }
-
-    componentDidMount() {
-    }
-
-    public dispatchComponentDidMount() {
-        this.eventBus().emit(Block.EVENTS.FLOW_CDM);
-
-        Object.values(this.children).forEach(child => {
-            if (Array.isArray(child)) {
-                child.forEach(ch => ch.dispatchComponentDidMount());
-            } else {
-                child.dispatchComponentDidMount();
-            }
-        });
-    }
-
-    private _componentDidUpdate(oldProps: P, newProps: P) {
-        if (this.componentDidUpdate(oldProps, newProps)) {
-            this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
-        }
-    }
-
-    protected componentDidUpdate(oldProps: P, newProps: P) {
-        return true;
-    }
-
-    setProps = (nextProps: Partial<P>) => {
-        if (!nextProps) {
-            return;
-        }
-
-        Object.assign(this.props, nextProps);
-    };
-
-    get element() {
-        return this._element;
-    }
-
     private _render() {
         const fragment = this.render();
 
         const newElement = fragment.firstElementChild as HTMLElement;
+        this._removeEvents();
 
         if (this._element && newElement) {
             this._element.replaceWith(newElement);
@@ -185,43 +174,55 @@ class Block<P extends Record<string, any> = any> {
         return temp.content;
     }
 
+    protected componentDidMount() {
+    }
+
+    protected componentDidUpdate(oldProps: P, newProps: P) {
+        return true;
+    }
+
+    protected init() {
+    }
+
     protected render(): DocumentFragment {
         return new DocumentFragment();
     }
 
-    getContent() {
-        return this.element as HTMLElement;
-    }
+    public dispatchComponentDidMount() {
+        this._eventBus().emit(Block.EVENTS.FLOW_CDM);
 
-    _makePropsProxy(props: P) {
-        const self = this;
-
-        return new Proxy(props, {
-            get(target, prop: string) {
-                const value = target[prop];
-                return typeof value === 'function' ? value.bind(target) : value;
-            },
-            set(target, prop: string, value) {
-                const oldTarget = { ...target }
-
-                target[prop as keyof P] = value;
-
-                self.eventBus().emit(Block.EVENTS.FLOW_CDU, oldTarget, target);
-                return true;
-            },
-            deleteProperty() {
-                throw new Error('Нет доступа');
+        Object.values(this.children).forEach(child => {
+            if (Array.isArray(child)) {
+                child.forEach(ch => ch.dispatchComponentDidMount());
+            } else {
+                child.dispatchComponentDidMount();
             }
         });
     }
 
-    show() {
+    public getContent() {
+        return this.element as HTMLElement;
+    }
+
+    public hide() {
+        this._display = this.getContent().style.display
+        this.getContent().style.display = "none";
+    }
+
+    public setProps = (nextProps: Partial<P>) => {
+        if (!nextProps) {
+            return;
+        }
+
+        Object.assign(this.props, nextProps);
+    };
+
+    public show() {
         this.getContent().style.display = this._display;
     }
 
-    hide() {
-        this._display = this.getContent().style.display
-        this.getContent().style.display = "none";
+    get element() {
+        return this._element;
     }
 }
 
