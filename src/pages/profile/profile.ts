@@ -1,6 +1,7 @@
 
 import { Block, Button, Input, Link, Text } from "../../components";
 import { InputNames } from "../../constants/inputNames";
+import { changeData, changePassword, handleSave, restoreInputs } from "../../controllers/profile";
 import {
     displayNameFocus,
     emailFocus,
@@ -26,80 +27,6 @@ import { profileTemplate } from "./profileTpl";
 
 let inputs: Input[] = []
 let passwordInputs: Input[] = []
-
-function changeData(this: Profile) {
-    inputs.forEach(input => input.setProps({
-        readOnly: false
-    }));
-
-    (this.children.changeData as Block).hide();
-    (this.children.changePassword as Block).hide();
-    (this.children.logout as Block).hide();
-    (this.children.save as Block).show();
-}
-
-function changePassword(this: Profile) {
-    inputs.forEach(input => input.hide())
-    passwordInputs.forEach(input => input.setProps({
-        readOnly: false
-    }));
-
-    (this.children.changeData as Block).hide();
-    (this.children.changePassword as Block).hide();
-    (this.children.logout as Block).hide();
-    (this.children.save as Block).show();
-}
-
-function handleSave(this: Profile) {
-    const isLoginValid = validateLogin()
-    const isEmailValid = validateEmail()
-    const isFirstNameValid = validateFirstName()
-    const isSecondNameValid = validateSecondName()
-    const isPhoneValid = validatePhone()
-    const isDisplayNameValid = validateDisplayName()
-    const isOldPasswordValid = validateOldPassword()
-    const isNewPasswordValid = validatePassword()
-    const isRepeatPasswordValid = validateRepeatPassword()
-
-    if (!isLoginValid
-        || !isEmailValid
-        || !isFirstNameValid
-        || !isSecondNameValid
-        || !isPhoneValid
-        || !isDisplayNameValid
-        || !isOldPasswordValid
-        || !isNewPasswordValid
-        || !isRepeatPasswordValid
-    ) {
-        return
-    }
-
-    const form = (document.querySelector('#profile-form')) as HTMLFormElement
-    const data = new FormData(form)
-
-    for (var pair of Array.from(data)) {
-        console.log(pair[0] + ": " + pair[1]);
-    }
-
-    inputs.forEach(input => {
-        input.setProps({
-            readOnly: true
-        })
-        input.show()
-    });
-
-    passwordInputs.forEach(input => {
-        input.setProps({
-            readOnly: true
-        })
-        input.hide()
-    });
-
-    (this.children.changeData as Block).show();
-    (this.children.changePassword as Block).show();
-    (this.children.logout as Block).show();
-    (this.children.save as Block).hide();
-}
 
 export class Profile extends Block {
     constructor(props?: object) {
@@ -268,6 +195,14 @@ export class Profile extends Block {
             }
         })
 
+        this.children.cancel = new Text({
+            text: 'Cancel',
+            className: 'clickable-text cancel',
+            events: {
+                click: () => this.cancel(),
+            }
+        })
+
         this.hideComponents()
     }
 
@@ -276,18 +211,23 @@ export class Profile extends Block {
         (this.children.newPasswordInput as Block).hide();
         (this.children.repeatPasswordInput as Block).hide();
         (this.children.save as Block).hide();
+        (this.children.cancel as Block).hide();
     }
 
     changePassword() {
-        changePassword.call(this)
+        changePassword.call(this, inputs, passwordInputs)
     }
 
     handleSave() {
-        handleSave.call(this)
+        handleSave.call(this, inputs, passwordInputs)
+    }
+
+    cancel() {
+        restoreInputs.call(this, inputs, passwordInputs)
     }
 
     changeData() {
-        changeData.call(this)
+        changeData.call(this, inputs)
     }
 
     render() {

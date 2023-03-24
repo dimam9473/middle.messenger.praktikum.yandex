@@ -23,6 +23,7 @@ export const profileTemplate: string = `
             {{{changePassword}}}
             {{{logout}}}
             {{{save}}}
+            {{{cancel}}}
         </div>
     </section>
 </div>
