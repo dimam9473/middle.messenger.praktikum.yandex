@@ -9,8 +9,8 @@
         "strict": true,
         "forceConsistentCasingInFileNames": true,
         "noFallthroughCasesInSwitch": true,
-        "module": "esnext",
-        "moduleResolution": "node",
+        "module": "NodeNext",
+        "moduleResolution": "NodeNext",
         "resolveJsonModule": true,
         "isolatedModules": true,
         "noEmit": true,
@@ -22,10 +22,18 @@
         "lib": [
             "es2015",
             "es2019",
+            "ESNext",
             "dom",
             "dom.iterable",
-        ]
+        ],
+        "types": [
+            "node"
+        ],
     },
+    "exclude": [
+        "build",
+        "node_modules"
+    ],
     "ts-node": {
         "esm": true
     },
