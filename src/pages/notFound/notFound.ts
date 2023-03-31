@@ -1,7 +1,5 @@
-
-
-import { Block } from "../../components";
-import { notFoundTemplate } from "./notFoundTpl";
+import { Block, } from '../../components';
+import { notFoundTemplate, } from './notFoundTpl';
 
 export class NotFoundError extends Block {
     constructor(props?: object) {

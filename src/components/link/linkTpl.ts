@@ -1,3 +1,3 @@
-export const linkTemplate: string = `
+export const linkTemplate = `
 <a href="{{href}}" class="{{className}}">{{caption}}</a>
 `

@@ -1,9 +1,9 @@
-import { InputNames } from "../../constants/inputNames";
-import { loginFocus, passwordFocus, validateLogin, validatePassword } from "../../utils/inputHelper";
-import { formSubmit } from "../../controllers/login";
+import { InputNames, } from '../../constants/inputNames';
+import { formSubmit, } from '../../controllers/login';
+import { loginFocus, passwordFocus, validateLogin, validatePassword, } from '../../utils/inputHelper';
 
-import { loginTemplate } from "./loginTpl";
-import { Block, Button, Input, Link, Title } from "../../components";
+import { Block, Button, Input, Link, Title, } from '../../components';
+import { loginTemplate, } from './loginTpl';
 
 export class Login extends Block {
     constructor(props?: object) {
@@ -12,43 +12,43 @@ export class Login extends Block {
 
     protected init(): void {
         this.children.title = new Title({
-            caption: 'Sign In',
+            'caption': 'Sign In',
         })
 
         this.children.loginInput = new Input({
-            id: InputNames.login,
-            name: InputNames.login,
-            label: 'Login',
-            placeholder: 'Your login',
-            required: true,
-            events: {
-                focusin: loginFocus,
-                focusout: validateLogin
-            }
+            'id': InputNames.login,
+            'name': InputNames.login,
+            'label': 'Login',
+            'placeholder': 'Your login',
+            'required': true,
+            'events': {
+                'focusin': loginFocus,
+                'focusout': validateLogin,
+            },
         })
 
         this.children.passwordInput = new Input({
-            id: InputNames.password,
-            name: InputNames.password,
-            label: 'Password',
-            type: 'password',
-            placeholder: '1234',
-            required: true,
-            events: {
-                focusin: passwordFocus,
-                focusout: validatePassword
-            }
+            'id': InputNames.password,
+            'name': InputNames.password,
+            'label': 'Password',
+            'type': 'password',
+            'placeholder': '1234',
+            'required': true,
+            'events': {
+                'focusin': passwordFocus,
+                'focusout': validatePassword,
+            },
         })
 
         this.children.button = new Button({
-            caption: 'Enter',
-            className: 'button--green',
-            events: { click: formSubmit },
+            'caption': 'Enter',
+            'className': 'button--green',
+            'events': { 'click': formSubmit, },
         });
 
         this.children.link = new Link({
-            caption: 'Create account?',
-            href: 'register'
+            'caption': 'Create account?',
+            'href': 'register',
         })
     }
 

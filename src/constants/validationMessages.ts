@@ -1,4 +1,4 @@
-import { InputNames } from "./inputNames";
+import { InputNames, } from './inputNames';
 
 export const VALIDATION_MESSAGES: Partial<Record<InputNames, string>> = {
     [InputNames.login]: 'Латиница или кириллица',

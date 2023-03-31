@@ -1,4 +1,4 @@
-export const chatTemplate: string = `
+export const chatTemplate = `
 <div class="chat-wrapper">
     <section class="menu">
         <div class="menu-header">

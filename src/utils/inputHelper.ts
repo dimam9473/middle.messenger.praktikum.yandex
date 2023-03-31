@@ -1,8 +1,8 @@
-import { InputNames } from "../constants/inputNames"
-import { VALIDATION_RULES } from "../constants/validationRules"
+import { InputNames, } from '../constants/inputNames'
+import { VALIDATION_RULES, } from '../constants/validationRules'
 
 function validate(regexCondition: RegExp, value: string) {
-    const regex: RegExp = new RegExp(regexCondition)
+    const regex = new RegExp(regexCondition)
 
     return regex.test(value)
 }

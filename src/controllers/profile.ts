@@ -1,20 +1,20 @@
-import { Block, Input } from "../components";
-import { Profile } from "../pages";
+import { Block, Input, } from '../components';
+import { Profile, } from '../pages';
 import {
-    validateLogin,
+    validateDisplayName,
     validateEmail,
     validateFirstName,
-    validateSecondName,
-    validatePhone,
-    validateDisplayName,
+    validateLogin,
     validateOldPassword,
     validatePassword,
-    validateRepeatPassword
-} from "../utils/inputHelper";
+    validatePhone,
+    validateRepeatPassword,
+    validateSecondName,
+} from '../utils/inputHelper';
 
 export function changeData(this: Profile, inputs: Input[]) {
     inputs.forEach(input => input.setProps({
-        readOnly: false
+        'readOnly': false,
     }));
 
     (this.children.changeData as Block).hide();
@@ -27,7 +27,7 @@ export function changeData(this: Profile, inputs: Input[]) {
 export function changePassword(this: Profile, inputs: Input[], passwordInputs: Input[]) {
     inputs.forEach(input => input.hide())
     passwordInputs.forEach(input => input.setProps({
-        readOnly: false
+        'readOnly': false,
     }));
 
     (this.children.changeData as Block).hide();
@@ -40,14 +40,14 @@ export function changePassword(this: Profile, inputs: Input[], passwordInputs: I
 export function restoreInputs(this: Profile, inputs: Input[], passwordInputs: Input[]) {
     inputs.forEach(input => {
         input.setProps({
-            readOnly: true
+            'readOnly': true,
         })
         input.show()
     });
 
     passwordInputs.forEach(input => {
         input.setProps({
-            readOnly: true
+            'readOnly': true,
         })
         input.hide()
     });
@@ -86,8 +86,9 @@ export function handleSave(this: Profile, inputs: Input[], passwordInputs: Input
     const form = (document.querySelector('#profile-form')) as HTMLFormElement
     const data = new FormData(form)
 
-    for (var pair of Array.from(data)) {
-        console.log(pair[0] + ": " + pair[1]);
+    for (const pair of Array.from(data)) {
+        // eslint-disable-next-line no-console
+        console.log(`${pair[0]}: ${pair[1]}`);
     }
 
     restoreInputs.call(this, inputs, passwordInputs)

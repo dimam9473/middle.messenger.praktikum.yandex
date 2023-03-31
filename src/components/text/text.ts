@@ -1,7 +1,7 @@
-import Block from "../block/block";
-import { TextProps } from "../../types/text";
+import { TextProps, } from '../../types/text';
+import Block from '../block/block';
 
-import { textTemplate } from "./textTpl";
+import { textTemplate, } from './textTpl';
 
 export class Text extends Block {
     constructor(props: TextProps) {

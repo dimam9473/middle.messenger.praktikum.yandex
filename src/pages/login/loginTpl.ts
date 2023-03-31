@@ -1,4 +1,4 @@
-export const loginTemplate: string = `
+export const loginTemplate = `
 <div>
     <section class="form-wrapper">
         {{{title}}}

@@ -1,4 +1,4 @@
-export const messengerTemplate: string = `
+export const messengerTemplate = `
 <div class="messenger {{#unless firstName}}not-selected{{/unless}}">
     {{#if firstName}}
         <div id="selected-messenger" class="selected-messenger">

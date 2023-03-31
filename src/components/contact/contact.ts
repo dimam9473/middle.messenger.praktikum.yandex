@@ -1,8 +1,8 @@
-import { prepareDate } from "../../utils/date";
-import Block from "../block/block";
-import { ContactProps } from "../../types/contact";
+import { ContactProps, } from '../../types/contact';
+import { prepareDate, } from '../../utils/date';
+import Block from '../block/block';
 
-import { contactTemplate } from "./contactTpl";
+import { contactTemplate, } from './contactTpl';
 
 export class Contact extends Block {
     constructor(props: ContactProps) {
@@ -14,6 +14,6 @@ export class Contact extends Block {
 
         const prepairedDate = time ? prepareDate(time) : ''
 
-        return this.compile(contactTemplate, { ...restProps, time: prepairedDate });
+        return this.compile(contactTemplate, { ...restProps, 'time': prepairedDate, });
     }
 }

@@ -1,4 +1,4 @@
-import { METHODS } from "../constants/methods"
+import { METHODS, } from '../constants/methods'
 
 export type MethodType = METHODS.GET | METHODS.POST | METHODS.PUT | METHODS.DELETE
 

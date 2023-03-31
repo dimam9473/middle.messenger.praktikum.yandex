@@ -1,7 +1,7 @@
-import Block from "../block/block";
-import { ButtonProps } from "../../types/button";
+import { ButtonProps, } from '../../types/button';
+import Block from '../block/block';
 
-import { buttonTpl } from "./buttonTpl";
+import { buttonTpl, } from './buttonTpl';
 
 export class Button extends Block {
     constructor(props: ButtonProps) {
@@ -10,10 +10,10 @@ export class Button extends Block {
 
     render() {
         return this.compile(buttonTpl, {
-            caption: this.props.caption,
-            id: this.props.id,
-            type: this.props.type,
-            className: `${this.props.className || ''}`
+            'caption': this.props.caption,
+            'id': this.props.id,
+            'type': this.props.type,
+            'className': `${this.props.className || ''}`,
         });
     }
 }

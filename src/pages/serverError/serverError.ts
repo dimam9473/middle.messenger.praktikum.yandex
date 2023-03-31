@@ -1,6 +1,6 @@
-import Block from "../../components/block/block";
+import Block from '../../components/block/block';
 
-import { serverErrorTemplate } from "./serverErrorTpl"
+import { serverErrorTemplate, } from './serverErrorTpl'
 
 function initComponents() {
     return {}
@@ -10,7 +10,7 @@ export class ServerError extends Block {
     constructor(props?: object) {
         const components = initComponents()
 
-        super({ ...props, ...components });
+        super({ ...props, ...components, });
     }
 
     render() {

@@ -1,10 +1,11 @@
-import { METHODS } from "../constants/methods";
-import { Options } from "../types/fetch";
-import { queryStringify } from "../utils/queries";
+import { METHODS, } from '../constants/methods';
+import { Options, } from '../types/fetch';
+import { queryStringify, } from '../utils/queries';
 
 export class HTTPTransport {
     private static _instance: HTTPTransport;
 
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
     private constructor() { }
 
     public static get Instance() {
@@ -13,23 +14,23 @@ export class HTTPTransport {
 
     get = (url: string, options: Options) => {
 
-        return this.request(url, { ...options, method: METHODS.GET });
+        return this.request(url, { ...options, 'method': METHODS.GET, });
     };
 
     post = (url: string, options: Options) => {
-        return this.request(url, { ...options, method: METHODS.POST });
+        return this.request(url, { ...options, 'method': METHODS.POST, });
     };
 
     put = (url: string, options: Options) => {
-        return this.request(url, { ...options, method: METHODS.PUT });
+        return this.request(url, { ...options, 'method': METHODS.PUT, });
     };
 
     delete = (url: string, options: Options) => {
-        return this.request(url, { ...options, method: METHODS.DELETE });
+        return this.request(url, { ...options, 'method': METHODS.DELETE, });
     };
 
     request = (url: string, options: Options) => {
-        const { headers = {}, method, data, timeout = 5000 } = options;
+        const { headers = {}, method, data, timeout = 5000, } = options;
 
         return new Promise(function (resolve, reject) {
             if (!method) {
@@ -44,7 +45,7 @@ export class HTTPTransport {
                 method,
                 isGet && !!data
                     ? `${url}${queryStringify(data as object)}`
-                    : url,
+                    : url
             );
 
             Object.keys(headers).forEach(key => {
@@ -84,7 +85,6 @@ export const fetch = (url: string, options?: Options): Promise<unknown> => {
     }
 }
 
-
 export function fetchWithRetry(url: string, options?: Options): Promise<unknown> {
     const tries = options && options.tries ? options.tries : 1
 
@@ -94,8 +94,8 @@ export function fetchWithRetry(url: string, options?: Options): Promise<unknown>
             throw err;
         }
 
-        return fetchWithRetry(url, { ...options, tries: triesLeft });
+        return fetchWithRetry(url, { ...options, 'tries': triesLeft, });
     }
 
     return fetch(url, options).catch(onError);
-} 
+}

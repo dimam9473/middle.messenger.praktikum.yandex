@@ -1,4 +1,4 @@
-import { validateEmail, validateFirstName, validateLogin, validatePassword, validatePhone, validateRepeatPassword, validateSecondName } from "../utils/inputHelper"
+import { validateEmail, validateFirstName, validateLogin, validatePassword, validatePhone, validateRepeatPassword, validateSecondName, } from '../utils/inputHelper'
 
 export function formSubmit(event: Event) {
     event.preventDefault()
@@ -17,8 +17,9 @@ export function formSubmit(event: Event) {
     const form = (document.querySelector('#register-form')) as HTMLFormElement
     const data = new FormData(form)
 
-    for (var pair of Array.from(data)) {
-        console.log(pair[0] + ": " + pair[1]);
+    for (const pair of Array.from(data)) {
+        // eslint-disable-next-line no-console
+        console.log(`${pair[0]}: ${pair[1]}`);
     }
 
     window.location.pathname = 'chat'

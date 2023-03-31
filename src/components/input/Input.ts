@@ -1,9 +1,9 @@
-import Block from "../block/block";
-import { InputProps } from "../../types/input";
+import { InputProps, } from '../../types/input';
+import Block from '../block/block';
 
-import { inputTemplate } from "./inputTpl";
-import { VALIDATION_MESSAGES } from "../../constants/validationMessages";
-import { InputNames } from "../../constants/inputNames";
+import { InputNames, } from '../../constants/inputNames';
+import { VALIDATION_MESSAGES, } from '../../constants/validationMessages';
+import { inputTemplate, } from './inputTpl';
 
 export class Input extends Block {
     constructor(props: InputProps) {
@@ -16,17 +16,17 @@ export class Input extends Block {
             : VALIDATION_MESSAGES[this.props.name as InputNames]
 
         return this.compile(inputTemplate, {
-            id: this.props.id,
-            type: this.props.type,
-            name: this.props.name,
-            label: this.props.label,
-            placeholder: this.props.placeholder,
-            inputWrapper: this.props.inputWrapper,
-            required: this.props.required,
-            pattern: this.props.pattern,
-            className: this.props.className,
-            readOnly: this.props.readOnly,
-            validationError: validationError
+            'id': this.props.id,
+            'type': this.props.type,
+            'name': this.props.name,
+            'label': this.props.label,
+            'placeholder': this.props.placeholder,
+            'inputWrapper': this.props.inputWrapper,
+            'required': this.props.required,
+            'pattern': this.props.pattern,
+            'className': this.props.className,
+            'readOnly': this.props.readOnly,
+            'validationError': validationError,
         });
     }
 }

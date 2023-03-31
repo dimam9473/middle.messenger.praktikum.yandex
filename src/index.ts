@@ -1,9 +1,9 @@
-import Block from "./components/block/block"
-import { Chat, Login, NotFoundError, Profile, Register, ServerError } from "./pages"
+import { Chat, Login, NotFoundError, Profile, Register, ServerError, } from './pages'
+import Block from './components/block/block'
 
-import { render } from "./utils/render"
+import { render, } from './utils/render'
 
-window.addEventListener("load", function () {
+window.addEventListener('load', function () {
     let component: Block
 
     switch (window.location.pathname) {
@@ -32,6 +32,6 @@ window.addEventListener("load", function () {
         }
     }
 
-    render("#root", component)
+    render('#root', component)
     component.dispatchComponentDidMount()
 })

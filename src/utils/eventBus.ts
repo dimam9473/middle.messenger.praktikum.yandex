@@ -1,5 +1,5 @@
-import { Listener } from "../types/listener";
-import { getTypeKey } from "./getKey";
+import { Listener, } from '../types/listener';
+import { getTypeKey, } from './getKey';
 
 class EventBus {
     private static instance?: EventBus = undefined;

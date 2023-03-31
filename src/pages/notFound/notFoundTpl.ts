@@ -1,4 +1,4 @@
-export const notFoundTemplate: string = `
+export const notFoundTemplate = `
 <div>
     404
 </div>

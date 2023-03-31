@@ -1,4 +1,4 @@
-export const profileTemplate: string = `
+export const profileTemplate = `
 <div>
     <section class="form-wrapper form-wrapper--large">
         <div class="profile-header">

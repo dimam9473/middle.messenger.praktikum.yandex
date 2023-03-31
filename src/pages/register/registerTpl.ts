@@ -1,4 +1,4 @@
-export const registerTemplate: string = `
+export const registerTemplate = `
 <div>
     <section class="form-wrapper">
         {{{title}}}        
