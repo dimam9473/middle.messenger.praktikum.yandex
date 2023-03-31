@@ -28,7 +28,7 @@
         ],
         "types": [
             "node"
-        ],
+        ]
     },
     "exclude": [
         "build",
