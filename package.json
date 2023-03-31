@@ -4,7 +4,7 @@
     "description": "### Messenger application.",
     "type": "module",
     "scripts": {
-        "start": "npm run build && npm run eslint && nodemon app.ts",
+        "start": "npm run eslint && npm run build && nodemon app.ts",
         "dev": "parcel ./src/index.html --port 3000 --open",
         "build": "parcel build ./src/index.html --public-url ./",
         "eslint": "eslint \"**/*.ts\" --ignore-pattern node_modules/"
