@@ -1,13 +1,13 @@
-@import "global.scss";
+@import "global";
 
 // Components
-@import "components/button/button.scss";
-@import "components/input/input.scss";
-@import "components/title/title.scss";
-@import "components/contact/contact.scss";
-@import "components/messenger/messenger.scss";
+@import "components/button/button";
+@import "components/input/input";
+@import "components/title/title";
+@import "components/contact/contact";
+@import "components/messenger/messenger";
 
 // Pages
 
-@import "pages/profile/profile.scss";
-@import "pages/chat/chat.scss";
+@import "pages/profile/profile";
+@import "pages/chat/chat";

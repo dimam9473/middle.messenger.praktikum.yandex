@@ -113,7 +113,7 @@ export class Register extends Block {
         this.children.button = new Button({
             'caption': 'Create account',
             'type': 'button',
-            'className': 'button--green',
+            'className': 'button-green',
             'events': { 'click': formSubmit, },
         });
 

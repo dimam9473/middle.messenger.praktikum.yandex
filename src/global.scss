@@ -1,14 +1,14 @@
-//Colors
-$light: #FFFFFF;
-$lightGreen: #79db9d;
-$darkGreen: #118c90;
-$lightRed: red;
-$lightBrown: ivory;
+// Colors
+$light: #FFF;
+$light-green: #79db9d;
+$dark-green: #118c90;
+$light-red: red;
+$light-brown: ivory;
 
-//Gaps
-$largeGap: 16px;
-$middleGap: 10px;
-$smallGap: 5px;
+// Gaps
+$large-gap: 16px;
+$middle-gap: 10px;
+$small-gap: 5px;
 
 body {
     margin: 0;
@@ -18,9 +18,9 @@ body {
 ul {
     margin-block-start: 0;
     margin-block-end: 0;
-    margin-inline-start: 0px;
-    margin-inline-end: 0px;
-    padding-inline-start: 0px;
+    margin-inline-start: 0;
+    margin-inline-end: 0;
+    padding-inline-start: 0;
 }
 
 a:link {
@@ -30,9 +30,9 @@ a:link {
 .navigation {
     display: flex;
     list-style-type: none;
-    gap: $middleGap;
-    margin-bottom: $largeGap;
-    margin-left: $middleGap;
+    gap: $middle-gap;
+    margin-bottom: $large-gap;
+    margin-left: $middle-gap;
 }
 
 .form-layout {
@@ -54,7 +54,7 @@ a:link {
     align-items: center;
 
     background: $light;
-    box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.14);
+    box-shadow: 0 0 6 rgba(0 0 0 / 14%);
     border-radius: 12px;
 
     &--large {
@@ -68,7 +68,7 @@ a:link {
 }
 
 .clickable-text {
-    color: $lightGreen;
+    color: $light-green;
 
     &:hover {
         cursor: pointer;
@@ -76,6 +76,6 @@ a:link {
 
     &:active,
     &:focus {
-        color: $darkGreen;
+        color: $dark-green;
     }
 }

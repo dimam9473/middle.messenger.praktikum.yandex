@@ -1,4 +1,4 @@
-@import "../../global.scss";
+@import "../../global";
 
 .profile-header {
     width: 100%;
@@ -20,7 +20,7 @@
 .actions {
     display: flex;
     flex-direction: column;
-    gap: $smallGap;
+    gap: $small-gap;
 
     min-height: 65px;
 }

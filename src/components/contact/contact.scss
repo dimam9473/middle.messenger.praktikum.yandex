@@ -1,24 +1,24 @@
-@import "../../global.scss";
+@import "../../global";
 
 .contact-wrapper {
     display: flex;
     align-items: center;
-    column-gap: $middleGap;
+    column-gap: $middle-gap;
 
     height: 70px;
-    border-top: 1px solid $lightGreen;
-    padding: $middleGap;
+    border-top: 1px solid $light-green;
+    padding: $middle-gap;
 
     &:hover {
         cursor: pointer;
     }
 
     &:active {
-        background-color: $lightGreen;
+        background-color: $light-green;
     }
 
     &:last-child {
-        border-bottom: 1px solid $lightGreen;
+        border-bottom: 1px solid $light-green;
     }
 }
 
@@ -34,7 +34,7 @@
 }
 
 .first-name {
-    &:first-letter {
+    &::first-letter {
         text-transform: capitalize;
     }
 }
@@ -52,8 +52,8 @@
     align-items: center;
 
     width: fit-content;
-    padding: $smallGap;
-    background-color: $darkGreen;
+    padding: $small-gap;
+    background-color: $dark-green;
     border-radius: 50%;
 
     margin-left: auto;

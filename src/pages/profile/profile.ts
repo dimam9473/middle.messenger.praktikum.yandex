@@ -176,7 +176,7 @@ export class Profile extends Block {
         this.children.save = new Button({
             'caption': 'Save',
             'type': 'button',
-            'className': 'save button--green',
+            'className': 'save button-green',
             'events': { 'click': () => this.handleSave(), },
         });
 

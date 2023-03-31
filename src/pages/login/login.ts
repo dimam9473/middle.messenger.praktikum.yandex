@@ -42,7 +42,7 @@ export class Login extends Block {
 
         this.children.button = new Button({
             'caption': 'Enter',
-            'className': 'button--green',
+            'className': 'button-green',
             'events': { 'click': formSubmit, },
         });
 

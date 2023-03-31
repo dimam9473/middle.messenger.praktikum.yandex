@@ -1,4 +1,4 @@
-@import "../../global.scss";
+@import "../../global";
 
 .input-wrapper {
     display: flex;
@@ -9,8 +9,8 @@
 .inputs {
     display: flex;
     flex-direction: column;
-    gap: $largeGap;
-    margin-bottom: $largeGap;
+    gap: $large-gap;
+    margin-bottom: $large-gap;
 }
 
 .label,
@@ -21,13 +21,13 @@
 .error {
     flex: 0 0 100%;
     visibility: hidden;
-    color: $lightRed;
+    color: $light-red;
 }
 
 .input {
     border: 1px solid black;
-    border-radius: $smallGap;
-    padding: $smallGap;
+    border-radius: $small-gap;
+    padding: $small-gap;
 
     &:focus-visible {
         outline: none;
@@ -35,12 +35,12 @@
 
     &:focus,
     &:active {
-        border-color: $lightGreen;
+        border-color: $light-green;
     }
 
     &.invalid {
-        background-color: $lightBrown;
-        border-color: $lightRed;
+        background-color: $light-brown;
+        border-color: $light-red;
 
         &+.error {
             visibility: visible;
