@@ -9,8 +9,8 @@
         "strict": true,
         "forceConsistentCasingInFileNames": true,
         "noFallthroughCasesInSwitch": true,
-        "module": "NodeNext",
-        "moduleResolution": "NodeNext",
+        "module": "esnext",
+        "moduleResolution": "node",
         "resolveJsonModule": true,
         "isolatedModules": true,
         "noEmit": true,
@@ -36,8 +36,5 @@
     ],
     "ts-node": {
         "esm": true
-    },
-    "include": [
-        "src"
-    ]
+    }
 }
