@@ -1,25 +1,25 @@
-import Handlebars from "handlebars"
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4, } from 'uuid';
+import Handlebars from 'handlebars'
 
 import EventBus from '../../utils/eventBus';
 
+// eslint-disable-next-line
 class Block<P extends Record<string, any> = any> {
     static EVENTS = {
-        INIT: 'init',
-        FLOW_CDM: 'flow:component-did-mount',
-        FLOW_CDU: 'flow:component-did-update',
-        FLOW_RENDER: 'flow:render'
+        'INIT': 'init',
+        'FLOW_CDM': 'flow:component-did-mount',
+        'FLOW_CDU': 'flow:component-did-update',
+        'FLOW_RENDER': 'flow:render',
     } as const;
 
     private _eventBus: () => EventBus;
     private _element: HTMLElement | null = null;
-    private _display: string = ''
+    private _display = ''
 
     protected props: P;
 
     public id = uuidv4();
     public children: Record<string, Block | Block[]>;
-
 
     /** JSDoc
      * @param {string} tagName
@@ -29,7 +29,7 @@ class Block<P extends Record<string, any> = any> {
      */
     constructor(propsWithChildren: P) {
         const eventBus = new EventBus();
-        const { props, children } = this._getChildrenAndProps(propsWithChildren);
+        const { props, children, } = this._getChildrenAndProps(propsWithChildren);
 
         this.children = children;
         this.props = this._makePropsProxy(props);
@@ -40,7 +40,7 @@ class Block<P extends Record<string, any> = any> {
     }
 
     private _addEvents() {
-        const { events = {} } = this.props as P & { events: Record<string, () => void> };
+        const { events = {}, } = this.props as P & { events: Record<string, () => void> };
 
         Object.keys(events).forEach(eventName => {
             this._element?.addEventListener(eventName, events[eventName]);
@@ -62,7 +62,7 @@ class Block<P extends Record<string, any> = any> {
         const children: Record<string, Block | Block[]> = {};
 
         if (childrenAndProps) {
-            Object.entries(childrenAndProps).forEach(([key, value]) => {
+            Object.entries(childrenAndProps).forEach(([key, value,]) => {
                 const isComponentsList = Array.isArray(value) && value.length > 0 && value.every(v => v instanceof Block)
                 const isComponent = value instanceof Block
                 if (isComponentsList || isComponent) {
@@ -73,7 +73,7 @@ class Block<P extends Record<string, any> = any> {
             });
         }
 
-        return { props: props as P, children };
+        return { 'props': props as P, children, };
     }
 
     private _init() {
@@ -83,6 +83,7 @@ class Block<P extends Record<string, any> = any> {
     }
 
     private _makePropsProxy(props: P) {
+        // eslint-disable-next-line
         const self = this;
 
         return new Proxy(props, {
@@ -91,7 +92,7 @@ class Block<P extends Record<string, any> = any> {
                 return typeof value === 'function' ? value.bind(target) : value;
             },
             set(target, prop: string, value) {
-                const oldTarget = { ...target }
+                const oldTarget = { ...target, }
 
                 target[prop as keyof P] = value;
 
@@ -100,12 +101,12 @@ class Block<P extends Record<string, any> = any> {
             },
             deleteProperty() {
                 throw new Error('Нет доступа');
-            }
+            },
         });
     }
 
     private _removeEvents() {
-        const { events = {} } = this.props as P & { events: Record<string, () => void> };
+        const { events = {}, } = this.props as P & { events: Record<string, () => void> };
 
         Object.keys(events).forEach(eventName => {
             this._element?.removeEventListener(eventName, events[eventName]);
@@ -134,10 +135,11 @@ class Block<P extends Record<string, any> = any> {
         this._addEvents();
     }
 
+    // eslint-disable-next-line
     protected compile(template: string, context: any) {
-        const contextAndStubs = { ...context };
+        const contextAndStubs = { ...context, };
 
-        Object.entries(this.children).forEach(([name, component]) => {
+        Object.entries(this.children).forEach(([name, component,]) => {
             if (Array.isArray(component)) {
                 contextAndStubs[name] = component.map(child => `<div data-id="${child.id}"></div>`)
             } else {
@@ -160,10 +162,11 @@ class Block<P extends Record<string, any> = any> {
 
             component.getContent()?.append(...Array.from(stub.childNodes));
 
-            stub.replaceWith(component.getContent()!);
+            stub.replaceWith(component.getContent());
         }
 
-        Object.entries(this.children).forEach(([_, component]) => {
+        // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
+        Object.entries(this.children).forEach(([_, component,]) => {
             if (Array.isArray(component)) {
                 component.forEach(replaceStub);
             } else {
@@ -174,13 +177,16 @@ class Block<P extends Record<string, any> = any> {
         return temp.content;
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
     protected componentDidMount() {
     }
 
-    protected componentDidUpdate(oldProps: P, newProps: P) {
+    // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
+    protected componentDidUpdate(_oldProps: P, _newProps: P) {
         return true;
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
     protected init() {
     }
 
@@ -206,7 +212,7 @@ class Block<P extends Record<string, any> = any> {
 
     public hide() {
         this._display = this.getContent().style.display
-        this.getContent().style.display = "none";
+        this.getContent().style.display = 'none';
     }
 
     public setProps = (nextProps: Partial<P>) => {
