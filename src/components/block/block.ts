@@ -1,7 +1,7 @@
 import { v4 as uuidv4, } from 'uuid';
 import Handlebars from 'handlebars'
 
-import EventBus from '../../utils/eventBus.ts';
+import EventBus from '../../utils/eventBus';
 
 // eslint-disable-next-line
 class Block<P extends Record<string, any> = any> {
