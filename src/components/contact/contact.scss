@@ -1,0 +1,60 @@
+@import "../../global";
+
+.contact-wrapper {
+    display: flex;
+    align-items: center;
+    column-gap: $middle-gap;
+
+    height: 70px;
+    border-top: 1px solid $light-green;
+    padding: $middle-gap;
+
+    &:hover {
+        cursor: pointer;
+    }
+
+    &:active {
+        background-color: $light-green;
+    }
+
+    &:last-child {
+        border-bottom: 1px solid $light-green;
+    }
+}
+
+.user-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.chat-info {
+    display: flex;
+    flex-direction: column;
+    margin-left: auto;
+}
+
+.first-name {
+    &::first-letter {
+        text-transform: capitalize;
+    }
+}
+
+.last-message {
+    inline-size: 150px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.unread-count {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: fit-content;
+    padding: $small-gap;
+    background-color: $dark-green;
+    border-radius: 50%;
+
+    margin-left: auto;
+}

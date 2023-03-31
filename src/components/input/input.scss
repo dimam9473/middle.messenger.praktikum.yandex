@@ -1,14 +1,49 @@
-@import "../../global.scss";
+@import "../../global";
+
+.input-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
 
 .inputs {
     display: flex;
     flex-direction: column;
-    gap: $largeGap;
-    margin-bottom: 30px;
+    gap: $large-gap;
+    margin-bottom: $large-gap;
 }
 
-.input-wrapper {
-    display: flex;
-    justify-content: space-between;
-    gap: $middleGap;
+.label,
+.input {
+    flex: 0 0 45%;
+}
+
+.error {
+    flex: 0 0 100%;
+    visibility: hidden;
+    color: $light-red;
+}
+
+.input {
+    border: 1px solid black;
+    border-radius: $small-gap;
+    padding: $small-gap;
+
+    &:focus-visible {
+        outline: none;
+    }
+
+    &:focus,
+    &:active {
+        border-color: $light-green;
+    }
+
+    &.invalid {
+        background-color: $light-brown;
+        border-color: $light-red;
+
+        &+.error {
+            visibility: visible;
+        }
+    }
 }

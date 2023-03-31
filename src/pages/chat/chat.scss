@@ -1,0 +1,36 @@
+.chat-wrapper {
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+}
+
+.menu {
+    overflow-y: auto;
+
+    display: flex;
+    flex-direction: column;
+    gap: $large-gap;
+
+    max-width: 400px;
+    padding: $middle-gap;
+    border-right: 1px solid $light-green;
+}
+
+.menu-profile {
+    margin-left: auto;
+}
+
+.menu-header {
+    display: flex;
+    gap: $middle-gap
+}
+
+.contacts {
+    list-style-type: none;
+}
+
+.chat {
+    flex-grow: 1;
+    padding: $middle-gap;
+    padding-right: $large-gap;
+}

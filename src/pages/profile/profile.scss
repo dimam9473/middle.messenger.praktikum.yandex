@@ -1,4 +1,4 @@
-@import "../../global.scss";
+@import "../../global";
 
 .profile-header {
     width: 100%;
@@ -12,8 +12,23 @@
     left: 0;
 }
 
+.inputs {
+    min-height: 350px;
+    max-width: 500px;
+}
+
 .actions {
     display: flex;
     flex-direction: column;
-    gap: $smallGap;
+    gap: $small-gap;
+
+    min-height: 65px;
+}
+
+.save {
+    min-width: 300px;
+}
+
+.cancel {
+    text-align: center;
 }

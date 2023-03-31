@@ -1,0 +1,7 @@
+{
+    "rules": {
+        "color-no-invalid-hex": true,
+        "declaration-empty-line-before": null
+    },
+    "extends": "stylelint-config-standard-scss"
+}

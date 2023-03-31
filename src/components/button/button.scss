@@ -1,9 +1,9 @@
-@import "../../global.scss";
+@import "../../global";
 
 .button {
     border: none;
     border-radius: 8px;
-    padding: 12px 0;
+    padding: $large-gap 0;
     width: 100%;
 
     &:hover {
@@ -11,6 +11,6 @@
     }
 }
 
-.button--green {
-    background: linear-gradient(to right, $lightGreen, $darkGreen);
+.button-green {
+    background: linear-gradient(to right, $light-green, $dark-green);
 }
