@@ -4,7 +4,7 @@ import Handlebars from 'handlebars'
 import EventBus from '../../utils/eventBus';
 
 // eslint-disable-next-line
-class Block<P extends Record<string, any> = any> {
+class Block<P extends Record<string, unknown> = any> {
     static EVENTS = {
         'INIT': 'init',
         'FLOW_CDM': 'flow:component-did-mount',
@@ -27,7 +27,7 @@ class Block<P extends Record<string, any> = any> {
      *
      * @returns {void}
      */
-    constructor(propsWithChildren: P) {
+    constructor(propsWithChildren?: P) {
         const eventBus = new EventBus();
         const { props, children, } = this._getChildrenAndProps(propsWithChildren);
 
@@ -57,7 +57,7 @@ class Block<P extends Record<string, any> = any> {
         }
     }
 
-    private _getChildrenAndProps(childrenAndProps: P): { props: P, children: Record<string, Block | Block[]> } {
+    private _getChildrenAndProps(childrenAndProps?: P): { props: P, children: Record<string, Block | Block[]> } {
         const props: Record<string, unknown> = {};
         const children: Record<string, Block | Block[]> = {};
 
