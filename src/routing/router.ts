@@ -1,30 +1,34 @@
 import { Block, } from '../components';
-import { Login, Profile, } from '../pages';
+import { NotFoundError, } from '../pages';
+
+import { Routes, } from '../constants/routes'
 import Route from './route';
 
 class Router {
     private static _instance: Router;
-    private _currentRoute?: Route | null;
-    private _rootQuery?: string;
+    private _currentRoute!: Route | null;
+    private _rootQuery!: string;
+    private _notFoundRoute!: Route
 
-    public history?: History
-    public routes?: Route[]
+    public history!: History
+    public routes!: Route[]
 
     constructor(rootQuery: string) {
         if (Router._instance) {
             return Router._instance;
         }
 
-        this.routes = [];
         this.history = window.history;
         this._currentRoute = null;
         this._rootQuery = rootQuery;
+        this._notFoundRoute = new Route(Routes.notFoundError, NotFoundError, { 'rootQuery': this._rootQuery, })
+        this.routes = []
 
         Router._instance = this;
     }
 
     use(pathname: string, block: typeof Block) {
-        const route = new Route(pathname, block, { 'rootQuery': this._rootQuery || '', });
+        const route = new Route(pathname, block, { 'rootQuery': this._rootQuery, });
 
         this.routes?.push(route);
 
@@ -43,9 +47,6 @@ class Router {
 
     _onRoute(pathName: string) {
         const route = this.getRoute(pathName);
-        if (!route) {
-            return;
-        }
 
         if (this._currentRoute && this._currentRoute !== route) {
             this._currentRoute.leave();
@@ -69,33 +70,8 @@ class Router {
     }
 
     getRoute(pathName: string) {
-        return this.routes?.find(route => route.match(pathName));
+        return this.routes?.find(route => route.match(pathName)) || this._notFoundRoute;
     }
 }
 
 export default Router
-// Необходимо оставить в силу особенностей тренажёра
-// history.pushState({}, '', '/');
-
-const router = new Router('.app');
-
-// Можно обновиться на /user и получить сразу пользователя
-router
-    .use('/', Login)
-    .use('/users', Profile)
-    .start();
-
-// Через секунду контент изменится сам, достаточно дёрнуть переход
-setTimeout(() => {
-    router.go('/users');
-}, 1000);
-
-// А можно и назад
-setTimeout(() => {
-    router.back();
-}, 3000);
-
-// И снова вперёд
-setTimeout(() => {
-    router.forward();
-}, 5000);

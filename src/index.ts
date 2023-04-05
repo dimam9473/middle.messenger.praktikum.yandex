@@ -1,37 +1,41 @@
-import { Chat, Login, NotFoundError, Profile, Register, ServerError, } from './pages'
-import Block from './components/block/block'
+import { Chat, Login, Profile, Register, ServerError, } from './pages'
 
-import { render, } from './utils/render'
+import Router from './routing/router';
 
 window.addEventListener('load', function () {
-    let component: Block
+    const router = new Router('#root');
 
-    switch (window.location.pathname) {
-        case '/': {
-            component = new Login()
-            break
-        }
-        case '/register': {
-            component = new Register()
-            break
-        }
-        case '/chat': {
-            component = new Chat()
-            break
-        }
-        case '/profile': {
-            component = new Profile()
-            break
-        }
-        case '/500': {
-            component = new ServerError()
-            break
-        }
-        default: {
-            component = new NotFoundError()
-        }
-    }
-
-    render('#root', component)
-    component.dispatchComponentDidMount()
+    router
+        .use('/', Login)
+        .use('/register', Register)
+        .use('/chat', Chat)
+        .use('/profile', Profile)
+        .use('/500', ServerError)
+        .start();
 })
+
+// Необходимо оставить в силу особенностей тренажёра
+// history.pushState({}, '', '/');
+
+// const router = new Router('.app');
+
+// // Можно обновиться на /user и получить сразу пользователя
+// router
+//     .use('/', Login)
+//     .use('/users', Profile)
+//     .start();
+
+// // Через секунду контент изменится сам, достаточно дёрнуть переход
+// setTimeout(() => {
+//     router.go('/users');
+// }, 1000);
+
+// // А можно и назад
+// setTimeout(() => {
+//     router.back();
+// }, 3000);
+
+// // И снова вперёд
+// setTimeout(() => {
+//     router.forward();
+// }, 5000);

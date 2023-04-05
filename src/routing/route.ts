@@ -4,10 +4,10 @@ import { isEqual, } from '../utils/isEqual';
 import { render, } from '../utils/render';
 
 class Route {
-    private _pathName?: string
-    private _blockClass?: typeof Block
-    private _block?: Block | null
-    private _props?: RouteProps
+    private _pathName!: string
+    private _blockClass!: typeof Block
+    private _block!: Block | null
+    private _props!: RouteProps
 
     constructor(pathName: string, view: typeof Block, props: RouteProps) {
         this._pathName = pathName;
@@ -41,11 +41,13 @@ class Route {
 
             this._block = new this._blockClass();
 
-            if (this._props?.rootQuery === undefined) {
+            if (!this._props?.rootQuery.length) {
                 throw new Error('Root query does not specified')
             }
 
             render(this._props.rootQuery, this._block);
+            this._block.dispatchComponentDidMount()
+
             return;
         }
 
