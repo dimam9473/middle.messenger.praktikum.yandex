@@ -1,37 +1,15 @@
-import { Chat, Login, NotFoundError, Profile, Register, ServerError, } from './pages'
-import Block from './components/block/block'
+import { Chat, Login, Profile, Register, ServerError, } from './pages'
 
-import { render, } from './utils/render'
+import Router from './routing/router';
 
 window.addEventListener('load', function () {
-    let component: Block
+    const router = new Router('#root');
 
-    switch (window.location.pathname) {
-        case '/': {
-            component = new Login()
-            break
-        }
-        case '/register': {
-            component = new Register()
-            break
-        }
-        case '/chat': {
-            component = new Chat()
-            break
-        }
-        case '/profile': {
-            component = new Profile()
-            break
-        }
-        case '/500': {
-            component = new ServerError()
-            break
-        }
-        default: {
-            component = new NotFoundError()
-        }
-    }
-
-    render('#root', component)
-    component.dispatchComponentDidMount()
+    router
+        .use('/', Login)
+        .use('/register', Register)
+        .use('/chat', Chat)
+        .use('/profile', Profile)
+        .use('/500', ServerError)
+        .start();
 })
