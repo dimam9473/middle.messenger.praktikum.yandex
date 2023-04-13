@@ -30,16 +30,15 @@ class Router {
     use(pathname: string, block: typeof Block) {
         const route = new Route(pathname, block, { 'rootQuery': this._rootQuery, });
 
-        this.routes?.push(route);
+        this.routes.push(route);
 
         return this;
     }
 
     start() {
         window.onpopstate = ((event: PopStateEvent) => {
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            //@ts-ignore
-            this._onRoute(event.currentTarget?.location.pathname);
+            const target = event.currentTarget as Window
+            this._onRoute(target.location.pathname);
         }).bind(this);
 
         this._onRoute(window.location.pathname);
