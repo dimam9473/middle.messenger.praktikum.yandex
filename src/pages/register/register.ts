@@ -1,6 +1,7 @@
 import { Block, Button, Input, Link, Title, } from '../../components';
 
 import { InputNames, } from '../../constants/inputNames';
+import { RegisterController, } from '../../controllers/register';
 import {
     emailFocus,
     firstNameFocus,
@@ -17,9 +18,10 @@ import {
     validateRepeatPassword,
     validateSecondName,
 } from '../../utils/inputHelper';
-import { formSubmit, } from '../../controllers/register';
 
 import { registerTemplate, } from './registerTpl';
+
+const registerController = new RegisterController()
 
 export class Register extends Block {
     constructor(props?: object) {
@@ -114,7 +116,7 @@ export class Register extends Block {
             'caption': 'Create account',
             'type': 'button',
             'className': 'button-green',
-            'events': { 'click': formSubmit, },
+            'events': { 'click': registerController.formSubmit, },
         });
 
         this.children.link = new Link({

@@ -1,9 +1,11 @@
 import { InputNames, } from '../../constants/inputNames';
-import { formSubmit, } from '../../controllers/login';
+import { LoginController, } from '../../controllers/login';
 import { loginFocus, passwordFocus, validateLogin, validatePassword, } from '../../utils/inputHelper';
 
 import { Block, Button, Input, Link, Title, } from '../../components';
 import { loginTemplate, } from './loginTpl';
+
+const loginController = new LoginController()
 
 export class Login extends Block {
     constructor(props?: object) {
@@ -43,7 +45,7 @@ export class Login extends Block {
         this.children.button = new Button({
             'caption': 'Enter',
             'className': 'button-green',
-            'events': { 'click': formSubmit, },
+            'events': { 'click': loginController.formSubmit, },
         });
 
         this.children.link = new Link({

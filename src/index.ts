@@ -3,7 +3,7 @@ import { Chat, Login, Profile, Register, ServerError, } from './pages'
 import Router from './routing/router';
 
 window.addEventListener('load', function () {
-    const router = new Router('#root');
+    const router = new Router();
 
     router
         .use('/', Login)

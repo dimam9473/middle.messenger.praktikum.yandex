@@ -1,21 +1,52 @@
-import { validateLogin, validatePassword, } from '../utils/inputHelper'
+import { validateUserLogin, } from '../validation/login';
+import LoginApi from '../api/login';
+import Router from '../routing/router';
 
-export function formSubmit(event: Event) {
-    event.preventDefault()
-    const isLoginValid = validateLogin()
-    const isPasswordValid = validatePassword()
+interface LoginFormModel {
+    email: string;
+    password: string;
+}
 
-    if (!isLoginValid || !isPasswordValid) {
-        return
+const loginApi = new LoginApi();
+const router = new Router();
+
+export class LoginController {
+    public async login(data: LoginFormModel) {
+        try {
+            // Запускаем крутилку
+
+            // const validateData = userLoginValidator(data);
+
+            if (!validateUserLogin()) {
+                throw new Error('The data is filled incorrectly');
+            }
+
+            const userID = await loginApi.request(data);
+            console.log(userID)
+
+            router.go('/chats');
+
+            // Останавливаем крутилку
+        } catch (error) {
+            // Логика обработки ошибок
+        }
     }
 
-    const form = (document.querySelector('#login-form')) as HTMLFormElement
-    const data = new FormData(form)
+    formSubmit(event: Event) {
+        event.preventDefault()
 
-    for (const pair of Array.from(data)) {
-        // eslint-disable-next-line no-console
-        console.log(`${pair[0]}: ${pair[1]}`);
+        if (!validateUserLogin()) {
+            return
+        }
+
+        const form = (document.querySelector('#login-form')) as HTMLFormElement
+        const data = new FormData(form)
+
+        for (const pair of Array.from(data)) {
+            // eslint-disable-next-line no-console
+            console.log(`${pair[0]}: ${pair[1]}`);
+        }
+
+        window.location.pathname = 'chat'
     }
-
-    window.location.pathname = 'chat'
 }

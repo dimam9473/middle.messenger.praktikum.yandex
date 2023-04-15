@@ -13,14 +13,14 @@ class Router {
     public history!: History
     public routes!: Route[]
 
-    constructor(rootQuery: string) {
+    constructor(rootQuery?: string) {
         if (Router._instance) {
             return Router._instance;
         }
 
         this.history = window.history;
         this._currentRoute = null;
-        this._rootQuery = rootQuery;
+        this._rootQuery = rootQuery || '#root';
         this._notFoundRoute = new Route(Routes.notFoundError, NotFoundError, { 'rootQuery': this._rootQuery, })
         this.routes = []
 

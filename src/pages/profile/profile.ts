@@ -21,6 +21,7 @@ import {
     validateRepeatPassword,
     validateSecondName,
 } from '../../utils/inputHelper';
+import store, { StoreEvents, } from '../../store/store';
 
 import { profileTemplate, } from './profileTpl';
 
@@ -30,6 +31,11 @@ let passwordInputs: Input[] = []
 export class Profile extends Block {
     constructor(props?: object) {
         super(props);
+
+        store.on(StoreEvents.Updated, () => {
+            // вызываем обновление компонента, передав данные из хранилища
+            this.setProps(store.getState());
+        });
     }
 
     protected init(): void {
