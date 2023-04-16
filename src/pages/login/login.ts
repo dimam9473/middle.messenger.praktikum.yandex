@@ -5,14 +5,15 @@ import { loginFocus, passwordFocus, validateLogin, validatePassword, } from '../
 import { Block, Button, Input, Link, Title, } from '../../components';
 import { loginTemplate, } from './loginTpl';
 
-const loginController = new LoginController()
-
 export class Login extends Block {
+    private _loginController?: LoginController
+
     constructor(props?: object) {
         super(props);
     }
 
     protected init(): void {
+        this._loginController = new LoginController()
         this.children.title = new Title({
             'caption': 'Sign In',
         })
@@ -45,7 +46,7 @@ export class Login extends Block {
         this.children.button = new Button({
             'caption': 'Enter',
             'className': 'button-green',
-            'events': { 'click': loginController.formSubmit, },
+            'events': { 'click': this._loginController.formSubmit, },
         });
 
         this.children.link = new Link({

@@ -1,28 +1,28 @@
 import { METHODS, } from '../constants/methods';
-import { Options, } from '../types/fetch';
+import { Options, OptionsWithouMethods, } from '../types/fetch';
 import { queryStringify, } from '../utils/queries';
 
 export class HTTPTransport {
-    get = (url: string, options?: Options) => {
+    get = (url: string, options?: OptionsWithouMethods) => {
 
         return this.request(url, { ...options, 'method': METHODS.GET, });
     };
 
-    post = (url: string, options: Options) => {
+    post = (url: string, options: OptionsWithouMethods) => {
         return this.request(url, { ...options, 'method': METHODS.POST, });
     };
 
-    put = (url: string, options: Options) => {
+    put = (url: string, options: OptionsWithouMethods) => {
         return this.request(url, { ...options, 'method': METHODS.PUT, });
     };
 
-    delete = (url: string, options: Options) => {
+    delete = (url: string, options: OptionsWithouMethods) => {
         return this.request(url, { ...options, 'method': METHODS.DELETE, });
     };
 
     request = (url: string, options: Options) => {
         const { headers = {}, method, data, timeout = 5000, } = options;
-
+        debugger
         return new Promise(function (resolve, reject) {
             if (!method) {
                 reject('No method');

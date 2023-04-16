@@ -3,50 +3,53 @@ import LoginApi from '../api/login';
 import Router from '../routing/router';
 
 interface LoginFormModel {
-    email: string;
+    login: string;
     password: string;
 }
 
 const loginApi = new LoginApi();
-const router = new Router();
 
 export class LoginController {
-    public async login(data: LoginFormModel) {
+    private _router
+    constructor() {
+        this._router = new Router();
+        this.formSubmit = this.formSubmit.bind(this)
+    }
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    private async _login(data: LoginFormModel) {
         try {
             // Запускаем крутилку
 
-            // const validateData = userLoginValidator(data);
-
-            if (!validateUserLogin()) {
-                throw new Error('The data is filled incorrectly');
-            }
-
             const userID = await loginApi.request(data);
             console.log(userID)
+            if (!userID) {
+                throw new Error('User was not found')
+            }
 
-            router.go('/chats');
-
+            this._router.go('/chat');
             // Останавливаем крутилку
         } catch (error) {
             // Логика обработки ошибок
         }
     }
 
-    formSubmit(event: Event) {
+    async formSubmit(event: Event) {
         event.preventDefault()
 
-        if (!validateUserLogin()) {
-            return
-        }
+        // if (!validateUserLogin()) {
+        //     return
+        // }
 
-        const form = (document.querySelector('#login-form')) as HTMLFormElement
-        const data = new FormData(form)
+        // const form = ((event.target as HTMLElement).parentElement) as HTMLFormElement
+        // const data = new FormData(form)
 
-        for (const pair of Array.from(data)) {
-            // eslint-disable-next-line no-console
-            console.log(`${pair[0]}: ${pair[1]}`);
-        }
+        // const user: Partial<LoginFormModel> = {}
 
-        window.location.pathname = 'chat'
+        // for (const pair of Array.from(data)) {
+        //     const propertyName: keyof LoginFormModel = pair[0].toString() as keyof LoginFormModel
+        //     user[propertyName] = pair[1].toString()
+        // }
+        const defaultUser: LoginFormModel = { 'login': 'practicum', 'password': 'p@ssw0rdOa1', }
+        await this._login(defaultUser as LoginFormModel)
     }
 }

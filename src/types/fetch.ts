@@ -11,3 +11,5 @@ export type Options = {
     headers?: { [key: string]: string }
     tries?: number
 }
+
+export type OptionsWithouMethods = Omit<Options, 'method'>
