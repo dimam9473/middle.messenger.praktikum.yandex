@@ -6,6 +6,7 @@ export const inputTemplate = `
         id="{{id}}" 
         name="{{name}}" 
         type="{{#if type}}{{type}}{{else}}text{{/if}}" 
+        value="{{value}}"
         placeholder="{{placeholder}}"
         {{#if required}}required="{{required}}"{{/if}}
         {{#if pattern}}pattern="{{pattern}}"{{/if}}

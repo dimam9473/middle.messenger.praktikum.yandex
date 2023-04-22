@@ -15,6 +15,7 @@ class Block<P extends Record<string, unknown> = any> {
     private _eventBus: () => EventBus;
     private _element: HTMLElement | null = null;
     private _display = ''
+    private _isActivePage = false
 
     protected props: P;
 
@@ -96,7 +97,7 @@ class Block<P extends Record<string, unknown> = any> {
 
                 target[prop as keyof P] = value;
 
-                self._eventBus().emit(Block.EVENTS.FLOW_CDU, oldTarget, target);
+                self._isActivePage && self._eventBus().emit(Block.EVENTS.FLOW_CDU, oldTarget, target);
                 return true;
             },
             deleteProperty() {
@@ -133,6 +134,8 @@ class Block<P extends Record<string, unknown> = any> {
         this._element = newElement;
 
         this._addEvents();
+
+        this._isActivePage = true
     }
 
     // eslint-disable-next-line
@@ -213,6 +216,7 @@ class Block<P extends Record<string, unknown> = any> {
     public hide() {
         this._display = this.getContent().style.display
         this.getContent().style.display = 'none';
+        this._isActivePage = false
     }
 
     public setProps = (nextProps: Partial<P>) => {

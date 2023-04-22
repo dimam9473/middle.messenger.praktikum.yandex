@@ -4,25 +4,24 @@ import { queryStringify, } from '../utils/queries';
 
 export class HTTPTransport {
     get = (url: string, options?: OptionsWithouMethods) => {
-
         return this.request(url, { ...options, 'method': METHODS.GET, });
     };
 
-    post = (url: string, options: OptionsWithouMethods) => {
+    post = (url: string, options?: OptionsWithouMethods) => {
         return this.request(url, { ...options, 'method': METHODS.POST, });
     };
 
-    put = (url: string, options: OptionsWithouMethods) => {
+    put = (url: string, options?: OptionsWithouMethods) => {
         return this.request(url, { ...options, 'method': METHODS.PUT, });
     };
 
-    delete = (url: string, options: OptionsWithouMethods) => {
+    delete = (url: string, options?: OptionsWithouMethods) => {
         return this.request(url, { ...options, 'method': METHODS.DELETE, });
     };
 
-    request = (url: string, options: Options) => {
+    request = (url: string, options: Options): Promise<XMLHttpRequest> => {
         const { headers = {}, method, data, timeout = 5000, } = options;
-        debugger
+
         return new Promise(function (resolve, reject) {
             if (!method) {
                 reject('No method');
@@ -31,6 +30,8 @@ export class HTTPTransport {
 
             const xhr = new XMLHttpRequest();
             const isGet = method === METHODS.GET;
+
+            xhr.withCredentials = true;
 
             xhr.open(
                 method,

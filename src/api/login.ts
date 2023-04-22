@@ -1,28 +1,29 @@
 import { BaseAPI, } from './base';
-import { OptionsWithouMethods, XHRData, } from '../types/fetch';
+import { LoginProps, } from '../types/login';
+import { OptionsWithouMethods, } from '../types/fetch';
+import { ResponseStatuses, } from '../constants/responseStatuses';
 import { URLS, } from '../constants/url';
 import HTTPTransport from './HTTPTransport';
 
-type LoginRequest = {
-    login: string;
-    password: string;
-}
-
-type LoginResponse = {
-    user_id: string
-}
-
 class LoginApi extends BaseAPI {
-    private _prepareUser(user: LoginRequest): OptionsWithouMethods {
-        return { 'data': user as unknown as XHRData, }
+    private _prepareProps(user: LoginProps): OptionsWithouMethods {
+        return {
+            'data': JSON.stringify(user),
+            'headers': {
+                'content-type': 'application/json',
+            },
+        }
     }
 
-    public async request(user: LoginRequest) {
-        // const { user_id, } = (await HTTPTransport.post(`${URLS.basuUrl}/auth/user`, this._prepareUser(user)) as LoginResponse);
-        const request = await HTTPTransport.post(`${URLS.basuUrl}/auth/signin`, this._prepareUser(user));
-        const { user_id, } = request as LoginResponse
-
-        return user_id;
+    public async request(user: LoginProps): Promise<string> {
+        const request = await HTTPTransport.post(`${URLS.baseUrl}/auth/signin`, this._prepareProps(user));
+        const status = request.responseText
+        if (status === ResponseStatuses.OK) {
+            return String(status);
+        } else {
+            const { reason, } = JSON.parse(request.responseText)
+            return String(reason)
+        }
     }
 }
 

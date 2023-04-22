@@ -1,6 +1,6 @@
 import { Block, Button, Input, Link, Text, } from '../../components';
 import { InputNames, } from '../../constants/inputNames';
-import { changeData, changePassword, handleSave, restoreInputs, } from '../../controllers/profile';
+import { ProfileController, } from '../../controllers/profile';
 import {
     displayNameFocus,
     emailFocus,
@@ -23,22 +23,42 @@ import {
 } from '../../utils/inputHelper';
 import store, { StoreEvents, } from '../../store/store';
 
+import { AuthUserProps, } from '../../types/user';
+import { connect, } from '../../store/connect';
 import { profileTemplate, } from './profileTpl';
+import Router from '../../routing/router';
 
 let inputs: Input[] = []
 let passwordInputs: Input[] = []
 
-export class Profile extends Block {
+class Profile extends Block {
+    private _profileController?: ProfileController
+    private _router
+
     constructor(props?: object) {
         super(props);
 
+        this._router = new Router();
+
         store.on(StoreEvents.Updated, () => {
             // вызываем обновление компонента, передав данные из хранилища
-            this.setProps(store.getState());
+            const state = store.getState()
+            this.setProps({ ...state, });
         });
+
+        this.hideComponents = this.hideComponents.bind(this)
+        this.changePassword = this.changePassword.bind(this)
+        this.handleSave = this.handleSave.bind(this)
+        this.cancel = this.cancel.bind(this)
+        this.changeData = this.changeData.bind(this)
     }
 
     protected init(): void {
+        this._profileController = new ProfileController(this.children)
+
+        const user = this.props.user as AuthUserProps
+        // const user = state.user as AuthUserProps
+
         this.children.back = new Link({
             'caption': 'Back',
             'href': 'chat',
@@ -48,6 +68,7 @@ export class Profile extends Block {
         this.children.emailInput = new Input({
             'id': InputNames.email,
             'name': InputNames.email,
+            'value': user?.email ?? '',
             'label': 'Email',
             'placeholder': 'mail@mail.com',
             'readOnly': true,
@@ -188,8 +209,11 @@ export class Profile extends Block {
 
         this.children.logout = new Link({
             'caption': 'Logout',
-            'href': '/',
+            'href': '#',
             'className': 'clickable-text',
+            'events': {
+                'click': (event: Event) => this.logout.call(this, event),
+            },
         })
 
         this.children.changeData = new Text({
@@ -211,6 +235,12 @@ export class Profile extends Block {
         this.hideComponents()
     }
 
+    logout(event: Event) {
+        event.preventDefault()
+        this._profileController?.logout()
+        this._router.go('/');
+    }
+
     hideComponents() {
         (this.children.oldPasswordInput as Block).hide();
         (this.children.newPasswordInput as Block).hide();
@@ -220,19 +250,19 @@ export class Profile extends Block {
     }
 
     changePassword() {
-        changePassword.call(this, inputs, passwordInputs)
+        this._profileController?.changePassword(inputs, passwordInputs)
     }
 
     handleSave() {
-        handleSave.call(this, inputs, passwordInputs)
+        this._profileController?.handleSave(inputs, passwordInputs)
     }
 
     cancel() {
-        restoreInputs.call(this, inputs, passwordInputs)
+        this._profileController?.restoreInputs(inputs, passwordInputs)
     }
 
     changeData() {
-        changeData.call(this, inputs)
+        this._profileController?.changeData(inputs)
     }
 
     render() {
@@ -240,3 +270,13 @@ export class Profile extends Block {
         return template;
     }
 }
+
+function mapUserToProps(state: Record<string, unknown>) {
+    return {
+        'user': state.user,
+    };
+}
+
+// const test = connect(mapUserToProps)(Profile)
+
+export default connect(mapUserToProps)(Profile)
