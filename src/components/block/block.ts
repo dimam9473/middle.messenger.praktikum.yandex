@@ -226,6 +226,7 @@ class Block<P extends Record<string, unknown> = any> {
     };
 
     public show() {
+        this._isActivePage = true
         this.getContent().classList.remove('hide')
     }
 
