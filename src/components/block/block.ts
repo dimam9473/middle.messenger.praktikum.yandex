@@ -14,7 +14,6 @@ class Block<P extends Record<string, unknown> = any> {
 
     private _eventBus: () => EventBus;
     private _element: HTMLElement | null = null;
-    private _display = ''
     private _isActivePage = false
 
     protected props: P;
@@ -214,8 +213,7 @@ class Block<P extends Record<string, unknown> = any> {
     }
 
     public hide() {
-        this._display = this.getContent().style.display
-        this.getContent().style.display = 'none';
+        this.getContent().classList.add('hide')
         this._isActivePage = false
     }
 
@@ -228,7 +226,7 @@ class Block<P extends Record<string, unknown> = any> {
     };
 
     public show() {
-        this.getContent().style.display = this._display;
+        this.getContent().classList.remove('hide')
     }
 
     get element() {

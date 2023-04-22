@@ -54,10 +54,9 @@ class Profile extends Block {
     }
 
     protected init(): void {
-        this._profileController = new ProfileController(this.children)
+        this._profileController = new ProfileController()
 
         const user = this.props.user as AuthUserProps
-        // const user = state.user as AuthUserProps
 
         this.children.back = new Link({
             'caption': 'Back',
@@ -250,19 +249,20 @@ class Profile extends Block {
     }
 
     changePassword() {
-        this._profileController?.changePassword(inputs, passwordInputs)
+        this._profileController?.changePassword.call(this, inputs, passwordInputs)
     }
 
     handleSave() {
-        this._profileController?.handleSave(inputs, passwordInputs)
+        this._profileController?.handleSave()
+        this._profileController?.restoreInputs.call(this, inputs, passwordInputs)
     }
 
     cancel() {
-        this._profileController?.restoreInputs(inputs, passwordInputs)
+        this._profileController?.restoreInputs.call(this, inputs, passwordInputs)
     }
 
     changeData() {
-        this._profileController?.changeData(inputs)
+        this._profileController?.changeData.call(this, inputs)
     }
 
     render() {

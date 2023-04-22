@@ -15,43 +15,35 @@ import ProfileApi from '../api/profile';
 const profileApi = new ProfileApi();
 
 export class ProfileController {
-    private _children: Record<string, Block | Block[]>
-
-    constructor(children: Record<string, Block | Block[]>) {
-        this.restoreInputs = this.restoreInputs.bind(this)
-        this._children = children
-        this.changeData = this.changeData.bind(this)
-        this.changePassword = this.changePassword.bind(this)
-        this.restoreInputs = this.restoreInputs.bind(this)
-        this.handleSave = this.handleSave.bind(this)
-    }
-
-    changeData(inputs: Input[]) {
+    changeData(this: Block, inputs: Input[]) {
         inputs.forEach(input => input.setProps({
             'readOnly': false,
         }));
 
-        (this._children.changeData as Block).hide();
-        (this._children.changePassword as Block).hide();
-        (this._children.logout as Block).hide();
-        (this._children.save as Block).show();
-        (this._children.cancel as Block).show();
+        (this.children.changeData as Block).hide();
+        (this.children.changePassword as Block).hide();
+        (this.children.logout as Block).hide();
+        (this.children.save as Block).show();
+        (this.children.cancel as Block).show();
     }
 
-    changePassword(inputs: Input[], passwordInputs: Input[]) {
+    changePassword(this: Block, inputs: Input[], passwordInputs: Input[]) {
         inputs.forEach(input => input.hide())
-        passwordInputs.forEach(input => input.setProps({
-            'readOnly': false,
-        }));
+        passwordInputs.forEach(input => {
+            input.show()
+            input.setProps({
+                'readOnly': false,
+            })
+        });
 
-        (this._children.changeData as Block).hide();
-        (this._children.changePassword as Block).hide();
-        (this._children.logout as Block).hide();
-        (this._children.save as Block).show();
-        (this._children.cancel as Block).show();
+        (this.children.changeData as Block).hide();
+        (this.children.changePassword as Block).hide();
+        (this.children.logout as Block).hide();
+        (this.children.save as Block).show();
+        (this.children.cancel as Block).show();
     }
 
-    restoreInputs(inputs: Input[], passwordInputs: Input[]) {
+    restoreInputs(this: Block, inputs: Input[], passwordInputs: Input[]) {
         inputs.forEach(input => {
             input.setProps({
                 'readOnly': true,
@@ -66,14 +58,14 @@ export class ProfileController {
             input.hide()
         });
 
-        (this._children.changeData as Block).show();
-        (this._children.changePassword as Block).show();
-        (this._children.logout as Block).show();
-        (this._children.save as Block).hide();
-        (this._children.cancel as Block).hide();
+        (this.children.changeData as Block).show();
+        (this.children.changePassword as Block).show();
+        (this.children.logout as Block).show();
+        (this.children.save as Block).hide();
+        (this.children.cancel as Block).hide();
     }
 
-    handleSave(inputs: Input[], passwordInputs: Input[]) {
+    handleSave() {
         const isLoginValid = validateLogin()
         const isEmailValid = validateEmail()
         const isFirstNameValid = validateFirstName()
@@ -104,8 +96,6 @@ export class ProfileController {
             // eslint-disable-next-line no-console
             console.log(`${pair[0]}: ${pair[1]}`);
         }
-
-        this.restoreInputs(inputs, passwordInputs)
     }
 
     async logout() {

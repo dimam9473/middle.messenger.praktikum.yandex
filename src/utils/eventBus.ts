@@ -43,7 +43,8 @@ class EventBus {
         const key = getTypeKey<Listener>(event)
 
         if (!this.listeners[key]) {
-            throw new Error(`Нет события: ${event}`);
+            // eslint-disable-next-line no-console
+            console.warn(`Нет события: ${event}`);
         }
 
         this.listeners[key].forEach(listener => {
