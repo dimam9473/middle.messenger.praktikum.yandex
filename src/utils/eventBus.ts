@@ -45,6 +45,7 @@ class EventBus {
         if (!this.listeners[key]) {
             // eslint-disable-next-line no-console
             console.warn(`Нет события: ${event}`);
+            return
         }
 
         this.listeners[key].forEach(listener => {
