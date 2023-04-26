@@ -30,7 +30,8 @@ export class RegisterController {
             return
         }
 
-        const form = (document.querySelector('#register-form')) as HTMLFormElement
+        const form = ((event.target as HTMLElement).parentElement) as HTMLFormElement
+        // const form = (document.querySelector('#register-form')) as HTMLFormElement
         const data = new FormData(form)
         const user: Partial<UserProps> = {}
 

@@ -3,7 +3,10 @@ export const profileTemplate = `
     <section class="form-wrapper form-wrapper--large">
         <div class="profile-header">
             {{{back}}}            
-            <img src="#" alt="avatar">
+            {{{avatar}}}
+            <form id="myUserForm">
+                {{{fileUploader}}}
+            </form>             
         </div>        
         <h2>Here will be Name Surname of user</h2>
         <form id="profile-form" class="inputs">

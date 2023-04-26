@@ -16,16 +16,7 @@ export class Input extends Block {
             : VALIDATION_MESSAGES[this.props.name as InputNames]
 
         return this.compile(inputTemplate, {
-            'id': this.props.id,
-            'type': this.props.type,
-            'name': this.props.name,
-            'label': this.props.label,
-            'placeholder': this.props.placeholder,
-            'inputWrapper': this.props.inputWrapper,
-            'required': this.props.required,
-            'pattern': this.props.pattern,
-            'className': this.props.className,
-            'readOnly': this.props.readOnly,
+            ...this.props,
             'validationError': validationError,
         });
     }

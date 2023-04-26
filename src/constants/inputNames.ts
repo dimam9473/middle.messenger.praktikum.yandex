@@ -10,5 +10,6 @@ export enum InputNames {
     phone = 'phone',
     search = 'search',
     message = 'message',
-    displayName = 'display_name'
+    displayName = 'display_name',
+    fileUploader = 'avatar'
 }

@@ -1,20 +1,27 @@
 import { Block, Contact, Input, Link, Messenger, } from '../../components';
 import { CONTACTS, USER_INFO, } from '../../constants/mockContacts';
+import { ChatController, } from '../../controllers/chat';
 import { InputNames, } from '../../constants/inputNames';
-import { handleClick, } from '../../controllers/chat';
 
 import { chatTemplate, } from './chatTpl';
 
 export class Chat extends Block {
+    private _chatController?: ChatController
+
     constructor(props?: object) {
         super(props);
     }
 
     protected init(): void {
+        this._chatController = new ChatController()
+
         this.children.profile = new Link({
             'caption': 'Profile',
-            'href': 'profile',
+            'href': '#',
             'className': 'menu-profile',
+            'events': {
+                'click': (event: Event) => this.redirect(event),
+            },
         })
 
         this.children.searchInput = new Input({
@@ -38,7 +45,7 @@ export class Chat extends Block {
             this.children.contacts.push(new Contact({
                 ...user,
                 'events': {
-                    'click': () => handleClick(user, this.children.messenger as Messenger),
+                    'click': () => this._chatController?.handleClick(user, this.children.messenger as Messenger),
                 },
             }))
         }
@@ -47,5 +54,10 @@ export class Chat extends Block {
     render() {
         const template = this.compile(chatTemplate, this.props)
         return template;
+    }
+
+    redirect(event: Event) {
+        event.preventDefault()
+        this._chatController?.redirect()
     }
 }
