@@ -193,8 +193,8 @@ class Profile extends Block {
         })
 
         this.children.repeatPasswordInput = new Input({
-            'id': InputNames.repeatPassword,
-            'name': InputNames.repeatPassword,
+            'id': InputNames.newPassword,
+            'name': InputNames.newPassword,
             'label': 'Repeat new password',
             'type': 'password',
             'placeholder': '1234',
@@ -314,14 +314,17 @@ class Profile extends Block {
         this._profileController?.changePassword.call(this, inputs, passwordInputs)
     }
 
-    handleSave(event: Event) {
+    async handleSave(event: Event) {
         event.preventDefault()
         if (selectedUpdateType === null) {
             return
         }
 
-        this._profileController?.handleSave(selectedUpdateType)
-        this._profileController?.restoreInputs.call(this, inputs, passwordInputs)
+        const isSaved = await this._profileController?.handleSave(selectedUpdateType)
+
+        if (isSaved) {
+            this._profileController?.restoreInputs.call(this, inputs, passwordInputs)
+        }
     }
 
     cancel() {

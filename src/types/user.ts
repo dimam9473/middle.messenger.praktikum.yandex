@@ -19,3 +19,8 @@ export type UserProps = {
 export type AuthUserProps = { id: string, avatar: string, display_name: string } & UserProps
 
 export type UserUpdateProps = Omit<AuthUserProps, 'id' | 'password' | 'avatar'>
+
+export type Passwords = {
+    oldPassword: string
+    newPassword: string
+}

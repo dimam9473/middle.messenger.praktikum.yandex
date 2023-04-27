@@ -1,6 +1,7 @@
 import { Block, Input, } from '../components';
+import { Passwords, UserUpdateProps, } from '../types/user';
+import { ResponseStatuses, } from '../constants/responseStatuses';
 import { UpdateType, } from '../constants/updateType';
-import { UserUpdateProps, } from '../types/user';
 import {
     validateDisplayName,
     validateEmail,
@@ -100,9 +101,21 @@ export class ProfileController {
         }
 
         if (invalid) {
-            return
+            return false
         }
 
+        if (selectedUpdateType === UpdateType.Data) {
+            return await this.saveUser()
+        }
+
+        return await this.savePasswords()
+    }
+
+    async logout() {
+        await profileApi.request()
+    }
+
+    private async saveUser() {
         const form = (document.querySelector('#profile-form')) as HTMLFormElement
         const data = new FormData(form)
         const user: UserUpdateProps = {
@@ -126,13 +139,38 @@ export class ProfileController {
 
         if (typeof userResponse === 'string') {
             alert(userResponse)
+            return false
         }
 
         userResponse && store.set('user', userResponse)
+
+        return true
     }
 
-    async logout() {
-        await profileApi.request()
+    private async savePasswords() {
+        const form = (document.querySelector('#profile-form')) as HTMLFormElement
+        const data = new FormData(form)
+        const passwords: Passwords = {
+            'oldPassword': '',
+            'newPassword': '',
+        }
+
+        for (const pair of Array.from(data)) {
+            // eslint-disable-next-line no-console
+            const propertyName: keyof Passwords = pair[0].toString() as keyof Passwords
+            if (propertyName in passwords) {
+                passwords[propertyName] = pair[1].toString()
+            }
+        }
+
+        const response = await profileApi.updatePassword(passwords as Passwords)
+
+        if (response !== ResponseStatuses.OK) {
+            alert(response)
+            return false
+        }
+
+        return true
     }
 }
 

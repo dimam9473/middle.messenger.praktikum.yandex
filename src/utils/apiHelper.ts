@@ -12,8 +12,5 @@ export function prepareJsonProps(user: Record<string, unknown>): OptionsWithouMe
 export function prepareFileProps(data: FormData): OptionsWithouMethods {
     return {
         'data': data,
-        'headers': {
-            'content-type': 'multipart/form-data',
-        },
     }
 }

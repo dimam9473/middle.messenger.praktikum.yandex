@@ -101,8 +101,8 @@ export class Register extends Block {
         })
 
         this.children.repeatPasswordInput = new Input({
-            'id': InputNames.repeatPassword,
-            'name': InputNames.repeatPassword,
+            'id': InputNames.newPassword,
+            'name': InputNames.newPassword,
             'label': 'Repeat password',
             'type': 'password',
             'placeholder': '1234',
