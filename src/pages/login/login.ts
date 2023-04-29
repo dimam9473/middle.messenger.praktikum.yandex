@@ -51,8 +51,16 @@ export class Login extends Block {
 
         this.children.link = new Link({
             'caption': 'Create account?',
-            'href': 'register',
+            'href': '#',
+            'events': {
+                'click': (event: Event) => this.redirect(event),
+            },
         })
+    }
+
+    redirect(event: Event) {
+        event.preventDefault()
+        this._loginController?.redirect()
     }
 
     render() {

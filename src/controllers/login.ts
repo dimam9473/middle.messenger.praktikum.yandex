@@ -59,4 +59,8 @@ export class LoginController {
 
         await this._login(user as LoginProps)
     }
+
+    redirect() {
+        this._router.go('/register');
+    }
 }

@@ -121,8 +121,16 @@ export class Register extends Block {
 
         this.children.link = new Link({
             'caption': 'Login',
-            'href': '/',
+            'href': '#',
+            'events': {
+                'click': (event: Event) => this.redirect(event),
+            },
         })
+    }
+
+    redirect(event: Event) {
+        event.preventDefault()
+        registerController.redirect()
     }
 
     render() {

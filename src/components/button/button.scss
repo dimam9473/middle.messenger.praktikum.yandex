@@ -14,3 +14,13 @@
 .button-green {
     background: linear-gradient(to right, $light-green, $dark-green);
 }
+
+.button-small {
+    padding: 0;
+    width: 30px;
+}
+
+.button-text {
+    background: none;
+    padding: 0;
+}

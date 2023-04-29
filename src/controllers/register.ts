@@ -43,4 +43,8 @@ export class RegisterController {
 
         await this.registerUser(user as UserProps)
     }
+
+    redirect() {
+        this._router.go('/');
+    }
 }

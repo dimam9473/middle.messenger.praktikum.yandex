@@ -18,6 +18,7 @@ class LoginApi extends BaseAPI {
     public async request(user: LoginProps): Promise<string> {
         const request = await HTTPTransport.post(`${URLS.baseUrl}/auth/signin`, this._prepareProps(user));
         const status = request.responseText
+
         if (status === ResponseStatuses.OK) {
             return String(status);
         } else {

@@ -1,5 +1,4 @@
-import { Block, Contact, Input, Link, Messenger, } from '../../components';
-import { CONTACTS, USER_INFO, } from '../../constants/mockContacts';
+import { Block, Button, Contact, Input, Link, Messenger, } from '../../components';
 import { ChatController, } from '../../controllers/chat';
 import { InputNames, } from '../../constants/inputNames';
 
@@ -8,11 +7,7 @@ import { chatTemplate, } from './chatTpl';
 export class Chat extends Block {
     private _chatController?: ChatController
 
-    constructor(props?: object) {
-        super(props);
-    }
-
-    protected init(): void {
+    protected init() {
         this._chatController = new ChatController()
 
         this.children.profile = new Link({
@@ -30,25 +25,44 @@ export class Chat extends Block {
             'placeholder': 'Search',
         })
 
+        this.children.chatNameInput = new Input({
+            'id': 'chatNameInput',
+            'name': 'chatNameInput',
+            'placeholder': 'Chat name to create',
+        })
+
+        this.children.createChat = new Button({
+            'caption': '+',
+            'className': 'button-green button-small',
+            'events': { 'click': async () => await this._chatController?.createChat('chatNameInput'), },
+        })
+
         this.children.messenger = new Messenger({})
+    }
+
+    protected async componentDidMount() {
+        const chats = await this._chatController?.loadChats({ 'offset': 0, 'limit': 10, })
+        if (!chats) {
+            return
+        }
 
         this.children.contacts = []
-        for (const contact of CONTACTS) {
-            const userInfo = USER_INFO.find(info => info.id === contact.id)
+        for (const chat of chats) {
             const user = {
-                'firstName': contact.first_name,
-                'avatarSrc': contact.avatar,
-                'lastMessage': userInfo?.lastMessage,
-                'time': userInfo?.time,
-                'unreadCount': userInfo?.unreadCount,
+                'firstName': chat.last_message?.user.first_name ?? chat.title,
+                'avatarSrc': chat.avatar ?? '',
+                'lastMessage': chat.last_message?.content ?? '',
+                'time': chat.last_message?.time ?? new Date(),
+                'unreadCount': chat.unread_count,
             }
             this.children.contacts.push(new Contact({
                 ...user,
                 'events': {
-                    'click': () => this._chatController?.handleClick(user, this.children.messenger as Messenger),
+                    'click': () => this._chatController?.handleClick({ 'id': chat.id, ...user, }, this.children.messenger as Messenger),
                 },
             }))
         }
+        this._eventBus().emit(Block.EVENTS.FLOW_RENDER);
     }
 
     render() {

@@ -12,7 +12,7 @@ class Block<P extends Record<string, unknown> = any> {
         'FLOW_RENDER': 'flow:render',
     } as const;
 
-    private _eventBus: () => EventBus;
+    protected _eventBus: () => EventBus;
     private _element: HTMLElement | null = null;
     private _isActivePage = false
 

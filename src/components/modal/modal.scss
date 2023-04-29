@@ -1,0 +1,33 @@
+@import "../../global";
+
+.modal-wrapper {
+    position: absolute;
+    z-index: 10;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    padding: 100px;
+    background-color: white;
+    border-radius: 20;
+
+    display: flex;
+    flex-direction: column;
+    gap: $middle-gap;
+}
+
+.backdrop {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: black;
+    opacity: 0.5;
+}
+
+.modal-close {
+    position: absolute;
+    top: $middle-gap;
+    right: $large-gap;
+    width: fit-content;
+}

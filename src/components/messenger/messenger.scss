@@ -1,6 +1,7 @@
 @import "../../global";
 
 .messenger {
+    position: relative;
     height: 100%;
 
     &.not-selected {
@@ -64,4 +65,12 @@
     height: 28px;
     border-radius: 50%;
     background-color: $dark-green;
+}
+
+.dropdown-show {
+    margin-right: 20px;
+}
+
+.dropdown-wrapper {
+    position: relative;
 }

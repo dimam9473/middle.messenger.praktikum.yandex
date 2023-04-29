@@ -24,6 +24,7 @@ import {
 import store, { StoreEvents, } from '../../store/store';
 
 import { AuthUserProps, } from '../../types/user';
+import { ProfileStateProps, } from '../../types/profile';
 import { UpdateType, } from '../../constants/updateType';
 import { connect, } from '../../store/connect';
 import { profileTemplate, } from './profileTpl';
@@ -263,30 +264,33 @@ class Profile extends Block {
         this.hideComponents()
     }
 
-    protected componentDidUpdate(_oldProps: any, _newProps: any): boolean {
-        if (_oldProps !== _newProps) {
+    protected componentDidUpdate(_oldProps: Record<string, unknown>, _newProps: Record<string, unknown>): boolean {
+        const oldProps = _oldProps as ProfileStateProps
+        const newProps = _newProps as ProfileStateProps
+
+        if (oldProps !== newProps) {
             (this.children.emailInput as Block).setProps({
-                'value': _newProps.user.email,
+                'value': newProps.user.email,
             });
 
             (this.children.loginInput as Block).setProps({
-                'value': _newProps.user.login,
+                'value': newProps.user.login,
             });
 
             (this.children.displayNameInput as Block).setProps({
-                'value': _newProps.user.display_name,
+                'value': newProps.user.display_name,
             });
 
             (this.children.firstNameInput as Block).setProps({
-                'value': _newProps.user.first_name,
+                'value': newProps.user.first_name,
             });
 
             (this.children.secondNameInput as Block).setProps({
-                'value': _newProps.user.second_name,
+                'value': newProps.user.second_name,
             });
 
             (this.children.phoneInput as Block).setProps({
-                'value': _newProps.user.phone,
+                'value': newProps.user.phone,
             })
 
             return true

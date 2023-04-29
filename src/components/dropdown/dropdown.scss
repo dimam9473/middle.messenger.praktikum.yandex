@@ -1,0 +1,19 @@
+@import "../../global";
+
+.dropdown-button {
+    border: 1px solid $dark-green;
+    padding: 8px;
+}
+
+.dropdown {
+    position: absolute;
+    top: 25px;
+    right: $middle-gap;
+    width: 100px;
+}
+
+.options {
+    display: flex;
+    flex-direction: column;
+    gap: $small-gap;
+}

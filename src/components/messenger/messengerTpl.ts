@@ -7,7 +7,10 @@ export const messengerTemplate = `
                     <img src="{{avatarSrc}}" alt="avatar"/>
                     <b>{{firstName}}</b>
                 </div>
-                <span class="mesenger-menu">...</span>
+                <div class='dropdown-wrapper'>
+                    {{{showDropdown}}}
+                    {{{dropdown}}}
+                </div>
             </div>
             <div class="messenger-history">
                 messages
@@ -21,5 +24,6 @@ export const messengerTemplate = `
     {{else}}
         <span id="chat_empty" class="messenger--empty ">Select chat</span>
     {{/if}}
+    {{{modal}}}
 </div>
 `

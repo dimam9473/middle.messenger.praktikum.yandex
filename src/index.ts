@@ -21,6 +21,10 @@ window.addEventListener('load', async function () {
         userResponse.id && await profileApi.request()
     }
 
+    if (window.location.pathname !== '/' && window.location.pathname !== 'register' && !userResponse.id) {
+        router.go('/')
+    }
+
     router
         .use('/', Login)
         .use('/register', Register)
