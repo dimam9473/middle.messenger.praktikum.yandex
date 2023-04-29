@@ -17,7 +17,12 @@ export class Dropdown extends Block {
                 'caption': option.title,
                 'className': 'button-text dropdown-button',
                 'events': {
-                    'click': () => option.callback?.(),
+                    'click': () => {
+                        option.callback?.()
+                        this.setProps({
+                            'visible': false,
+                        })
+                    },
                 },
             }))
         }

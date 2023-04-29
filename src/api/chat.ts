@@ -1,5 +1,5 @@
 import { BaseAPI, } from './base';
-import { ChatProps, ChatRequestProps, ChatResponceProps, } from '../types/chat';
+import { ChatProps, ChatRequestProps, ChatResponceProps, ChatTokeResponceProps, } from '../types/chat';
 import { URLS, } from '../constants/url';
 import { prepareJsonProps, } from '../utils/apiHelper';
 import HTTPTransport from './HTTPTransport';
@@ -23,6 +23,18 @@ class ChatApi extends BaseAPI {
 
         if (chatId) {
             return chatId;
+        } else {
+            const { reason, } = JSON.parse(request.responseText)
+            return String(reason)
+        }
+    }
+
+    async getChatToken(chatId: number) {
+        const request = await HTTPTransport.post(`${URLS.baseUrl}/chats/token/${chatId}`);
+        const token = (JSON.parse(request.responseText)) as ChatTokeResponceProps
+
+        if (token) {
+            return token;
         } else {
             const { reason, } = JSON.parse(request.responseText)
             return String(reason)

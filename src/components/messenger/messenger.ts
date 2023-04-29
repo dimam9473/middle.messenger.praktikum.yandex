@@ -2,7 +2,7 @@ import { Button, } from '../button/button';
 import { Input, } from '../input/Input';
 import { InputNames, } from '../../constants/inputNames';
 import { MessengerController, } from '../../controllers/messenger';
-import { MessengerProps, } from '../../types/messenger';
+import { MessengerProps, UserMessageProps, } from '../../types/messenger';
 import { attachButtonTemplate, } from '../../templates/attachButtonIconTpl';
 import { messageFocus, } from '../../utils/inputHelper';
 import { messengerTemplate, } from './messengerTpl';
@@ -11,7 +11,9 @@ import Block from '../block/block';
 import { ActionType, } from '../../constants/action';
 import { Dropdown, } from '../dropdown/dropdown';
 import { DropdownProps, } from '../../types/dropdown';
+import { Message, } from '../message/message';
 import { Modal, } from '../modal/modal';
+import { prepareDate, } from '../../utils/date';
 import { sendButtonIconTemplate, } from '../../templates/sendButtonIconTpl';
 
 export class Messenger extends Block {
@@ -42,7 +44,14 @@ export class Messenger extends Block {
         this.children.sendButton = new Button({
             'caption': sendButtonIconTemplate,
             'className': 'send-button',
-            'events': { 'click': this._messengerController.sendMessage, },
+            'events': {
+                'click': () => {
+                    const value = this._messengerController?.sendMessage()
+                    if (value) {
+                        this.props.onSend(value)
+                    }
+                },
+            },
         })
 
         this.children.modal = new Modal({
@@ -93,6 +102,42 @@ export class Messenger extends Block {
                 },
             },
         })
+        this.children.messages = []
+    }
+
+    protected componentDidUpdate(_oldProps: MessengerProps, _newProps: MessengerProps): boolean {
+        if (_oldProps !== _newProps) {
+            if (!_newProps.messages || !_newProps.messages.length) {
+                (this.children.messages as Block[]) = [];
+                return false
+            }
+
+            const messages = JSON.parse(_newProps.messages) as UserMessageProps[];
+
+            if (Array.isArray(messages)) {
+                messages.reverse().forEach((message: UserMessageProps) => {
+                    (this.children.messages as Block[]).push(new Message({
+                        'chat_id': message.chat_id,
+                        'user_id': message.user_id,
+                        'content': message.content,
+                        'time': prepareDate(new Date(message.time)),
+                    }))
+                })
+            } else {
+                const message = messages as UserMessageProps
+                (this.children.messages as Block[]) = (this.children.messages as Block[]).slice(1);
+                (this.children.messages as Block[]).push(new Message({
+                    'chat_id': message.chat_id,
+                    'user_id': message.user_id,
+                    'content': message.content,
+                    'time': prepareDate(new Date(message.time)),
+                }))
+            }
+
+            return true
+        }
+
+        return false
     }
 
     render() {

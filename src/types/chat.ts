@@ -17,3 +17,7 @@ export type ChatProps = {
 export type ChatResponceProps = {
     chatId: string
 }
+
+export type ChatTokeResponceProps = {
+    token: string
+}

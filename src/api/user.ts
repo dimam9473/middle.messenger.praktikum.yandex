@@ -21,6 +21,18 @@ class UserApi extends BaseAPI {
             return String(reason)
         }
     }
+
+    public async getUser(userId: number) {
+        const request = await HTTPTransport.get(`${URLS.baseUrl}/user/${userId}`);
+        const updatedUser = (JSON.parse(request.responseText)) as AuthUserProps
+
+        if (updatedUser) {
+            return updatedUser;
+        } else {
+            const { reason, } = JSON.parse(request.responseText)
+            return String(reason)
+        }
+    }
 }
 
 export default UserApi

@@ -1,11 +1,21 @@
 import { Block, Button, Contact, Input, Link, Messenger, } from '../../components';
 import { ChatController, } from '../../controllers/chat';
 import { InputNames, } from '../../constants/inputNames';
-
 import { chatTemplate, } from './chatTpl';
+import { connect, } from '../../store/connect';
+import store, { StoreEvents, } from '../../store/store';
 
-export class Chat extends Block {
+class Chat extends Block {
     private _chatController?: ChatController
+
+    constructor(props?: object) {
+        super(props)
+
+        store.on(StoreEvents.Updated, () => {
+            const state = store.getState()
+            this.setProps({ ...state, });
+        });
+    }
 
     protected init() {
         this._chatController = new ChatController()
@@ -37,7 +47,9 @@ export class Chat extends Block {
             'events': { 'click': async () => await this._chatController?.createChat('chatNameInput'), },
         })
 
-        this.children.messenger = new Messenger({})
+        this.children.messenger = new Messenger({
+            'onSend': this._chatController.onSend,
+        })
     }
 
     protected async componentDidMount() {
@@ -52,13 +64,13 @@ export class Chat extends Block {
                 'firstName': chat.last_message?.user.first_name ?? chat.title,
                 'avatarSrc': chat.avatar ?? '',
                 'lastMessage': chat.last_message?.content ?? '',
-                'time': chat.last_message?.time ?? new Date(),
+                'time': new Date(chat.last_message?.time) ?? new Date(),
                 'unreadCount': chat.unread_count,
             }
             this.children.contacts.push(new Contact({
                 ...user,
                 'events': {
-                    'click': () => this._chatController?.handleClick({ 'id': chat.id, ...user, }, this.children.messenger as Messenger),
+                    'click': async () => await this._chatController?.openChat(user, this.children.messenger as Messenger, chat.id, this.props.user.id),
                 },
             }))
         }
@@ -75,3 +87,11 @@ export class Chat extends Block {
         this._chatController?.redirect()
     }
 }
+
+function mapUserToProps(state: Record<string, unknown>) {
+    return {
+        'user': state.user,
+    };
+}
+
+export default connect(mapUserToProps)(Chat)

@@ -13,7 +13,11 @@ export const messengerTemplate = `
                 </div>
             </div>
             <div class="messenger-history">
-                messages
+                <ul>
+                    {{#each messages}}
+                        {{{this}}}
+                    {{/each}}        
+                </ul>
             </div>
             <div class="messenger-footer">
                 {{{atachButton}}}
