@@ -13,17 +13,17 @@ export const messengerTemplate = `
                 </div>
             </div>
             <div class="messenger-history">
-                <ul>
+                <ul class='messages'>
                     {{#each messages}}
                         {{{this}}}
                     {{/each}}        
                 </ul>
             </div>
-            <div class="messenger-footer">
+            <form id='send-message' class="messenger-footer">
                 {{{atachButton}}}
                 {{{messageInput}}}
                 {{{sendButton}}}
-            </div>
+            </form>
         </div>
     {{else}}
         <span id="chat_empty" class="messenger--empty ">Select chat</span>

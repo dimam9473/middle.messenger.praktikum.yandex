@@ -75,3 +75,9 @@
 .dropdown-wrapper {
     position: relative;
 }
+
+.messages {
+    display: flex;
+    flex-direction: column;
+    gap: $small-gap;
+}
