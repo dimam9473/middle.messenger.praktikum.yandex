@@ -19,11 +19,11 @@ export const messengerTemplate = `
                     {{/each}}        
                 </ul>
             </div>
-            <form id='send-message' class="messenger-footer">
+            <div class="messenger-footer">
                 {{{atachButton}}}
                 {{{messageInput}}}
                 {{{sendButton}}}
-            </form>
+            </div>
         </div>
     {{else}}
         <span id="chat_empty" class="messenger--empty ">Select chat</span>
