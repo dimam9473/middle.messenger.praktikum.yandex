@@ -2,20 +2,23 @@ import { METHODS, } from '../constants/methods';
 import { Options, OptionsWithouMethods, } from '../types/fetch';
 import { queryStringify, } from '../utils/queries';
 
+// eslint-disable-next-line no-unused-vars
+type HTTPMethod = (url: string, options?: OptionsWithouMethods) => Promise<XMLHttpRequest>
+
 export class HTTPTransport {
-    get = (url: string, options?: OptionsWithouMethods) => {
+    get: HTTPMethod = (url, options) => {
         return this.request(url, { ...options, 'method': METHODS.GET, });
     };
 
-    post = (url: string, options?: OptionsWithouMethods) => {
+    post: HTTPMethod = (url, options) => {
         return this.request(url, { ...options, 'method': METHODS.POST, });
     };
 
-    put = (url: string, options?: OptionsWithouMethods) => {
+    put: HTTPMethod = (url, options) => {
         return this.request(url, { ...options, 'method': METHODS.PUT, });
     };
 
-    delete = (url: string, options?: OptionsWithouMethods) => {
+    delete: HTTPMethod = (url, options) => {
         return this.request(url, { ...options, 'method': METHODS.DELETE, });
     };
 
