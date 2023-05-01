@@ -1,6 +1,7 @@
 import { AuthUserProps, } from '../types/user';
 import { LoginProps, } from '../types/login';
 import { ResponseStatuses, } from '../constants/responseStatuses';
+import { Routes, } from '../constants/routes';
 import { validateUserLogin, } from '../validation/login';
 import LoginApi from '../api/login';
 import Router from '../routing/router';
@@ -34,7 +35,7 @@ export class LoginController {
 
             store.set('user', userResponse as AuthUserProps)
 
-            this._router.go('/chat');
+            this._router.go(Routes.chat);
         } catch (error) {
             alert('An unexpected error has occurred')
         }
@@ -61,6 +62,6 @@ export class LoginController {
     }
 
     redirect() {
-        this._router.go('/register');
+        this._router.go(Routes.register);
     }
 }

@@ -25,6 +25,7 @@ import store, { StoreEvents, } from '../../store/store';
 
 import { AuthUserProps, } from '../../types/user';
 import { ProfileStateProps, } from '../../types/profile';
+import { Routes, } from '../../constants/routes';
 import { UpdateType, } from '../../constants/updateType';
 import { connect, } from '../../store/connect';
 import { profileTemplate, } from './profileTpl';
@@ -302,7 +303,7 @@ class Profile extends Block {
     logout(event: Event) {
         event.preventDefault()
         this._profileController?.logout()
-        this._router.go('/');
+        this._router.go(Routes.home);
     }
 
     hideComponents() {

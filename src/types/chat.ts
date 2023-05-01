@@ -11,7 +11,9 @@ export type ChatProps = {
     'title': string,
     'avatar': string,
     'unread_count': number,
-    'last_message': MessageProps
+    'last_message': MessageProps,
+    deleteChat: () => void,
+    events?: { [key: string]: Function }
 }
 
 export type ChatResponceProps = {

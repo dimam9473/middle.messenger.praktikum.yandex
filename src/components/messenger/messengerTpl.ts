@@ -1,11 +1,11 @@
 export const messengerTemplate = `
 <div class="messenger {{#unless firstName}}not-selected{{/unless}}">
-    {{#if firstName}}
+    {{#if id}}
         <div id="selected-messenger" class="selected-messenger">
             <div class="messenger-header">
                 <div>
                     <img src="{{avatarSrc}}" alt="avatar"/>
-                    <b>{{firstName}}</b>
+                    <b>{{title}}</b>
                 </div>
                 <div class='dropdown-wrapper'>
                     {{{showDropdown}}}

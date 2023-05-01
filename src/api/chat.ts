@@ -29,6 +29,18 @@ class ChatApi extends BaseAPI {
         }
     }
 
+    async delete(chatId: number) {
+        const request = await HTTPTransport.delete(`${URLS.baseUrl}/chats`, prepareJsonProps({ chatId, }));
+        const responce = (JSON.parse(request.responseText))
+
+        if (responce.userId) {
+            return '';
+        } else {
+            const { reason, } = JSON.parse(request.responseText)
+            return String(reason)
+        }
+    }
+
     async getChatToken(chatId: number) {
         const request = await HTTPTransport.post(`${URLS.baseUrl}/chats/token/${chatId}`);
         const token = (JSON.parse(request.responseText)) as ChatTokeResponceProps

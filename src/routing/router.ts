@@ -21,8 +21,7 @@ class Router {
         this.history = window.history;
         this._currentRoute = null;
         this._rootQuery = rootQuery || '#root';
-        const notFound = Routes.notFoundError
-        this._notFoundRoute = new Route(notFound, NotFoundError, { 'rootQuery': this._rootQuery, })
+        this._notFoundRoute = new Route(Routes.notFoundError, NotFoundError, { 'rootQuery': this._rootQuery, })
         this.routes = []
 
         Router._instance = this;

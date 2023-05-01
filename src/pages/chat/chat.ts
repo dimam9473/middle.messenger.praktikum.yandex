@@ -44,7 +44,12 @@ class Chat extends Block {
         this.children.createChat = new Button({
             'caption': '+',
             'className': 'button-green button-small',
-            'events': { 'click': async () => await this._chatController?.createChat('chatNameInput'), },
+            'events': {
+                'click': async () => {
+                    await this._chatController?.createChat('chatNameInput')
+                    this.dispatchComponentDidMount()
+                },
+            },
         })
 
         this.children.messenger = new Messenger({
@@ -60,17 +65,21 @@ class Chat extends Block {
 
         this.children.contacts = []
         for (const chat of chats) {
-            const user = {
-                'firstName': chat.last_message?.user.first_name ?? chat.title,
-                'avatarSrc': chat.avatar ?? '',
-                'lastMessage': chat.last_message?.content ?? '',
-                'time': new Date(chat.last_message?.time) ?? new Date(),
-                'unreadCount': chat.unread_count,
+            const deleteChat = () => {
+                this._chatController?.deleteChat(chat.id)
+                this.dispatchComponentDidMount()
             }
             this.children.contacts.push(new Contact({
-                ...user,
+                ...chat,
+                deleteChat,
                 'events': {
-                    'click': async () => await this._chatController?.openChat(user, this.children.messenger as Messenger, chat.id, this.props.user.id),
+                    'click': async () =>
+                        await this._chatController?.openChat(
+                            chat.title,
+                            this.children.messenger as Messenger,
+                            chat.id,
+                            this.props.user.id
+                        ),
                 },
             }))
         }

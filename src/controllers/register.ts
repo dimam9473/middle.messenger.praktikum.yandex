@@ -1,5 +1,6 @@
 // import { validateRegister, } from '../validation/register';
 
+import { Routes, } from '../constants/routes';
 import { UserProps, } from '../types/user';
 import { validateRegister, } from '../validation/register';
 import RegisterApi from '../api/register';
@@ -19,7 +20,7 @@ export class RegisterController {
         const userID = await registerApi.create(user);
 
         if (userID) {
-            this._router.go('/chat');
+            this._router.go(Routes.chat);
         }
     }
 
@@ -45,6 +46,6 @@ export class RegisterController {
     }
 
     redirect() {
-        this._router.go('/');
+        this._router.go(Routes.home);
     }
 }
