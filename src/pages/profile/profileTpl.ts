@@ -8,7 +8,7 @@ export const profileTemplate = `
                 {{{fileUploader}}}
             </form>             
         </div>        
-        <h2>Here will be Name Surname of user</h2>
+        <h2>Profile</h2>
         <form id="profile-form" class="inputs">
             {{{emailInput}}}
             {{{firstNameInput}}}

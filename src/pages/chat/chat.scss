@@ -33,7 +33,8 @@
 
 .menu-header {
     display: flex;
-    gap: $middle-gap
+    gap: $middle-gap;
+    justify-content: space-between;
 }
 
 .contacts {

@@ -24,9 +24,10 @@ export class Contact extends Block {
     }
 
     render() {
-        const { last_message, ...restProps } = this.props as ChatProps
+        const { last_message, avatar, ...restProps } = this.props as ChatProps
         const prepairedDate = last_message?.time ? prepareDate(new Date(last_message.time)) : ''
+        const avatarSrc = `https://ya-praktikum.tech/api/v2/resources${avatar}`
 
-        return this.compile(contactTemplate, { ...restProps, 'time': prepairedDate, });
+        return this.compile(contactTemplate, { ...restProps, 'time': prepairedDate, 'avatar': avatarSrc, });
     }
 }

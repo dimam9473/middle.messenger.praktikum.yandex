@@ -19,7 +19,12 @@ window.addEventListener('load', async function () {
     }
 
     if (window.location.pathname === Routes.home || window.location.pathname === Routes.register) {
-        userResponse.id && await profileApi.request()
+        try {
+            userResponse.id && await profileApi.request()
+        } catch (error) {
+            // eslint-disable-next-line no-console
+            console.warn(error)
+        }
     }
 
     if (window.location.pathname !== Routes.home && window.location.pathname !== Routes.register && !userResponse.id) {

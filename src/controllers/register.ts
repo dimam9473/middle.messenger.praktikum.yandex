@@ -17,10 +17,15 @@ export class RegisterController {
     }
 
     private async registerUser(user: UserProps) {
-        const userID = await registerApi.create(user);
+        try {
+            const userID = await registerApi.create(user);
 
-        if (userID) {
-            this._router.go(Routes.chat);
+            if (userID) {
+                this._router.go(Routes.chat);
+            }
+        } catch (error) {
+            // eslint-disable-next-line no-console
+            console.warn(error)
         }
     }
 

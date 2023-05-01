@@ -31,8 +31,13 @@ export class ProfileController {
         (this.children.cancel as Block).show();
     }
 
-    changeAvatar(avatar: File) {
-        profileApi.updateAvatar(avatar)
+    async changeAvatar(avatar: File) {
+        try {
+            return await profileApi.updateAvatar(avatar)
+        } catch (error) {
+            // eslint-disable-next-line no-console
+            console.warn(error)
+        }
     }
 
     changePassword(this: Block, inputs: Input[], passwordInputs: Input[]) {
@@ -112,7 +117,12 @@ export class ProfileController {
     }
 
     async logout() {
-        await profileApi.request()
+        try {
+            await profileApi.request()
+        } catch (error) {
+            // eslint-disable-next-line no-console
+            console.warn(error)
+        }
     }
 
     private async saveUser() {
@@ -135,16 +145,22 @@ export class ProfileController {
             }
         }
 
-        const userResponse = await profileApi.update(user as UserUpdateProps)
+        try {
+            const userResponse = await profileApi.update(user as UserUpdateProps)
 
-        if (typeof userResponse === 'string') {
-            alert(userResponse)
-            return false
+            if (typeof userResponse === 'string') {
+                alert(userResponse)
+                return false
+            }
+
+            userResponse && store.set('user', userResponse)
+
+            return true
+        } catch (error) {
+            // eslint-disable-next-line no-console
+            console.warn(error);
+            return false;
         }
-
-        userResponse && store.set('user', userResponse)
-
-        return true
     }
 
     private async savePasswords() {
@@ -163,14 +179,20 @@ export class ProfileController {
             }
         }
 
-        const response = await profileApi.updatePassword(passwords as Passwords)
+        try {
+            const response = await profileApi.updatePassword(passwords as Passwords)
 
-        if (response !== ResponseStatuses.OK) {
-            alert(response)
+            if (response !== ResponseStatuses.OK) {
+                alert(response)
+                return false
+            }
+
+            return true
+        } catch (error) {
+            // eslint-disable-next-line no-console
+            console.warn(error);
             return false
         }
-
-        return true
     }
 }
 

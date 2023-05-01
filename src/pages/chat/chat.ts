@@ -1,6 +1,5 @@
 import { Block, Button, Contact, Input, Link, Messenger, } from '../../components';
 import { ChatController, } from '../../controllers/chat';
-import { InputNames, } from '../../constants/inputNames';
 import { chatTemplate, } from './chatTpl';
 import { connect, } from '../../store/connect';
 import store, { StoreEvents, } from '../../store/store';
@@ -27,12 +26,6 @@ class Chat extends Block {
             'events': {
                 'click': (event: Event) => this.redirect(event),
             },
-        })
-
-        this.children.searchInput = new Input({
-            'id': InputNames.search,
-            'name': InputNames.search,
-            'placeholder': 'Search',
         })
 
         this.children.chatNameInput = new Input({
@@ -65,8 +58,8 @@ class Chat extends Block {
 
         this.children.contacts = []
         for (const chat of chats) {
-            const deleteChat = () => {
-                this._chatController?.deleteChat(chat.id)
+            const deleteChat = async () => {
+                await this._chatController?.deleteChat(chat.id)
                 this.dispatchComponentDidMount()
             }
             this.children.contacts.push(new Contact({

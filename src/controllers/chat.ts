@@ -16,56 +16,61 @@ export class ChatController {
     }
 
     async openChat(title: string, messenger: Messenger, chatId: number, userId: number) {
-        const responce = await chatApi.getChatToken(chatId as unknown as number)
-        if (typeof responce === 'string') {
-            alert(responce)
-            return false
-        }
-
-        this._socket = new WebSocket(`wss://ya-praktikum.tech/ws/chats/${userId}/${chatId}/${responce.token}`);
-
-        this._socket.addEventListener('open', () => {
-            // eslint-disable-next-line no-console
-            console.log('Соединение установлено');
-            this._socket.send(JSON.stringify({
-                'content': '0',
-                'type': 'get old',
-            }));
-        });
-
-        this._socket.addEventListener('close', event => {
-            if (event.wasClean) {
-                // eslint-disable-next-line no-console
-                console.log('Соединение закрыто чисто');
-            } else {
-                // eslint-disable-next-line no-console
-                console.log('Обрыв соединения');
+        try {
+            const responce = await chatApi.getChatToken(chatId as unknown as number)
+            if (typeof responce === 'string') {
+                alert(responce)
+                return false
             }
 
-            // eslint-disable-next-line no-console
-            console.log(`Код: ${event.code} | Причина: ${event.reason}`);
-        });
+            this._socket = new WebSocket(`wss://ya-praktikum.tech/ws/chats/${userId}/${chatId}/${responce.token}`);
 
-        this._socket.addEventListener('message', event => {
+            this._socket.addEventListener('open', () => {
+                // eslint-disable-next-line no-console
+                console.log('Соединение установлено');
+                this._socket.send(JSON.stringify({
+                    'content': '0',
+                    'type': 'get old',
+                }));
+            });
+
+            this._socket.addEventListener('close', event => {
+                if (event.wasClean) {
+                    // eslint-disable-next-line no-console
+                    console.log('Соединение закрыто чисто');
+                } else {
+                    // eslint-disable-next-line no-console
+                    console.log('Обрыв соединения');
+                }
+
+                // eslint-disable-next-line no-console
+                console.log(`Код: ${event.code} | Причина: ${event.reason}`);
+            });
+
+            this._socket.addEventListener('message', event => {
+                messenger.setProps({
+                    'messages': event.data,
+                })
+                // eslint-disable-next-line no-console
+                console.log('Получены данные', event.data);
+            });
+
+            this._socket.addEventListener('error', event => {
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                //@ts-ignore
+                // eslint-disable-next-line no-console
+                console.log('Ошибка', event.message);
+            });
+
             messenger.setProps({
-                'messages': event.data,
+                'id': chatId,
+                'title': title,
+                'messages': [],
             })
+        } catch (error) {
             // eslint-disable-next-line no-console
-            console.log('Получены данные', event.data);
-        });
-
-        this._socket.addEventListener('error', event => {
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            //@ts-ignore
-            // eslint-disable-next-line no-console
-            console.log('Ошибка', event.message);
-        });
-
-        messenger.setProps({
-            'id': chatId,
-            'title': title,
-            'messages': [],
-        })
+            console.warn(error)
+        }
     }
 
     onSend(value: string) {
@@ -76,38 +81,55 @@ export class ChatController {
     }
 
     async loadChats(chatRequest: ChatRequestProps) {
-        const response = await chatApi.request(chatRequest)
-        if (typeof response === 'string') {
-            alert(response)
+        try {
+            const response = await chatApi.request(chatRequest)
+            if (typeof response === 'string') {
+                alert(response)
+                return []
+            }
+
+            return response
+        } catch (error) {
+            // eslint-disable-next-line no-console
+            console.warn(error)
             return []
         }
-
-        return response
     }
 
     async createChat(inputName: string) {
         const title = (document.querySelector(`#${inputName}`) as HTMLInputElement).value
 
-        const responce = await chatApi.createChat(title)
+        try {
+            const responce = await chatApi.createChat(title)
 
-        if (typeof responce === 'string') {
-            alert(responce)
-            return null
+            if (typeof responce === 'string') {
+                alert(responce)
+                return null;
+            }
+
+            return responce
+        } catch (error) {
+            // eslint-disable-next-line no-console
+            console.warn(error);
+            return null;
         }
-
-        return responce
     }
 
     async deleteChat(chatId: number) {
+        try {
+            const responce = await chatApi.delete(chatId)
 
-        const responce = await chatApi.delete(chatId)
+            if (typeof responce === 'string') {
+                alert(responce)
+                return null
+            }
 
-        if (typeof responce === 'string') {
-            alert(responce)
+            return responce
+        } catch (error) {
+            // eslint-disable-next-line no-console
+            console.warn(error)
             return null
         }
-
-        return responce
     }
 
     redirect() {

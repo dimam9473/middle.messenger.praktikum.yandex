@@ -61,15 +61,18 @@ class Profile extends Block {
         this._profileController = new ProfileController()
 
         const user = this.props.user as AuthUserProps
-
         this.children.back = new Link({
             'caption': 'Back',
-            'href': 'chat',
+            'href': '#',
             'className': 'back',
+            'events': {
+                'click': (event: Event) => this.back.call(this, event),
+            },
         })
 
         this.children.avatar = new Avatar({
             'src': user?.avatar ?? '',
+            'className': 'avatar-wrapper',
             'events': {
                 'click': () => {
                     const fileUploader = (document.querySelector(`#${InputNames.fileUploader}`) as HTMLInputElement)
@@ -84,8 +87,11 @@ class Profile extends Block {
             'className': 'file-uploader',
             'type': 'file',
             'events': {
-                'change': (event: Event) => {
-                    this.changeAvatar(event)
+                'change': async (event: Event) => {
+                    const responce = await this.changeAvatar(event);
+                    (this.children.avatar as Block).setProps({
+                        'src': responce.avatar,
+                    });
                 },
             },
         })
@@ -292,12 +298,17 @@ class Profile extends Block {
 
             (this.children.phoneInput as Block).setProps({
                 'value': newProps.user.phone,
-            })
+            });
 
             return true
         }
 
         return false
+    }
+
+    back(event: Event) {
+        event.preventDefault()
+        this._router.go(Routes.chat);
     }
 
     logout(event: Event) {
@@ -342,13 +353,13 @@ class Profile extends Block {
         this._profileController?.changeData.call(this, inputs)
     }
 
-    changeAvatar(event: Event) {
+    async changeAvatar(event: Event) {
         const files = (event.target as HTMLInputElement)?.files
         if (!files) {
             return
         }
 
-        this._profileController?.changeAvatar(files[0])
+        return await this._profileController?.changeAvatar(files[0])
     }
 
     render() {

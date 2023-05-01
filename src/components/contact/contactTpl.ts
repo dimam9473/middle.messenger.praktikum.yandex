@@ -4,11 +4,13 @@ export const contactTemplate = `
     <div class="user-info">
         <b class="title">{{title}}</b>
         <span class="last-message">{{lastMessage}}</span>
-    </div>    
+    </div>
+    {{#if unreadCount}}
     <div class="chat-info">
         <span>{{time}}</span>
         <span class="unread-count">{{unreadCount}}</span>
     </div>
+    {{/if}}
     {{{delete}}}
 </li>
 `

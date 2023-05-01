@@ -9,34 +9,44 @@ const userApi = new UserApi();
 
 export class MessengerController {
     async addUserToChat(userLogin: string, chatId: number) {
-        const responce = await userApi.searchUser(userLogin)
+        try {
+            const responce = await userApi.searchUser(userLogin)
 
-        if (typeof responce === 'string') {
-            alert(responce)
-            return
-        }
+            if (typeof responce === 'string') {
+                alert(responce)
+                return
+            }
 
-        const user = {
-            'users': [responce[0].id,],
-            'chatId': chatId,
+            const user = {
+                'users': [responce[0].id,],
+                'chatId': chatId,
+            }
+            return await messengerApi.update(user)
+        } catch (error) {
+            // eslint-disable-next-line no-console
+            console.warn(error)
         }
-        return await messengerApi.update(user)
     }
 
     async deleteUserFromChat(userLogin: string, chatId: number) {
-        const responce = await userApi.searchUser(userLogin)
+        try {
+            const responce = await userApi.searchUser(userLogin)
 
-        if (typeof responce === 'string') {
-            alert(responce)
-            return
+            if (typeof responce === 'string') {
+                alert(responce)
+                return
+            }
+
+            const user = {
+                'users': [responce[0].id,],
+                'chatId': chatId,
+            }
+
+            return await messengerApi.delete(user)
+        } catch (error) {
+            // eslint-disable-next-line no-console
+            console.warn(error)
         }
-
-        const user = {
-            'users': [responce[0].id,],
-            'chatId': chatId,
-        }
-
-        return await messengerApi.delete(user)
     }
 
     sendMessage() {
