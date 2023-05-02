@@ -1,6 +1,6 @@
 export const contactTemplate = `
 <li class="contact-wrapper">
-    <img src="{{avatar}}" alt="avatar"/>
+    <img src="{{avatar}}" alt="avatar" class='avatar'/>
     <div class="user-info">
         <b class="title">{{title}}</b>
         <span class="last-message">{{lastMessage}}</span>

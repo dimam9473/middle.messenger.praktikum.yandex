@@ -1,4 +1,5 @@
 import { AvatarProps, } from '../../types/avatar';
+import { URLS, } from '../../constants/url';
 import { avatarTemplate, } from './avatarTpl';
 import Block from '../block/block';
 
@@ -9,7 +10,7 @@ export class Avatar extends Block {
 
     render() {
         return this.compile(avatarTemplate, {
-            'src': `https://ya-praktikum.tech/api/v2/resources${this.props.src}`,
+            'src': `${URLS.resource}${this.props.src}`,
             'className': this.props.className,
         });
     }

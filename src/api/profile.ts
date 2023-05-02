@@ -7,11 +7,11 @@ import HTTPTransport from './HTTPTransport';
 
 class ProfileApi extends BaseAPI {
     public async request() {
-        await HTTPTransport.post(`${URLS.baseUrl}/auth/logout`);
+        await HTTPTransport.post(`${URLS.base}/auth/logout`);
     }
 
     public async update(user: UserUpdateProps) {
-        const request = await HTTPTransport.put(`${URLS.baseUrl}/user/profile`, prepareJsonProps(user));
+        const request = await HTTPTransport.put(`${URLS.base}/user/profile`, prepareJsonProps(user));
         const updatedUser = (JSON.parse(request.responseText)) as AuthUserProps
 
         if (updatedUser) {
@@ -26,7 +26,7 @@ class ProfileApi extends BaseAPI {
         const formData = new FormData();
         formData.append('avatar', avatar);
 
-        const request = await HTTPTransport.put(`${URLS.baseUrl}/user/profile/avatar`, prepareFileProps(formData));
+        const request = await HTTPTransport.put(`${URLS.base}/user/profile/avatar`, prepareFileProps(formData));
         const updatedUser = (JSON.parse(request.responseText)) as AuthUserProps
 
         if (updatedUser) {
@@ -38,7 +38,7 @@ class ProfileApi extends BaseAPI {
     }
 
     public async updatePassword(passwords: Passwords) {
-        const request = await HTTPTransport.put(`${URLS.baseUrl}/user/password`, prepareJsonProps(passwords));
+        const request = await HTTPTransport.put(`${URLS.base}/user/password`, prepareJsonProps(passwords));
 
         const status = request.responseText
         if (status === ResponseStatuses.OK) {

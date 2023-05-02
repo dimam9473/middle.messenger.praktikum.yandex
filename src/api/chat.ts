@@ -6,7 +6,7 @@ import HTTPTransport from './HTTPTransport';
 
 class ChatApi extends BaseAPI {
     async request(chatRequest: ChatRequestProps) {
-        const request = await HTTPTransport.get(`${URLS.baseUrl}/chats`, prepareJsonProps(chatRequest));
+        const request = await HTTPTransport.get(`${URLS.base}/chats`, prepareJsonProps(chatRequest));
         const chatsdUser = (JSON.parse(request.responseText)) as ChatProps[]
 
         if (chatsdUser) {
@@ -18,7 +18,7 @@ class ChatApi extends BaseAPI {
     }
 
     async createChat(title: string) {
-        const request = await HTTPTransport.post(`${URLS.baseUrl}/chats`, prepareJsonProps({ title, }));
+        const request = await HTTPTransport.post(`${URLS.base}/chats`, prepareJsonProps({ title, }));
         const chatId = (JSON.parse(request.responseText)) as ChatResponceProps[]
 
         if (chatId) {
@@ -30,7 +30,7 @@ class ChatApi extends BaseAPI {
     }
 
     async delete(chatId: number) {
-        const request = await HTTPTransport.delete(`${URLS.baseUrl}/chats`, prepareJsonProps({ chatId, }));
+        const request = await HTTPTransport.delete(`${URLS.base}/chats`, prepareJsonProps({ chatId, }));
         const responce = (JSON.parse(request.responseText))
 
         if (responce.userId) {
@@ -42,7 +42,7 @@ class ChatApi extends BaseAPI {
     }
 
     async getChatToken(chatId: number) {
-        const request = await HTTPTransport.post(`${URLS.baseUrl}/chats/token/${chatId}`);
+        const request = await HTTPTransport.post(`${URLS.base}/chats/token/${chatId}`);
         const token = (JSON.parse(request.responseText)) as ChatTokeResponceProps
 
         if (token) {

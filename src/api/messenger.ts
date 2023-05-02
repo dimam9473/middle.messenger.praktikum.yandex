@@ -8,7 +8,7 @@ import HTTPTransport from './HTTPTransport';
 
 class MessengerApi extends BaseAPI {
     public async update(user: MessengerRequestProps) {
-        const request = await HTTPTransport.put(`${URLS.baseUrl}/chats/users`, prepareJsonProps(user));
+        const request = await HTTPTransport.put(`${URLS.base}/chats/users`, prepareJsonProps(user));
         const status = request.responseText
 
         if (status === ResponseStatuses.OK) {
@@ -20,7 +20,7 @@ class MessengerApi extends BaseAPI {
     }
 
     async delete(user: MessengerRequestProps) {
-        const request = await HTTPTransport.delete(`${URLS.baseUrl}/chats/users`, prepareJsonProps(user));
+        const request = await HTTPTransport.delete(`${URLS.base}/chats/users`, prepareJsonProps(user));
         const status = request.responseText
 
         if (status === ResponseStatuses.OK) {
@@ -32,7 +32,7 @@ class MessengerApi extends BaseAPI {
     }
 
     async getToken(chatId: number) {
-        const request = await HTTPTransport.post(`${URLS.baseUrl}/chats/token/${chatId}`);
+        const request = await HTTPTransport.post(`${URLS.base}/chats/token/${chatId}`);
         const token = (JSON.parse(request.responseText)) as ChatTokeResponceProps
 
         if (token) {

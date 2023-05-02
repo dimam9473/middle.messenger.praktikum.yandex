@@ -6,12 +6,12 @@ import HTTPTransport from './HTTPTransport';
 
 class UserApi extends BaseAPI {
     public async request() {
-        const request = await HTTPTransport.get(`${URLS.baseUrl}/auth/user`);
+        const request = await HTTPTransport.get(`${URLS.base}/auth/user`);
         return request.responseText;
     }
 
     public async searchUser(userLogin: string) {
-        const request = await HTTPTransport.post(`${URLS.baseUrl}/user/search`, prepareJsonProps({ 'login': userLogin, }));
+        const request = await HTTPTransport.post(`${URLS.base}/user/search`, prepareJsonProps({ 'login': userLogin, }));
         const updatedUser = (JSON.parse(request.responseText)) as AuthUserProps[]
 
         if (updatedUser) {
@@ -23,7 +23,7 @@ class UserApi extends BaseAPI {
     }
 
     public async getUser(userId: number) {
-        const request = await HTTPTransport.get(`${URLS.baseUrl}/user/${userId}`);
+        const request = await HTTPTransport.get(`${URLS.base}/user/${userId}`);
         const updatedUser = (JSON.parse(request.responseText)) as AuthUserProps
 
         if (updatedUser) {

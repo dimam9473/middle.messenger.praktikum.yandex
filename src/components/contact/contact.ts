@@ -3,6 +3,7 @@ import { ChatProps, } from '../../types/chat';
 import { prepareDate, } from '../../utils/date';
 import Block from '../block/block';
 
+import { URLS, } from '../../constants/url';
 import { contactTemplate, } from './contactTpl';
 
 export class Contact extends Block {
@@ -26,7 +27,7 @@ export class Contact extends Block {
     render() {
         const { last_message, avatar, ...restProps } = this.props as ChatProps
         const prepairedDate = last_message?.time ? prepareDate(new Date(last_message.time)) : ''
-        const avatarSrc = `https://ya-praktikum.tech/api/v2/resources${avatar}`
+        const avatarSrc = `${URLS.resource}${avatar}`
 
         return this.compile(contactTemplate, { ...restProps, 'time': prepairedDate, 'avatar': avatarSrc, });
     }
