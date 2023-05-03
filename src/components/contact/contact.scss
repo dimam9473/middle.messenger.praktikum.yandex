@@ -25,6 +25,8 @@
 .user-info {
     display: flex;
     flex-direction: column;
+    flex-grow: 1;
+    overflow: hidden;
 }
 
 .chat-info {
@@ -33,7 +35,11 @@
     margin-left: auto;
 }
 
-.first-name {
+.title {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+
     &::first-letter {
         text-transform: capitalize;
     }
@@ -57,4 +63,9 @@
     border-radius: 50%;
 
     margin-left: auto;
+}
+
+.avatar {
+    max-width: 30px;
+    max-height: 30px;
 }

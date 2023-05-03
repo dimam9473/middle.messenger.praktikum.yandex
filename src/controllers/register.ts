@@ -1,26 +1,56 @@
-import { validateEmail, validateFirstName, validateLogin, validatePassword, validatePhone, validateRepeatPassword, validateSecondName, } from '../utils/inputHelper'
+// import { validateRegister, } from '../validation/register';
 
-export function formSubmit(event: Event) {
-    event.preventDefault()
-    const isLoginValid = validateLogin()
-    const isEmailValid = validateEmail()
-    const isFirstNameValid = validateFirstName()
-    const isSecondNameValid = validateSecondName()
-    const isPhoneValid = validatePhone()
-    const isPasswordValid = validatePassword()
-    const isRepeatPasswordValid = validateRepeatPassword()
+import { Routes, } from '../constants/routes';
+import { UserProps, } from '../types/user';
+import { validateRegister, } from '../validation/register';
+import RegisterApi from '../api/register';
+import Router from '../routing/router';
 
-    if (!isLoginValid || !isEmailValid || !isFirstNameValid || !isSecondNameValid || !isPhoneValid || !isPasswordValid || !isRepeatPasswordValid) {
-        return
+const registerApi = new RegisterApi();
+
+export class RegisterController {
+    private _router
+
+    constructor() {
+        this.formSubmit = this.formSubmit.bind(this)
+        this._router = new Router();
     }
 
-    const form = (document.querySelector('#register-form')) as HTMLFormElement
-    const data = new FormData(form)
+    private async registerUser(user: UserProps) {
+        try {
+            const userID = await registerApi.create(user);
 
-    for (const pair of Array.from(data)) {
-        // eslint-disable-next-line no-console
-        console.log(`${pair[0]}: ${pair[1]}`);
+            if (userID) {
+                this._router.go(Routes.chat);
+            }
+        } catch (error) {
+            // eslint-disable-next-line no-console
+            console.warn(error)
+        }
     }
 
-    window.location.pathname = 'chat'
+    async formSubmit(event: Event) {
+        event.preventDefault()
+
+        if (!validateRegister()) {
+            return
+        }
+
+        const form = ((event.target as HTMLElement).parentElement) as HTMLFormElement
+        // const form = (document.querySelector('#register-form')) as HTMLFormElement
+        const data = new FormData(form)
+        const user: Partial<UserProps> = {}
+
+        for (const pair of Array.from(data)) {
+            // eslint-disable-next-line no-console
+            const propertyName: keyof UserProps = pair[0].toString() as keyof UserProps
+            user[propertyName] = pair[1].toString()
+        }
+
+        await this.registerUser(user as UserProps)
+    }
+
+    redirect() {
+        this._router.go(Routes.home);
+    }
 }

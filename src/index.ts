@@ -1,37 +1,41 @@
-import { Chat, Login, NotFoundError, Profile, Register, ServerError, } from './pages'
-import Block from './components/block/block'
+import { Chat, Login, Profile, Register, ServerError, } from './pages'
+import ProfileApi from './api/profile';
 
-import { render, } from './utils/render'
+import { AuthUserProps, } from './types/user';
+import { Routes, } from './constants/routes';
+import Router from './routing/router';
+import UserApi from './api/user';
+import store from './store/store';
 
-window.addEventListener('load', function () {
-    let component: Block
+const profileApi = new ProfileApi();
+const userApi = new UserApi();
 
-    switch (window.location.pathname) {
-        case '/': {
-            component = new Login()
-            break
-        }
-        case '/register': {
-            component = new Register()
-            break
-        }
-        case '/chat': {
-            component = new Chat()
-            break
-        }
-        case '/profile': {
-            component = new Profile()
-            break
-        }
-        case '/500': {
-            component = new ServerError()
-            break
-        }
-        default: {
-            component = new NotFoundError()
+window.addEventListener('load', async function () {
+    const router = new Router();
+
+    const userResponse = JSON.parse(await userApi.request()) as AuthUserProps
+    if (userResponse.id) {
+        store.set('user', userResponse as AuthUserProps)
+    }
+
+    if (window.location.pathname === Routes.home || window.location.pathname === Routes.register) {
+        try {
+            userResponse.id && await profileApi.request()
+        } catch (error) {
+            // eslint-disable-next-line no-console
+            console.warn(error)
         }
     }
 
-    render('#root', component)
-    component.dispatchComponentDidMount()
+    if (window.location.pathname !== Routes.home && window.location.pathname !== Routes.register && !userResponse.id) {
+        router.go(Routes.home)
+    }
+
+    router
+        .use(Routes.home, Login)
+        .use(Routes.register, Register)
+        .use(Routes.chat, Chat)
+        .use(Routes.profile, Profile)
+        .use(Routes.serverError, ServerError)
+        .start();
 })

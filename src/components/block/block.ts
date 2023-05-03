@@ -4,7 +4,7 @@ import Handlebars from 'handlebars'
 import EventBus from '../../utils/eventBus';
 
 // eslint-disable-next-line
-class Block<P extends Record<string, any> = any> {
+class Block<P extends Record<string, unknown> = any> {
     static EVENTS = {
         'INIT': 'init',
         'FLOW_CDM': 'flow:component-did-mount',
@@ -12,9 +12,9 @@ class Block<P extends Record<string, any> = any> {
         'FLOW_RENDER': 'flow:render',
     } as const;
 
-    private _eventBus: () => EventBus;
+    protected _eventBus: () => EventBus;
     private _element: HTMLElement | null = null;
-    private _display = ''
+    private _isActivePage = false
 
     protected props: P;
 
@@ -27,7 +27,7 @@ class Block<P extends Record<string, any> = any> {
      *
      * @returns {void}
      */
-    constructor(propsWithChildren: P) {
+    constructor(propsWithChildren?: P) {
         const eventBus = new EventBus();
         const { props, children, } = this._getChildrenAndProps(propsWithChildren);
 
@@ -57,7 +57,7 @@ class Block<P extends Record<string, any> = any> {
         }
     }
 
-    private _getChildrenAndProps(childrenAndProps: P): { props: P, children: Record<string, Block | Block[]> } {
+    private _getChildrenAndProps(childrenAndProps?: P): { props: P, children: Record<string, Block | Block[]> } {
         const props: Record<string, unknown> = {};
         const children: Record<string, Block | Block[]> = {};
 
@@ -96,7 +96,7 @@ class Block<P extends Record<string, any> = any> {
 
                 target[prop as keyof P] = value;
 
-                self._eventBus().emit(Block.EVENTS.FLOW_CDU, oldTarget, target);
+                self._isActivePage && self._eventBus().emit(Block.EVENTS.FLOW_CDU, oldTarget, target);
                 return true;
             },
             deleteProperty() {
@@ -133,6 +133,8 @@ class Block<P extends Record<string, any> = any> {
         this._element = newElement;
 
         this._addEvents();
+
+        this._isActivePage = true
     }
 
     // eslint-disable-next-line
@@ -211,8 +213,8 @@ class Block<P extends Record<string, any> = any> {
     }
 
     public hide() {
-        this._display = this.getContent().style.display
-        this.getContent().style.display = 'none';
+        this.getContent().classList.add('hide')
+        this._isActivePage = false
     }
 
     public setProps = (nextProps: Partial<P>) => {
@@ -224,7 +226,8 @@ class Block<P extends Record<string, any> = any> {
     };
 
     public show() {
-        this.getContent().style.display = this._display;
+        this._isActivePage = true
+        this.getContent().classList.remove('hide')
     }
 
     get element() {

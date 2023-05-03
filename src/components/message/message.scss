@@ -1,0 +1,12 @@
+@import "../../global";
+
+.wrapper {
+    display: flex;
+    gap: $large-gap;
+}
+
+.info {
+    display: flex;
+    flex-direction: column;
+    gap: $small-gap;
+}

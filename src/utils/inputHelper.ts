@@ -42,7 +42,7 @@ export function validatePassword() {
 
 export function validateRepeatPassword() {
     const password = document.querySelector(`#${InputNames.password}`) as HTMLInputElement
-    const repeatPassword = document.querySelector(`#${InputNames.repeatPassword}`) as HTMLInputElement
+    const repeatPassword = document.querySelector(`#${InputNames.newPassword}`) as HTMLInputElement
     if (password.value !== repeatPassword.value) {
         repeatPassword?.classList.add('invalid')
         return false
@@ -104,7 +104,7 @@ export function passwordFocus() {
 }
 
 export function repeatPasswordFocus() {
-    inputFocus(InputNames.repeatPassword)
+    inputFocus(InputNames.newPassword)
 }
 
 export function messageFocus() {

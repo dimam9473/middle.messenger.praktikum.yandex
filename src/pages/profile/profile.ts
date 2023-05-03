@@ -1,6 +1,6 @@
-import { Block, Button, Input, Link, Text, } from '../../components';
+import { Avatar, Block, Button, Input, Link, Text, } from '../../components';
 import { InputNames, } from '../../constants/inputNames';
-import { changeData, changePassword, handleSave, restoreInputs, } from '../../controllers/profile';
+import { ProfileController, } from '../../controllers/profile';
 import {
     displayNameFocus,
     emailFocus,
@@ -21,27 +21,85 @@ import {
     validateRepeatPassword,
     validateSecondName,
 } from '../../utils/inputHelper';
+import store, { StoreEvents, } from '../../store/store';
 
+import { AuthUserProps, } from '../../types/user';
+import { ProfileStateProps, } from '../../types/profile';
+import { Routes, } from '../../constants/routes';
+import { UpdateType, } from '../../constants/updateType';
+import { connect, } from '../../store/connect';
 import { profileTemplate, } from './profileTpl';
+import Router from '../../routing/router';
 
 let inputs: Input[] = []
 let passwordInputs: Input[] = []
+let selectedUpdateType: UpdateType | null = null
 
-export class Profile extends Block {
+class Profile extends Block {
+    private _profileController?: ProfileController
+    private _router
+
     constructor(props?: object) {
         super(props);
+
+        this._router = new Router();
+
+        store.on(StoreEvents.Updated, () => {
+            const state = store.getState()
+            this.setProps({ ...state, });
+        });
+
+        this.hideComponents = this.hideComponents.bind(this)
+        this.changePassword = this.changePassword.bind(this)
+        this.handleSave = this.handleSave.bind(this)
+        this.cancel = this.cancel.bind(this)
+        this.changeData = this.changeData.bind(this)
+        this.changeAvatar = this.changeAvatar.bind(this)
     }
 
     protected init(): void {
+        this._profileController = new ProfileController()
+
+        const user = this.props.user as AuthUserProps
         this.children.back = new Link({
             'caption': 'Back',
-            'href': 'chat',
+            'href': '#',
             'className': 'back',
+            'events': {
+                'click': (event: Event) => this.back.call(this, event),
+            },
+        })
+
+        this.children.avatar = new Avatar({
+            'src': user?.avatar ?? '',
+            'className': 'avatar-wrapper',
+            'events': {
+                'click': () => {
+                    const fileUploader = (document.querySelector(`#${InputNames.fileUploader}`) as HTMLInputElement)
+                    fileUploader.click()
+                },
+            },
+        })
+
+        this.children.fileUploader = new Input({
+            'id': InputNames.fileUploader,
+            'name': InputNames.fileUploader,
+            'className': 'file-uploader',
+            'type': 'file',
+            'events': {
+                'change': async (event: Event) => {
+                    const responce = await this.changeAvatar(event);
+                    (this.children.avatar as Block).setProps({
+                        'src': responce.avatar,
+                    });
+                },
+            },
         })
 
         this.children.emailInput = new Input({
             'id': InputNames.email,
             'name': InputNames.email,
+            'value': user?.email ?? '',
             'label': 'Email',
             'placeholder': 'mail@mail.com',
             'readOnly': true,
@@ -54,6 +112,7 @@ export class Profile extends Block {
         this.children.loginInput = new Input({
             'id': InputNames.login,
             'name': InputNames.login,
+            'value': user?.login ?? '',
             'label': 'Login',
             'placeholder': 'Your login',
             'readOnly': true,
@@ -66,6 +125,7 @@ export class Profile extends Block {
         this.children.displayNameInput = new Input({
             'id': InputNames.displayName,
             'name': InputNames.displayName,
+            'value': user?.display_name ?? '',
             'label': 'Display name',
             'placeholder': 'Your display name',
             'readOnly': true,
@@ -78,6 +138,7 @@ export class Profile extends Block {
         this.children.firstNameInput = new Input({
             'id': InputNames.firstName,
             'name': InputNames.firstName,
+            'value': user?.first_name ?? '',
             'label': 'First name',
             'placeholder': 'First name',
             'readOnly': true,
@@ -90,6 +151,7 @@ export class Profile extends Block {
         this.children.secondNameInput = new Input({
             'id': InputNames.secondName,
             'name': InputNames.secondName,
+            'value': user?.second_name ?? '',
             'label': 'Second name',
             'placeholder': 'Your second name',
             'readOnly': true,
@@ -103,6 +165,7 @@ export class Profile extends Block {
             'id': 'phone',
             'name': 'phone',
             'label': 'Phone',
+            'value': user?.phone ?? '',
             'placeholder': '+7-999-999-9999',
             'readOnly': true,
             'events': {
@@ -138,8 +201,8 @@ export class Profile extends Block {
         })
 
         this.children.repeatPasswordInput = new Input({
-            'id': InputNames.repeatPassword,
-            'name': InputNames.repeatPassword,
+            'id': InputNames.newPassword,
+            'name': InputNames.newPassword,
             'label': 'Repeat new password',
             'type': 'password',
             'placeholder': '1234',
@@ -177,13 +240,16 @@ export class Profile extends Block {
             'caption': 'Save',
             'type': 'button',
             'className': 'save button-green',
-            'events': { 'click': () => this.handleSave(), },
+            'events': { 'click': (event: Event) => this.handleSave(event), },
         });
 
         this.children.logout = new Link({
             'caption': 'Logout',
-            'href': '/',
+            'href': '#',
             'className': 'clickable-text',
+            'events': {
+                'click': (event: Event) => this.logout.call(this, event),
+            },
         })
 
         this.children.changeData = new Text({
@@ -205,6 +271,52 @@ export class Profile extends Block {
         this.hideComponents()
     }
 
+    protected componentDidUpdate(_oldProps: Record<string, unknown>, _newProps: Record<string, unknown>): boolean {
+        const oldProps = _oldProps as ProfileStateProps
+        const newProps = _newProps as ProfileStateProps
+
+        if (oldProps !== newProps) {
+            (this.children.emailInput as Block).setProps({
+                'value': newProps.user.email,
+            });
+
+            (this.children.loginInput as Block).setProps({
+                'value': newProps.user.login,
+            });
+
+            (this.children.displayNameInput as Block).setProps({
+                'value': newProps.user.display_name,
+            });
+
+            (this.children.firstNameInput as Block).setProps({
+                'value': newProps.user.first_name,
+            });
+
+            (this.children.secondNameInput as Block).setProps({
+                'value': newProps.user.second_name,
+            });
+
+            (this.children.phoneInput as Block).setProps({
+                'value': newProps.user.phone,
+            });
+
+            return true
+        }
+
+        return false
+    }
+
+    back(event: Event) {
+        event.preventDefault()
+        this._router.go(Routes.chat);
+    }
+
+    logout(event: Event) {
+        event.preventDefault()
+        this._profileController?.logout()
+        this._router.go(Routes.home);
+    }
+
     hideComponents() {
         (this.children.oldPasswordInput as Block).hide();
         (this.children.newPasswordInput as Block).hide();
@@ -214,19 +326,40 @@ export class Profile extends Block {
     }
 
     changePassword() {
-        changePassword.call(this, inputs, passwordInputs)
+        selectedUpdateType = UpdateType.Password
+        this._profileController?.changePassword.call(this, inputs, passwordInputs)
     }
 
-    handleSave() {
-        handleSave.call(this, inputs, passwordInputs)
+    async handleSave(event: Event) {
+        event.preventDefault()
+        if (selectedUpdateType === null) {
+            return
+        }
+
+        const isSaved = await this._profileController?.handleSave(selectedUpdateType)
+
+        if (isSaved) {
+            this._profileController?.restoreInputs.call(this, inputs, passwordInputs)
+        }
     }
 
     cancel() {
-        restoreInputs.call(this, inputs, passwordInputs)
+        selectedUpdateType = null
+        this._profileController?.restoreInputs.call(this, inputs, passwordInputs)
     }
 
     changeData() {
-        changeData.call(this, inputs)
+        selectedUpdateType = UpdateType.Data
+        this._profileController?.changeData.call(this, inputs)
+    }
+
+    async changeAvatar(event: Event) {
+        const files = (event.target as HTMLInputElement)?.files
+        if (!files) {
+            return
+        }
+
+        return await this._profileController?.changeAvatar(files[0])
     }
 
     render() {
@@ -234,3 +367,11 @@ export class Profile extends Block {
         return template;
     }
 }
+
+function mapUserToProps(state: Record<string, unknown>) {
+    return {
+        'user': state.user,
+    };
+}
+
+export default connect(mapUserToProps)(Profile)

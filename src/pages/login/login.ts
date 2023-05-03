@@ -1,16 +1,19 @@
 import { InputNames, } from '../../constants/inputNames';
-import { formSubmit, } from '../../controllers/login';
+import { LoginController, } from '../../controllers/login';
 import { loginFocus, passwordFocus, validateLogin, validatePassword, } from '../../utils/inputHelper';
 
 import { Block, Button, Input, Link, Title, } from '../../components';
 import { loginTemplate, } from './loginTpl';
 
 export class Login extends Block {
+    private _loginController?: LoginController
+
     constructor(props?: object) {
         super(props);
     }
 
     protected init(): void {
+        this._loginController = new LoginController()
         this.children.title = new Title({
             'caption': 'Sign In',
         })
@@ -43,13 +46,21 @@ export class Login extends Block {
         this.children.button = new Button({
             'caption': 'Enter',
             'className': 'button-green',
-            'events': { 'click': formSubmit, },
+            'events': { 'click': this._loginController.formSubmit, },
         });
 
         this.children.link = new Link({
             'caption': 'Create account?',
-            'href': 'register',
+            'href': '#',
+            'events': {
+                'click': (event: Event) => this.redirect(event),
+            },
         })
+    }
+
+    redirect(event: Event) {
+        event.preventDefault()
+        this._loginController?.redirect()
     }
 
     render() {

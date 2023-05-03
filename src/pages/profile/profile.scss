@@ -32,3 +32,16 @@
 .cancel {
     text-align: center;
 }
+
+.avatar:hover {
+    cursor: pointer;
+}
+
+.file-uploader {
+    display: none;
+}
+
+.avatar-wrapper {
+    max-width: 100px;
+    max-height: 100px;
+}

@@ -1,6 +1,7 @@
 @import "../../global";
 
 .messenger {
+    position: relative;
     height: 100%;
 
     &.not-selected {
@@ -15,6 +16,7 @@
     flex-direction: column;
 
     height: 100%;
+    width: 100%;
 }
 
 .messenger-header {
@@ -64,4 +66,18 @@
     height: 28px;
     border-radius: 50%;
     background-color: $dark-green;
+}
+
+.dropdown-show {
+    margin-right: 20px;
+}
+
+.dropdown-wrapper {
+    position: relative;
+}
+
+.messages {
+    display: flex;
+    flex-direction: column;
+    gap: $small-gap;
 }

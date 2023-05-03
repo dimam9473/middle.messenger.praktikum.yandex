@@ -1,13 +1,16 @@
 export const contactTemplate = `
 <li class="contact-wrapper">
-    <img src="{{avatarSrc}}" alt="avatar"/>
+    <img src="{{avatar}}" alt="avatar" class='avatar'/>
     <div class="user-info">
-        <b class="first-name">{{firstName}}</b>
+        <b class="title">{{title}}</b>
         <span class="last-message">{{lastMessage}}</span>
-    </div>    
+    </div>
+    {{#if unreadCount}}
     <div class="chat-info">
         <span>{{time}}</span>
         <span class="unread-count">{{unreadCount}}</span>
     </div>
+    {{/if}}
+    {{{delete}}}
 </li>
 `

@@ -1,14 +1,62 @@
 import { InputNames, } from '../constants/inputNames'
 import { validateMessage, } from '../utils/inputHelper'
 
-export function sendMessage() {
-    const isMessageValid = validateMessage()
+import MessengerApi from '../api/messenger';
+import UserApi from '../api/user';
 
-    if (!isMessageValid) {
-        return
+const messengerApi = new MessengerApi();
+const userApi = new UserApi();
+
+export class MessengerController {
+    async addUserToChat(userLogin: string, chatId: number) {
+        try {
+            const responce = await userApi.searchUser(userLogin)
+
+            if (typeof responce === 'string') {
+                alert(responce)
+                return
+            }
+
+            const user = {
+                'users': [responce[0].id,],
+                'chatId': chatId,
+            }
+            return await messengerApi.update(user)
+        } catch (error) {
+            // eslint-disable-next-line no-console
+            console.warn(error)
+        }
     }
 
-    const input = (document.querySelector(`#${InputNames.message}`) as HTMLInputElement)
-    // eslint-disable-next-line no-console
-    console.log(input.value)
+    async deleteUserFromChat(userLogin: string, chatId: number) {
+        try {
+            const responce = await userApi.searchUser(userLogin)
+
+            if (typeof responce === 'string') {
+                alert(responce)
+                return
+            }
+
+            const user = {
+                'users': [responce[0].id,],
+                'chatId': chatId,
+            }
+
+            return await messengerApi.delete(user)
+        } catch (error) {
+            // eslint-disable-next-line no-console
+            console.warn(error)
+        }
+    }
+
+    sendMessage() {
+        const isMessageValid = validateMessage()
+
+        if (!isMessageValid) {
+            return
+        }
+
+        return (document.querySelector(`#${InputNames.message}`) as HTMLInputElement).value
+    }
 }
+
